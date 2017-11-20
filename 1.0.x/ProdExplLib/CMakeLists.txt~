@@ -1,0 +1,45 @@
+# CMake input file to build 2
+ if(COMMAND cmake_policy)
+     cmake_minimum_required(VERSION 3.1)
+     cmake_policy(SET CMP0003 NEW)
+ endif(COMMAND cmake_policy)
+
+MESSAGE(STATUS "include CMakeGen.txt" )
+  include (./Base/CMakeGen.txt)
+
+# Global settings and flags
+SET( CMAKE_VERBECOS_MAKEFILE ON)
+
+SET( ZIP_INCLUDE ${BUILD_BASEDIR}/CommonLibs/LibZip/ )
+SET( FTP_INCLUDE ${BUILD_BASEDIR}/CommonLibs/LibFtp/ )
+SET( NET_SNMP_INCLUDE ${BUILD_BASEDIR}/NetSnmp/include )
+SET( DHCP_INCLUDE ${BUILD_BASEDIR}/Dhcp )
+
+
+MESSAGE(STATUS "ECOS-Lib-Path " ${ECOS_INCLUDE}/lib)
+IF (EXISTS ${ECOS_INCLUDE}/include)
+#${CMAKE_BUILD_TYPE}_${BUILD})
+  SET ( ECOS_BUILD_DIR ${ECOS_INCLUDE}/lib)
+#${CMAKE_BUILD_TYPE}_${BUILD})
+ELSE()
+  MESSAGE (STATUS "!!! you should upgrade your ECOS-library !!!")
+  SET ( ECOS_BUILD_DIR ${CMAKE_BUILD_TYPE})
+  ADD_DEFINITIONS(-DCCU -DCONFIG_CCU)
+ENDIF()
+ 
+ SET( ECOS_LIBRARY ${ECOS_INCLUDE}/lib)
+ #${ECOS_BUILD_DIR})
+
+PROJECT(BASICLIB)
+INCLUDE_DIRECTORIES( ${ECOS_INCLUDE}/include)
+#ADD_SUBDIRECTORY(LibUtilities)
+#ADD_SUBDIRECTORY(LibModules)
+#ADD_SUBDIRECTORY(Base)
+#ADD_SUBDIRECTORY(Update)
+#ADD_SUBDIRECTORY(Tools)
+IF (NOT BUILD OR BUILD STREQUAL "RXXXX")
+ ADD_SUBDIRECTORY(GXXXX)
+ENDIF()
+#ADD_SUBDIRECTORY(XmlServer)
+
+

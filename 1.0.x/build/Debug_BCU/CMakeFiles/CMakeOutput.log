@@ -1,0 +1,236 @@
+The target system is: eCos -  - 
+The host system is: Linux - 3.2.0-4-686-pae - i686
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /opt/ecos/gnutools/arm-eabi/bin/arm-eabi-gcc 
+Build flags: ;-mcpu=cortex-m4;-mfloat-abi=hard;-mfpu=fpv4-sp-d16;-mthumb;-nostartfiles;-nostdlib;;-nodefaultlibs;-I$(ECOS_LIBRARY_PATH)/include;;-Wl,-static;-Wl,-n;-g;;-fmessage-length=0;-Wall;;;-DDEBUG
+Id flags: 
+
+The output was:
+0
+/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/bin/ld: warning: cannot find entry symbol _start; defaulting to 00008000
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is GNU, found in "/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/3.1.0/CompilerIdC/a.out"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /opt/ecos/gnutools/arm-eabi/bin/arm-eabi-g++ 
+Build flags: ;-mcpu=cortex-m4;-mfloat-abi=hard;-mfpu=fpv4-sp-d16;-mthumb;-nostartfiles;-nostdlib;;-nodefaultlibs;-I$(ECOS_LIBRARY_PATH)/include;-Wl,-static;-Wl,-n;-g;;;-fmessage-length=0;-Wall;-Wno-sign-compare;;;-DDEBUG
+Id flags: 
+
+The output was:
+0
+/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/bin/ld: warning: cannot find entry symbol _start; defaulting to 00008000
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+
+The CXX compiler identification is GNU, found in "/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/3.1.0/CompilerIdCXX/a.out"
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /opt/ecos/gnutools/arm-eabi/bin/arm-eabi-gcc 
+Build flags: ;-mcpu=cortex-m4;-mfloat-abi=hard;-mfpu=fpv4-sp-d16;-mthumb;-nostartfiles;-nostdlib;;-nodefaultlibs;-I$(ECOS_LIBRARY_PATH)/include;;-Wl,-static;-Wl,-n;-g;;-fmessage-length=0;-Wall;;;-DDEBUG
+Id flags: 
+
+The output was:
+0
+/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/bin/ld: warning: cannot find entry symbol _start; defaulting to 00008000
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+The C compiler identification is GNU, found in "/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/3.1.0/CompilerIdC/a.out"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /opt/ecos/gnutools/arm-eabi/bin/arm-eabi-g++ 
+Build flags: ;-mcpu=cortex-m4;-mfloat-abi=hard;-mfpu=fpv4-sp-d16;-mthumb;-nostartfiles;-nostdlib;;-nodefaultlibs;-I$(ECOS_LIBRARY_PATH)/include;-Wl,-static;-Wl,-n;-g;;;-fmessage-length=0;-Wall;-Wno-sign-compare;;;-DDEBUG
+Id flags: 
+
+The output was:
+0
+/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/bin/ld: warning: cannot find entry symbol _start; defaulting to 00008000
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+
+The CXX compiler identification is GNU, found in "/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/3.1.0/CompilerIdCXX/a.out"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec644854060/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec644854060.dir/build.make CMakeFiles/cmTryCompileExec644854060.dir/build
+make[1]: Entering directory `/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec644854060.dir/testCCompiler.c.o
+/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-gcc  -D__ECOS=1 -D__ECOS__=1 -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I/include  -Wl,-static -Wl,-n -g  -fmessage-length=0 -Wall   -DDEBUG  -I/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/include    -o CMakeFiles/cmTryCompileExec644854060.dir/testCCompiler.c.o   -c /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTryCompileExec644854060.elf
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec644854060.dir/link.txt --verbose=1
+/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-gcc     -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I$(ECOS_LIBRARY_PATH)/include  -Wl,-static -Wl,-n -g  -fmessage-length=0 -Wall   -DDEBUG      CMakeFiles/cmTryCompileExec644854060.dir/testCCompiler.c.o -o cmTryCompileExec644854060.elf -nostdlib -nostartfiles -L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib -Ttarget.ld   
+make[1]: Leaving directory `/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp'
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec2320585576/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2320585576.dir/build.make CMakeFiles/cmTryCompileExec2320585576.dir/build
+make[1]: Entering directory `/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2320585576.dir/CMakeCCompilerABI.c.o
+/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-gcc  -D__ECOS=1 -D__ECOS__=1 -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I/include  -Wl,-static -Wl,-n -g  -fmessage-length=0 -Wall   -DDEBUG  -I/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/include    -o CMakeFiles/cmTryCompileExec2320585576.dir/CMakeCCompilerABI.c.o   -c /usr/local/share/cmake-3.1/Modules/CMakeCCompilerABI.c
+Linking C executable cmTryCompileExec2320585576.elf
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2320585576.dir/link.txt --verbose=1
+/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-gcc     -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I$(ECOS_LIBRARY_PATH)/include  -Wl,-static -Wl,-n -g  -fmessage-length=0 -Wall   -DDEBUG     -v CMakeFiles/cmTryCompileExec2320585576.dir/CMakeCCompilerABI.c.o -o cmTryCompileExec2320585576.elf -nostdlib -nostartfiles -L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib -Ttarget.ld    
+Using built-in specs.
+COLLECT_GCC=/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-gcc
+COLLECT_LTO_WRAPPER=/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/lto-wrapper
+Target: arm-eabi
+Configured with: ../../../../src/gcc-4.6.3/configure --target=arm-eabi --with-cpu=arm7tdmi --prefix=/opt/ecos/gnutools/arm-eabi --with-newlib --with-gnu-as --with-gnu-ld --with-gmp=/opt/gmp-4.3.2 --with-mpfr=/opt/mpfr-2.4.2 --with-mpc=/opt/mpc-0.8.2 --enable-languages=c,c++ --enable-threads --disable-hosted-libstdcxx --disable-__cxa_atexit --disable-libquadmath --disable-decimal-float -with-pkgversion='eCos GNU Tools 4.6.3-20120623' --with-bugurl=http://bugs.ecos.sourceware.org/
+Thread model: single
+gcc version 4.6.3 (eCos GNU Tools 4.6.3-20120623) 
+COMPILER_PATH=/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/bin/
+LIBRARY_PATH=/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/
+COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfloat-abi=hard' '-mfpu=fpv4-sp-d16' '-mthumb' '-nostartfiles' '-nostdlib' '-nodefaultlibs' '-I' '$(ECOS_LIBRARY_PATH)/include' '-g' '-fmessage-length=0' '-Wall' '-D' 'DEBUG' '-v' '-o' 'cmTryCompileExec2320585576.elf' '-nostdlib' '-nostartfiles' '-L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib' '-T' 'target.ld'
+ /opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/collect2 -X -o cmTryCompileExec2320585576.elf -L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib -static -n CMakeFiles/cmTryCompileExec2320585576.dir/CMakeCCompilerABI.c.o -T target.ld
+make[1]: Leaving directory `/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp'
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(arm-eabi-ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTryCompileExec2320585576/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec2320585576.dir/build.make CMakeFiles/cmTryCompileExec2320585576.dir/build]
+  ignore line: [make[1]: Entering directory `/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/local/bin/cmake -E cmake_progress_report /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building C object CMakeFiles/cmTryCompileExec2320585576.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-gcc  -D__ECOS=1 -D__ECOS__=1 -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I/include  -Wl,-static -Wl,-n -g  -fmessage-length=0 -Wall   -DDEBUG  -I/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/include    -o CMakeFiles/cmTryCompileExec2320585576.dir/CMakeCCompilerABI.c.o   -c /usr/local/share/cmake-3.1/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTryCompileExec2320585576.elf]
+  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2320585576.dir/link.txt --verbose=1]
+  ignore line: [/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-gcc     -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I$(ECOS_LIBRARY_PATH)/include  -Wl,-static -Wl,-n -g  -fmessage-length=0 -Wall   -DDEBUG     -v CMakeFiles/cmTryCompileExec2320585576.dir/CMakeCCompilerABI.c.o -o cmTryCompileExec2320585576.elf -nostdlib -nostartfiles -L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib -Ttarget.ld    ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-gcc]
+  ignore line: [COLLECT_LTO_WRAPPER=/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/lto-wrapper]
+  ignore line: [Target: arm-eabi]
+  ignore line: [Configured with: ../../../../src/gcc-4.6.3/configure --target=arm-eabi --with-cpu=arm7tdmi --prefix=/opt/ecos/gnutools/arm-eabi --with-newlib --with-gnu-as --with-gnu-ld --with-gmp=/opt/gmp-4.3.2 --with-mpfr=/opt/mpfr-2.4.2 --with-mpc=/opt/mpc-0.8.2 --enable-languages=c,c++ --enable-threads --disable-hosted-libstdcxx --disable-__cxa_atexit --disable-libquadmath --disable-decimal-float -with-pkgversion='eCos GNU Tools 4.6.3-20120623' --with-bugurl=http://bugs.ecos.sourceware.org/]
+  ignore line: [Thread model: single]
+  ignore line: [gcc version 4.6.3 (eCos GNU Tools 4.6.3-20120623) ]
+  ignore line: [COMPILER_PATH=/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/bin/]
+  ignore line: [LIBRARY_PATH=/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfloat-abi=hard' '-mfpu=fpv4-sp-d16' '-mthumb' '-nostartfiles' '-nostdlib' '-nodefaultlibs' '-I' '$(ECOS_LIBRARY_PATH)/include' '-g' '-fmessage-length=0' '-Wall' '-D' 'DEBUG' '-v' '-o' 'cmTryCompileExec2320585576.elf' '-nostdlib' '-nostartfiles' '-L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib' '-T' 'target.ld']
+  link line: [ /opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/collect2 -X -o cmTryCompileExec2320585576.elf -L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib -static -n CMakeFiles/cmTryCompileExec2320585576.dir/CMakeCCompilerABI.c.o -T target.ld]
+    arg [/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/collect2] ==> ignore
+    arg [-X] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec2320585576.elf] ==> ignore
+    arg [-L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib] ==> dir [/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib]
+    arg [-L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16] ==> dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16]
+    arg [-L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16] ==> dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16]
+    arg [-L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3] ==> dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3]
+    arg [-L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib] ==> dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib]
+    arg [-static] ==> ignore
+    arg [-n] ==> ignore
+    arg [CMakeFiles/cmTryCompileExec2320585576.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [-T] ==> ignore
+    arg [target.ld] ==> ignore
+  collapse library dir [/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib] ==> [/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib]
+  collapse library dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16] ==> [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16]
+  collapse library dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16] ==> [/opt/ecos/gnutools/arm-eabi/arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16]
+  collapse library dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3] ==> [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3]
+  collapse library dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib] ==> [/opt/ecos/gnutools/arm-eabi/arm-eabi/lib]
+  implicit libs: []
+  implicit dirs: [/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib;/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16;/opt/ecos/gnutools/arm-eabi/arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16;/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3;/opt/ecos/gnutools/arm-eabi/arm-eabi/lib]
+  implicit fwks: []
+
+
+Determining if the CXX compiler works passed with the following output:
+Change Dir: /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec3312912442/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3312912442.dir/build.make CMakeFiles/cmTryCompileExec3312912442.dir/build
+make[1]: Entering directory `/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3312912442.dir/testCXXCompiler.cxx.o
+/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-g++   -D__ECOS=1 -D__ECOS__=1 -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I/include -Wl,-static -Wl,-n -g   -fmessage-length=0 -Wall -Wno-sign-compare   -DDEBUG  -I/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/include    -o CMakeFiles/cmTryCompileExec3312912442.dir/testCXXCompiler.cxx.o -c /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTryCompileExec3312912442.elf
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3312912442.dir/link.txt --verbose=1
+/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-g++   -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I$(ECOS_LIBRARY_PATH)/include -Wl,-static -Wl,-n -g   -fmessage-length=0 -Wall -Wno-sign-compare   -DDEBUG    CMakeFiles/cmTryCompileExec3312912442.dir/testCXXCompiler.cxx.o -o cmTryCompileExec3312912442.elf -nostdlib -nostartfiles -L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib -Ttarget.ld   
+make[1]: Leaving directory `/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp'
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec2358712956/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2358712956.dir/build.make CMakeFiles/cmTryCompileExec2358712956.dir/build
+make[1]: Entering directory `/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp'
+/usr/local/bin/cmake -E cmake_progress_report /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2358712956.dir/CMakeCXXCompilerABI.cpp.o
+/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-g++   -D__ECOS=1 -D__ECOS__=1 -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I/include -Wl,-static -Wl,-n -g   -fmessage-length=0 -Wall -Wno-sign-compare   -DDEBUG  -I/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/include    -o CMakeFiles/cmTryCompileExec2358712956.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.1/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTryCompileExec2358712956.elf
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2358712956.dir/link.txt --verbose=1
+/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-g++   -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I$(ECOS_LIBRARY_PATH)/include -Wl,-static -Wl,-n -g   -fmessage-length=0 -Wall -Wno-sign-compare   -DDEBUG   -v CMakeFiles/cmTryCompileExec2358712956.dir/CMakeCXXCompilerABI.cpp.o -o cmTryCompileExec2358712956.elf -nostdlib -nostartfiles -L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib -Ttarget.ld    
+Using built-in specs.
+COLLECT_GCC=/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-g++
+COLLECT_LTO_WRAPPER=/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/lto-wrapper
+Target: arm-eabi
+Configured with: ../../../../src/gcc-4.6.3/configure --target=arm-eabi --with-cpu=arm7tdmi --prefix=/opt/ecos/gnutools/arm-eabi --with-newlib --with-gnu-as --with-gnu-ld --with-gmp=/opt/gmp-4.3.2 --with-mpfr=/opt/mpfr-2.4.2 --with-mpc=/opt/mpc-0.8.2 --enable-languages=c,c++ --enable-threads --disable-hosted-libstdcxx --disable-__cxa_atexit --disable-libquadmath --disable-decimal-float -with-pkgversion='eCos GNU Tools 4.6.3-20120623' --with-bugurl=http://bugs.ecos.sourceware.org/
+Thread model: single
+gcc version 4.6.3 (eCos GNU Tools 4.6.3-20120623) 
+COMPILER_PATH=/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/bin/
+LIBRARY_PATH=/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/
+COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfloat-abi=hard' '-mfpu=fpv4-sp-d16' '-mthumb' '-nostartfiles' '-nostdlib' '-nodefaultlibs' '-I' '$(ECOS_LIBRARY_PATH)/include' '-g' '-fmessage-length=0' '-Wall' '-Wno-sign-compare' '-D' 'DEBUG' '-v' '-o' 'cmTryCompileExec2358712956.elf' '-nostdlib' '-nostartfiles' '-L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib' '-T' 'target.ld'
+ /opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/collect2 -X -o cmTryCompileExec2358712956.elf -L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib -static -n CMakeFiles/cmTryCompileExec2358712956.dir/CMakeCXXCompilerABI.cpp.o -T target.ld
+make[1]: Leaving directory `/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp'
+
+
+Parsed CXX implicit link information from above output:
+  link line regex: [^( *|.*[/\])(arm-eabi-ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTryCompileExec2358712956/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec2358712956.dir/build.make CMakeFiles/cmTryCompileExec2358712956.dir/build]
+  ignore line: [make[1]: Entering directory `/home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/local/bin/cmake -E cmake_progress_report /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building CXX object CMakeFiles/cmTryCompileExec2358712956.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-g++   -D__ECOS=1 -D__ECOS__=1 -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I/include -Wl,-static -Wl,-n -g   -fmessage-length=0 -Wall -Wno-sign-compare   -DDEBUG  -I/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/include    -o CMakeFiles/cmTryCompileExec2358712956.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.1/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTryCompileExec2358712956.elf]
+  ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2358712956.dir/link.txt --verbose=1]
+  ignore line: [/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-g++   -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mthumb -nostartfiles -nostdlib  -nodefaultlibs -I$(ECOS_LIBRARY_PATH)/include -Wl,-static -Wl,-n -g   -fmessage-length=0 -Wall -Wno-sign-compare   -DDEBUG   -v CMakeFiles/cmTryCompileExec2358712956.dir/CMakeCXXCompilerABI.cpp.o -o cmTryCompileExec2358712956.elf -nostdlib -nostartfiles -L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib -Ttarget.ld    ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/opt/ecos/gnutools/arm-eabi/bin/arm-eabi-g++]
+  ignore line: [COLLECT_LTO_WRAPPER=/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/lto-wrapper]
+  ignore line: [Target: arm-eabi]
+  ignore line: [Configured with: ../../../../src/gcc-4.6.3/configure --target=arm-eabi --with-cpu=arm7tdmi --prefix=/opt/ecos/gnutools/arm-eabi --with-newlib --with-gnu-as --with-gnu-ld --with-gmp=/opt/gmp-4.3.2 --with-mpfr=/opt/mpfr-2.4.2 --with-mpc=/opt/mpc-0.8.2 --enable-languages=c,c++ --enable-threads --disable-hosted-libstdcxx --disable-__cxa_atexit --disable-libquadmath --disable-decimal-float -with-pkgversion='eCos GNU Tools 4.6.3-20120623' --with-bugurl=http://bugs.ecos.sourceware.org/]
+  ignore line: [Thread model: single]
+  ignore line: [gcc version 4.6.3 (eCos GNU Tools 4.6.3-20120623) ]
+  ignore line: [COMPILER_PATH=/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/bin/]
+  ignore line: [LIBRARY_PATH=/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/:/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-mcpu=cortex-m4' '-mfloat-abi=hard' '-mfpu=fpv4-sp-d16' '-mthumb' '-nostartfiles' '-nostdlib' '-nodefaultlibs' '-I' '$(ECOS_LIBRARY_PATH)/include' '-g' '-fmessage-length=0' '-Wall' '-Wno-sign-compare' '-D' 'DEBUG' '-v' '-o' 'cmTryCompileExec2358712956.elf' '-nostdlib' '-nostartfiles' '-L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib' '-T' 'target.ld']
+  link line: [ /opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/collect2 -X -o cmTryCompileExec2358712956.elf -L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3 -L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib -static -n CMakeFiles/cmTryCompileExec2358712956.dir/CMakeCXXCompilerABI.cpp.o -T target.ld]
+    arg [/opt/ecos/gnutools/arm-eabi/libexec/gcc/arm-eabi/4.6.3/collect2] ==> ignore
+    arg [-X] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec2358712956.elf] ==> ignore
+    arg [-L/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib] ==> dir [/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib]
+    arg [-L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16] ==> dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16]
+    arg [-L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16] ==> dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16]
+    arg [-L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3] ==> dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3]
+    arg [-L/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib] ==> dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib]
+    arg [-static] ==> ignore
+    arg [-n] ==> ignore
+    arg [CMakeFiles/cmTryCompileExec2358712956.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [-T] ==> ignore
+    arg [target.ld] ==> ignore
+  collapse library dir [/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib] ==> [/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib]
+  collapse library dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16] ==> [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16]
+  collapse library dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16] ==> [/opt/ecos/gnutools/arm-eabi/arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16]
+  collapse library dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3] ==> [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3]
+  collapse library dir [/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/../../../../arm-eabi/lib] ==> [/opt/ecos/gnutools/arm-eabi/arm-eabi/lib]
+  implicit libs: []
+  implicit dirs: [/home/benty/workspace/Projects/os/ecos/freescale/cortexm/k70/core_k70150/ecos/bcu/install/lib;/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3/thumb/thumb2/fpu/fpv4spd16;/opt/ecos/gnutools/arm-eabi/arm-eabi/lib/thumb/thumb2/fpu/fpv4spd16;/opt/ecos/gnutools/arm-eabi/lib/gcc/arm-eabi/4.6.3;/opt/ecos/gnutools/arm-eabi/arm-eabi/lib]
+  implicit fwks: []
+
+

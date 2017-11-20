@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/benty/workspace/Projects/ProdExpl/1.0.x/ProdExplUnits/source/zhou_test.c
+stdio.h
+-
+stdlib.h
+-
+netdb.h
+-
+unistd.h
+-
+arpa/inet.h
+-
+cyg/infra/testcase.h
+-
+

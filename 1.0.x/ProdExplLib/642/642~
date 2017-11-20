@@ -1,0 +1,12 @@
+typedef struct
+{
+
+unsigned int event_type;
+unsigned int car_no;
+unsigned int car_state[11];
+unsigned char affirm;
+unsigned char cancel;
+unsigned int reserve[4];
+
+}select_vehicle_info;
+

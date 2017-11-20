@@ -1,0 +1,1523 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0300 
+header_name {.h} 
+code_name {.cxx}
+Function {touch_screen_main()} {open return_type int
+} {
+  Fl_Window wd_touch_screen {
+    label {Touch Screen} open
+    xywh {284 95 800 480} type Double box BORDER_BOX color 0 selection_color 0 resizable
+    code0 {\#include "ts_head_file.h"} visible
+  } {
+    Fl_Wizard wz_window_view {open
+      xywh {-70 -124 1290 794} box UP_BOX color 246
+    } {
+      Fl_Group gp_main_file {open
+        xywh {0 -4 800 384} color 246 hide resizable
+        code0 {gp_main_file->hide();}
+      } {
+        Fl_Button btn_setting {
+          label {设置}
+          callback {memset((void *)password_buffer,0,sizeof(password_buffer));
+
+ShowPasswordMask(0);
+
+btn_input_password_ok->deactivate();
+
+gp_main_file->hide();
+//gp_input_password->show();
+
+gp_main_file_active_page = gp_input_password;
+wz_window_view->value(gp_main_file_active_page);}
+          xywh {15 20 140 95} align 128
+        }
+        Fl_Button btn_main_file_back {
+          label {返回}
+          callback {gp_main_file->hide();
+btn_main_file->color((Fl_Color)50);
+btn_main_file->redraw();
+
+
+
+ShowDeviceVolumeInfo(255);
+wz_window_view->value(gp_static_show);
+current_is_on_static_page = 1;}
+          xywh {650 270 140 95}
+        }
+      }
+      Fl_Group gp_intercomm {
+        xywh {0 0 800 384} color 246 align 129 hide
+        code0 {gp_intercomm->hide();}
+      } {
+        Fl_Button btn_d2p_request_1 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+	char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_1->label());
+		
+	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
+
+	SetReceptPCUNo(d2p_reponse_sursor);
+	
+	currend_d2P_position = 1;
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {10 13 140 95}
+        }
+        Fl_Button btn_d2p_request_2 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+
+	char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_2->label());
+	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
+	SetReceptPCUNo(d2p_reponse_sursor);
+	currend_d2P_position = 2;
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {172 13 140 95}
+        }
+        Fl_Button btn_d2p_request_3 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+
+	char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_3->label());
+	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
+	SetReceptPCUNo(d2p_reponse_sursor);
+	currend_d2P_position = 3;
+
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {330 13 140 95}
+        }
+        Fl_Button btn_d2p_request_4 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+
+
+	char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_4->label());
+	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
+	SetReceptPCUNo(d2p_reponse_sursor );
+	currend_d2P_position = 4;
+
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {490 13 140 95}
+        }
+        Fl_Button btn_d2p_request_5 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+ 		char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_5->label());
+	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
+	SetReceptPCUNo(d2p_reponse_sursor);
+ 	currend_d2P_position = 5;
+ 
+	 (gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {10 120 140 95}
+        }
+        Fl_Button btn_d2p_request_6 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+		char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_6->label());
+	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
+
+	SetReceptPCUNo(d2p_reponse_sursor);
+	currend_d2P_position = 6;
+	
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {170 120 140 95}
+        }
+        Fl_Button btn_d2p_request_7 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+	char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_7->label());
+	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
+
+	SetReceptPCUNo(d2p_reponse_sursor );
+	currend_d2P_position = 7;
+
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {330 120 140 95}
+        }
+        Fl_Button btn_d2p_request_8 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+		char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_8->label());
+	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
+	SetReceptPCUNo(d2p_reponse_sursor);
+	currend_d2P_position = 8;
+
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {490 120 140 95}
+        }
+        Fl_Button btn_d2p_request_9 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+		char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_9->label());
+	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
+	SetReceptPCUNo(d2p_reponse_sursor);
+	currend_d2P_position = 9;
+
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {10 230 140 95}
+        }
+        Fl_Button btn_d2p_request_10 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+
+	SetReceptPCUNo(d2p_reponse_sursor + 9);
+	currend_d2P_position = 10;
+
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {170 230 140 95}
+        }
+        Fl_Button btn_d2p_request_11 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+
+	SetReceptPCUNo(d2p_reponse_sursor + 10);
+	currend_d2P_position = 11;
+
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {335 230 140 95}
+        }
+        Fl_Button btn_d2p_request_12 {
+          callback {if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+
+	currend_d2P_position = 12;
+	SetReceptPCUNo(d2p_reponse_sursor + 11);
+	
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
+}}
+          xywh {490 230 140 95}
+        }
+        Fl_Button btn_intercomm_accept {
+          label {接通}
+          callback {RecvD2PRequest();}
+          xywh {655 210 135 70}
+        }
+        Fl_Button btn_intercomm_refuse {
+          label {挂断}
+          callback {if(bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT && is_intercomming_with_pcu == 1)
+{
+	CloseAudioSampleTimer();
+}
+RefuseD2PRequest();}
+          xywh {655 300 135 70}
+        }
+        Fl_Button btn_d2p_intercomm_turn_up_page {
+          label {@8->}
+          callback {d2p_reponse_sursor = d2p_reponse_sursor - 12;
+
+if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+}
+else
+{
+	if(connecting_d2p_response_sursor == d2p_reponse_sursor)
+	{
+			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
+		(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+	}
+	else
+	{
+			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+			(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+	}	
+}
+if(d2p_reponse_sursor == 1)
+{
+	btn_d2p_intercomm_turn_up_page->deactivate();
+}
+
+
+if(bcu_state.pcu_request_info.request_number - d2p_reponse_sursor < 24 && bcu_state.pcu_request_info.request_number - d2p_reponse_sursor >= 12)
+{
+	btn_d2p_intercomm_turn_down_page->activate();
+}
+
+
+ShowD2PRequest();
+if(is_intercomming_with_pcu == 0)
+{
+	SetReceptPCUNo(d2p_reponse_sursor);
+	currend_d2P_position = 1;
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
+}}
+          xywh {655 20 135 70}
+        }
+        Fl_Button btn_d2p_intercomm_turn_down_page {
+          label {@8<-}
+          callback {d2p_reponse_sursor = d2p_reponse_sursor + 12;
+
+if(is_intercomming_with_pcu == 0)
+{
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+}	
+else
+{
+	if(connecting_d2p_response_sursor == d2p_reponse_sursor)
+	{
+			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
+		(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+	}
+	else
+	{
+			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+			(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+	}	
+}
+
+if(d2p_reponse_sursor == 13)
+{
+	btn_d2p_intercomm_turn_up_page->activate();	
+}
+if(bcu_state.pcu_request_info.request_number - d2p_reponse_sursor < 12)
+{
+	btn_d2p_intercomm_turn_down_page->deactivate();	
+}
+ShowD2PRequest();
+
+if(is_intercomming_with_pcu == 0)
+{
+	SetReceptPCUNo(d2p_reponse_sursor);
+	currend_d2P_position = 1;
+	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
+}}
+          xywh {655 115 135 70}
+        }
+        Fl_Button btn_intercomm_back {
+          label {一键清除请求}
+          callback {(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
+(gp_intercomm->child(currend_d2P_position - 1))->redraw();
+
+
+if(is_intercomming_with_pcu == 1)
+{
+	is_intercomming_with_pcu  = 0;
+	btn_intercomm->activate();
+		btn_intercomm->color((Fl_Color)71);
+	whether_intercomm_button_is_active = 0;
+}
+
+//ClearAllPCURequest();
+
+d2p_reponse_sursor = 1;
+currend_d2P_position = 1;
+
+
+btn_intercomm->deactivate();
+whether_intercomm_button_is_active = 0;
+btn_intercomm->color((Fl_Color)50);
+btn_intercomm->redraw();
+
+btn_main_file->color((Fl_Color)71);
+btn_main_file->redraw();
+
+//btn_intercomm->deactivate();
+
+//send PCU request cmd package
+
+SetD2PCmd(1,0,255,0);//进入、运行、退出-响应类型-pcu_no-bcu_no
+
+wz_window_view->value(gp_main_file);}
+          xywh {652 301 135 70} hide
+        }
+      }
+      Fl_Group gp_static_show {
+        xywh {0 0 800 384} color 246 hide
+        code0 {gp_static_show->hide();}
+      } {
+        Fl_Tile title_static_volume_info {
+          label {本机音量}
+          xywh {20 94 135 41} labelsize 25 align 128 deactivate
+        } {}
+        Fl_Tile title_tms_info_terminal_station {open
+          xywh {685 245 105 35} align 144 deactivate
+        } {}
+        Fl_Box {} {
+          xywh {10 10 20 20} box FLAT_BOX color 1 selection_color 1 labelcolor 1
+        }
+        Fl_Box {} {
+          xywh {10 35 20 20} box FLAT_BOX color 1 selection_color 1 labelcolor 1
+        }
+        Fl_Box {} {
+          xywh {10 60 20 20} box FLAT_BOX color 1 selection_color 1 labelcolor 1
+        }
+        Fl_Box {} {
+          xywh {35 10 20 20} box FLAT_BOX color 1 selection_color 1 labelcolor 1
+        }
+        Fl_Box {} {
+          xywh {60 10 20 20} box FLAT_BOX color 1 selection_color 1 labelcolor 1
+        }
+        Fl_Box {} {
+          xywh {60 35 20 20} box FLAT_BOX color 1 selection_color 1 labelcolor 1
+        }
+        Fl_Box {} {
+          xywh {60 60 20 20} box FLAT_BOX color 1 selection_color 1 labelcolor 1
+        }
+        Fl_Box {} {
+          xywh {35 35 20 20} box FLAT_BOX color 1 selection_color 17 labelcolor 18
+        }
+        Fl_Box {} {
+          xywh {35 59 20 20} box FLAT_BOX color 1 selection_color 26 labelcolor 55
+        }
+        Fl_Box {} {
+          xywh {36 60 18 18} box FLAT_BOX selection_color 1 labelcolor 1
+        }
+        Fl_Box {} {
+          xywh {36 36 18 18} box FLAT_BOX selection_color 1 labelcolor 1
+        }
+        Fl_Tile {} {
+          label MIT
+          xywh {80 20 65 30} labelsize 16 align 464
+        } {}
+        Fl_Slider slider_d2d_intercomm_volume {
+          xywh {80 139 15 156} type {Vert Fill} box BORDER_BOX color 7 selection_color 41 maximum 100 step 1 deactivate
+        }
+        Fl_Tile title_static_d2d_intercomm_volume {open
+          xywh {120 305 50 35} align 144 deactivate
+        } {}
+        Fl_Tile {} {
+          label { 鸣啸信息} open
+          xywh {85 40 65 35} align 208
+        } {}
+        Fl_Tile {} {open
+          xywh {125 325 40 25} align 144
+        } {}
+      }
+      Fl_Group gp_input_password {
+        xywh {0 0 800 384} color 246 hide
+        code0 {gp_input_password->hide();}
+      } {
+        Fl_Button btn_input_password_1 {
+          label 1
+          callback {SetPassword(1,password_buffer);
+ShowTitleOfInputPassword(INPUT_PASSWORD);}
+          xywh {12 13 135 70}
+        }
+        Fl_Button btn_input_password_2 {
+          label 2
+          callback {SetPassword(2,password_buffer);
+ShowTitleOfInputPassword(INPUT_PASSWORD);}
+          xywh {172 13 135 70}
+        }
+        Fl_Button btn_input_password_3 {
+          label 3
+          callback {SetPassword(3,password_buffer);
+ShowTitleOfInputPassword(INPUT_PASSWORD);}
+          xywh {332 13 135 70}
+        }
+        Fl_Button btn_input_password_4 {
+          label 4
+          callback {SetPassword(4,password_buffer);
+ShowTitleOfInputPassword(INPUT_PASSWORD);}
+          xywh {12 109 135 70}
+        }
+        Fl_Button btn_input_password_5 {
+          label 5
+          callback {SetPassword(5,password_buffer);
+ShowTitleOfInputPassword(INPUT_PASSWORD);}
+          xywh {172 108 135 70}
+        }
+        Fl_Button btn_input_password_6 {
+          label 6
+          callback {SetPassword(6,password_buffer);
+ShowTitleOfInputPassword(INPUT_PASSWORD);}
+          xywh {332 109 135 70}
+        }
+        Fl_Button btn_input_password_7 {
+          label 7
+          callback {SetPassword(7,password_buffer);
+ShowTitleOfInputPassword(INPUT_PASSWORD);}
+          xywh {12 205 135 70}
+        }
+        Fl_Button btn_input_password_8 {
+          label 8
+          callback {SetPassword(8,password_buffer);
+ShowTitleOfInputPassword(INPUT_PASSWORD);}
+          xywh {172 205 135 70}
+        }
+        Fl_Button btn_input_password_9 {
+          label 9
+          callback {SetPassword(9,password_buffer);
+ShowTitleOfInputPassword(INPUT_PASSWORD);}
+          xywh {332 205 135 70}
+        }
+        Fl_Button btn_input_password_cancle {
+          label {清空}
+          callback {strcpy((char *)password_buffer,"");
+ShowPasswordMask(0);
+ShowTitleOfInputPassword(INPUT_PASSWORD);
+
+btn_input_password_ok->deactivate();}
+          xywh {12 291 135 70}
+        }
+        Fl_Button btn_input_password_0 {
+          label 0
+          callback {SetPassword(0,password_buffer);
+ShowTitleOfInputPassword(INPUT_PASSWORD);}
+          xywh {172 291 135 70}
+        }
+        Fl_Button btn_input_password_ok {
+          label {确定}
+          callback {if(strncmp((char *)bcu_state.device_volume.correct_password,(char *)password_buffer,6) == 0)
+{
+	gp_input_password->hide();
+	gp_setting_items->show();
+	gp_main_file_active_page = gp_setting_items;
+	title_version_info->label((char *)bcu_state.pa_software_version.software_version);
+}
+else
+{
+	ShowTitleOfInputPassword(PASSWORD_ERROR);
+	btn_input_password_ok->deactivate();
+}
+strcpy((char *)password_buffer,"");
+ShowPasswordMask(0);}
+          xywh {332 291 135 70}
+        }
+        Fl_Tile title_please_input_password {
+          label {请输入密码:} open
+          xywh {580 29 185 64} labelsize 24 labelcolor 1 align 208
+        } {}
+        Fl_Tile tile_out_password {
+          label AAA open
+          xywh {545 118 195 35} labelsize 30 labelcolor 32 align 16
+        } {}
+        Fl_Tile title_warning_and_forget_password {
+          xywh {500 185 285 75} labelsize 24 labelcolor 1 align 16
+        } {}
+        Fl_Button btn_forget_password {
+          label {忘记密码}
+          callback {strcpy((char *)password_buffer,"");
+ShowPasswordMask(0);
+
+ShowTitleOfInputPassword(FORGET_PASSWORD);}
+          xywh {492 291 135 70}
+        }
+        Fl_Button btn_input_password_back {
+          label {退出}
+          callback {gp_main_file_active_page = gp_main_file;
+gp_input_password->hide();
+gp_main_file->show();}
+          xywh {652 291 135 70}
+        }
+      }
+      Fl_Group gp_setting {
+        xywh {0 1 800 384} color 246 hide
+        code0 {gp_setting->hide();}
+      } {
+        Fl_Tile title_set_volume {
+          label {设置音量}
+          xywh {10 10 95 36} align 148
+        } {}
+        Fl_Button btn_setting_back {
+          label {退出}
+          callback {gp_setting->hide();
+gp_main_file_active_page = gp_setting_items;
+gp_main_file_active_page->show();}
+          xywh {650 301 135 70}
+        }
+        Fl_Tile title_monitor_volume {
+          label {监听音量} open
+          xywh {45 39 120 37} align 16
+        } {}
+        Fl_Tile title_car_volume {
+          label {客室音量} open
+          xywh {50 136 120 34} align 16
+        } {}
+        Fl_Tile title_inercomm_volume {
+          label {紧急对讲音量} open
+          xywh {43 237 124 32} align 16
+        } {}
+        Fl_Button btn_open_or_close_monitor {
+          label {监听音源开}
+          callback {if(strcmp((char *)btn_open_or_close_monitor->label(),"监听音源开") == 0)
+{
+	btn_open_or_close_monitor->label("监听音源关");
+	
+}
+else
+{
+	btn_open_or_close_monitor->label("监听音源开");
+	
+}}
+          xywh {485 313 135 60} hide deactivate
+        }
+        Fl_Button btn_setting_monitor_volume_sub {
+          label {@-->}
+          callback {\#if 0
+if(bcu_state.device_volume.monitor_volume >= 1)
+{
+	if(bcu_state.device_volume.monitor_volume == 100)
+	{
+		btn_setting_monitor_volume_inc->activate();	
+	}
+	bcu_state.device_volume.monitor_volume =  bcu_state.device_volume.monitor_volume - 1;
+	sprintf((char *)monitor_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.monitor_volume);
+	title_setting_monitor_volume->label(monitor_volume_digit_2_string_buffer);
+	if(bcu_state.device_volume.monitor_volume == 0)
+	{
+		btn_setting_monitor_volume_sub->deactivate();	
+	}
+}
+\#else
+
+bcu_state.device_volume.monitor_volume =  bcu_state.device_volume.monitor_volume - 1;
+
+if(bcu_state.device_volume.monitor_volume < 4)
+{
+	btn_setting_monitor_volume_inc->activate();	
+}
+
+
+ShowDeviceVolumeInfo(0);
+if(bcu_state.device_volume.monitor_volume == 0)
+{
+	btn_setting_monitor_volume_sub->deactivate();	
+}
+
+SetDeviceVolumeCMDPackage(0,bcu_state.device_volume.monitor_volume);
+\#endif}
+          xywh {172 18 135 70}
+        }
+        Fl_Button btn_setting_monitor_volume_inc {
+          label {@+}
+          callback {\#if 0
+if(bcu_state.device_volume.monitor_volume <= 99)
+{
+	if(bcu_state.device_volume.monitor_volume == 0)
+	{
+		btn_setting_monitor_volume_sub->activate();	
+	}
+	bcu_state.device_volume.monitor_volume =  bcu_state.device_volume.monitor_volume + 1;
+	sprintf((char *)monitor_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.monitor_volume);
+	title_setting_monitor_volume->label(monitor_volume_digit_2_string_buffer);
+	if(bcu_state.device_volume.monitor_volume == 100)
+	{
+		btn_setting_monitor_volume_inc->deactivate();	
+	}
+	
+}
+\#else
+if(bcu_state.device_volume.monitor_volume == 0)
+{
+	btn_setting_monitor_volume_sub->activate();	
+}
+bcu_state.device_volume.monitor_volume =  bcu_state.device_volume.monitor_volume + 1;
+
+ShowDeviceVolumeInfo(0);
+
+if(bcu_state.device_volume.monitor_volume == 4)
+{
+	btn_setting_monitor_volume_inc->deactivate();	
+}
+	
+SetDeviceVolumeCMDPackage(0,bcu_state.device_volume.monitor_volume);
+
+\#endif}
+          xywh {492 18 135 70}
+        }
+        Fl_Tile title_setting_monitor_volume {open
+          xywh {370 18 80 65} labelsize 30 align 16
+          code0 {bcu_state.device_volume.monitor_volume = 80;}
+          code1 {sprintf((char *)monitor_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.monitor_volume);}
+          code2 {title_setting_monitor_volume->label(monitor_volume_digit_2_string_buffer);}
+        } {}
+        Fl_Tile title_setting_car_volume {open
+          xywh {370 115 80 65} labelsize 30 align 16
+          code0 {bcu_state.device_volume.car_volume = 50;}
+          code2 {sprintf((char *)car_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.car_volume);}
+          code3 {title_setting_car_volume->label(car_volume_digit_2_string_buffer);}
+        } {}
+        Fl_Button btn_setting_car_volume_sub {
+          label {@-->}
+          callback {\#if 0
+if(bcu_state.device_volume.car_volume >= 1)
+{
+	if(bcu_state.device_volume.car_volume == 100)
+	{
+		btn_setting_car_volume_inc->activate();	
+	}
+	bcu_state.device_volume.car_volume =  bcu_state.device_volume.car_volume - 1;
+	sprintf((char *)car_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.car_volume);
+	title_setting_car_volume->label(car_volume_digit_2_string_buffer);
+	
+	if(bcu_state.device_volume.car_volume == 0)
+	{
+		btn_setting_car_volume_sub->deactivate();	
+	}
+}
+\#else
+bcu_state.device_volume.car_volume =  bcu_state.device_volume.car_volume - 1;
+if(bcu_state.device_volume.car_volume < 100)
+{
+	btn_setting_car_volume_inc->activate();	
+}
+
+
+ShowDeviceVolumeInfo(1);
+	
+if(bcu_state.device_volume.car_volume == 0)
+{
+	btn_setting_car_volume_sub->deactivate();	
+}
+SetDeviceVolumeCMDPackage(1,bcu_state.device_volume.car_volume);
+\#endif}
+          xywh {172 115 135 70}
+        }
+        Fl_Button btn_setting_car_volume_inc {
+          label {@+}
+          callback {\#if 0
+if(bcu_state.device_volume.car_volume <= 99)
+{
+	if(bcu_state.device_volume.car_volume == 0)
+	{
+		btn_setting_car_volume_sub->activate();	
+	}
+	bcu_state.device_volume.car_volume =  bcu_state.device_volume.car_volume + 1;
+	sprintf((char *)car_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.car_volume);
+	title_setting_car_volume->label(car_volume_digit_2_string_buffer);
+	if(bcu_state.device_volume.car_volume == 100)
+	{
+		btn_setting_car_volume_inc->deactivate();	
+	}
+}
+\#else
+if(bcu_state.device_volume.car_volume == 0)
+{
+	btn_setting_car_volume_sub->activate();	
+}
+bcu_state.device_volume.car_volume =  bcu_state.device_volume.car_volume + 1;
+
+ShowDeviceVolumeInfo(1);
+
+if(bcu_state.device_volume.car_volume == 100)
+{
+	btn_setting_car_volume_inc->deactivate();	
+}
+SetDeviceVolumeCMDPackage(1,bcu_state.device_volume.car_volume);
+\#endif}
+          xywh {492 115 135 70}
+        }
+        Fl_Button btn_setting_intercomm_volume_sub {
+          label {@-->}
+          callback {\#if 0
+if(bcu_state.device_volume.intercomm_volume >= 1)
+{
+	if(bcu_state.device_volume.intercomm_volume == 100)
+	{
+		btn_setting_intercomm_volume_inc->activate();	
+	}
+	bcu_state.device_volume.intercomm_volume =  bcu_state.device_volume.intercomm_volume - 1;
+	sprintf((char *)intercomm_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.intercomm_volume);
+	title_setting_intercomm_volume->label(intercomm_volume_digit_2_string_buffer);
+	
+	if(bcu_state.device_volume.intercomm_volume == 0)
+	{
+		btn_setting_intercomm_volume_sub->deactivate();	
+	}
+}
+\#else
+
+bcu_state.device_volume.intercomm_volume =  bcu_state.device_volume.intercomm_volume - 1;
+if(bcu_state.device_volume.intercomm_volume < 4)
+{
+	btn_setting_intercomm_volume_inc->activate();	
+}
+
+
+ShowDeviceVolumeInfo(2);
+
+
+if(bcu_state.device_volume.intercomm_volume == 0)
+{
+	btn_setting_intercomm_volume_sub->deactivate();	
+}
+SetDeviceVolumeCMDPackage(2,bcu_state.device_volume.intercomm_volume);
+\#endif}
+          xywh {172 214 135 70}
+        }
+        Fl_Button btn_setting_intercomm_volume_inc {
+          label {@+}
+          callback {\#if 0
+if(bcu_state.device_volume.intercomm_volume <= 99)
+{
+	if(bcu_state.device_volume.intercomm_volume == 0)
+	{
+		btn_setting_intercomm_volume_sub->activate();	
+	}
+	bcu_state.device_volume.intercomm_volume =  bcu_state.device_volume.intercomm_volume + 1;
+	sprintf((char *)intercomm_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.intercomm_volume);
+	title_setting_intercomm_volume->label(intercomm_volume_digit_2_string_buffer);
+	if(bcu_state.device_volume.intercomm_volume == 100)
+	{
+		btn_setting_intercomm_volume_inc->deactivate();	
+	}
+}
+\#else
+
+if(bcu_state.device_volume.intercomm_volume == 0)
+{
+	btn_setting_intercomm_volume_sub->activate();	
+}
+bcu_state.device_volume.intercomm_volume =  bcu_state.device_volume.intercomm_volume + 1;
+
+ShowDeviceVolumeInfo(2);
+
+if(bcu_state.device_volume.intercomm_volume == 4)
+{
+	btn_setting_intercomm_volume_inc->deactivate();	
+}
+SetDeviceVolumeCMDPackage(2,bcu_state.device_volume.intercomm_volume);
+\#endif}
+          xywh {492 214 135 70}
+        }
+        Fl_Tile title_setting_intercomm_volume {open
+          xywh {375 214 80 65} labelsize 30 align 16
+          code0 {bcu_state.device_volume.intercomm_volume = 30;}
+          code2 {sprintf((char *)intercomm_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.intercomm_volume);}
+          code3 {title_setting_intercomm_volume->label(intercomm_volume_digit_2_string_buffer);}
+        } {}
+        Fl_Button btn_setting_d2d_intercomm_volume_sub {
+          label {@-->}
+          callback {bcu_state.device_volume.d2d_volume =  bcu_state.device_volume.d2d_volume - 1;
+if(bcu_state.device_volume.d2d_volume < 4)
+{
+	btn_setting_d2d_intercomm_volume_inc->activate();	
+}
+
+
+ShowDeviceVolumeInfo(4);
+
+
+if(bcu_state.device_volume.d2d_volume == 0)
+{
+	btn_setting_d2d_intercomm_volume_sub->deactivate();	
+}
+SetDeviceVolumeCMDPackage(4,bcu_state.device_volume.d2d_volume);}
+          xywh {172 301 135 70}
+        }
+        Fl_Tile title_d2d_inercomm_volume {
+          label {司机对讲音量} open
+          xywh {47 322 115 38} align 16
+        } {}
+        Fl_Tile title_setting_d2d_intercomm_volume {open
+          xywh {370 301 80 65} labelsize 30 align 16
+          code0 {bcu_state.device_volume.intercomm_volume = 30;}
+          code2 {sprintf((char *)d2d_intercomm_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.d2d_volume);}
+          code3 {title_setting_d2d_intercomm_volume->label(d2d_intercomm_volume_digit_2_string_buffer);}
+        } {}
+        Fl_Button btn_setting_d2d_intercomm_volume_inc {
+          label {@+}
+          callback {if(bcu_state.device_volume.d2d_volume == 0)
+{
+	btn_setting_d2d_intercomm_volume_sub->activate();	
+}
+bcu_state.device_volume.d2d_volume =  bcu_state.device_volume.d2d_volume + 1;
+
+ShowDeviceVolumeInfo(4);
+
+if(bcu_state.device_volume.d2d_volume == 4)
+{
+	btn_setting_d2d_intercomm_volume_inc->deactivate();	
+}
+SetDeviceVolumeCMDPackage(4,bcu_state.device_volume.d2d_volume);}
+          xywh {495 301 135 70}
+        }
+      }
+      Fl_Group gp_setting_items {
+        xywh {0 0 800 384} color 246 hide
+        code0 {gp_setting_items->hide();}
+      } {
+        Fl_Button btn_volume_adjust {
+          label {设置音量}
+          callback {gp_setting_items->hide();
+gp_setting->show();
+ShowDeviceVolumeInfo(255);
+gp_main_file_active_page = gp_setting;}
+          xywh {25 30 140 95} align 208
+        }
+        Fl_Button btn_back_setting_items {
+          label {返回}
+          callback {gp_main_file_active_page->hide();
+gp_main_file_active_page = gp_main_file;
+gp_main_file_active_page->show();}
+          xywh {650 280 140 95} align 208
+        }
+        Fl_Tile title_version_info {open
+          xywh {30 345 105 25} align 16
+        } {}
+      }
+      Fl_Group gp_window_black_screen {
+        xywh {0 0 800 384} color 0 hide
+        code0 {gp_window_black_screen->hide();}
+      } {}
+      Fl_Group controlpage {open
+        xywh {0 -5 805 390} color 246
+        code0 {controlpage->hide();}
+      } {
+        Fl_Button pcu_1 {
+          label {PCU-1}
+          callback {int i=0;
+for(int i=0;i<8;i++){
+	(controlpage->child(i))->deactivate();
+}
+
+	pcu_1->color((Fl_Color)2);	
+	enter1->activate();
+	btn_return->deactivate();	
+	G_SetAndClearPakage(1,1,&g_MonPcuCmdPakage);
+	SetMonitorBigPakage(1,gwCurrCarNo);}
+          xywh {10 50 140 95}
+        }
+        Fl_Button pcu_2 {
+          label {PCU-2}
+          callback {int i=0;
+for(int i=0;i<8;i++){
+	(controlpage->child(i))->deactivate();
+}
+
+	pcu_2->color((Fl_Color)2);	
+	enter1->activate();
+	btn_return->deactivate();	
+	G_SetAndClearPakage(1,2,&g_MonPcuCmdPakage);
+	SetMonitorBigPakage(2,gwCurrCarNo);}
+          xywh {170 50 140 95}
+        }
+        Fl_Button pcu_3 {
+          label {PCU-3}
+          callback {int i=0;
+for(int i=0;i<8;i++){
+	(controlpage->child(i))->deactivate();
+}
+
+	pcu_3->color((Fl_Color)2);	
+	enter1->activate();
+	btn_return->deactivate();	
+	G_SetAndClearPakage(1,3,&g_MonPcuCmdPakage);
+	SetMonitorBigPakage(3,gwCurrCarNo);}
+          xywh {330 50 140 95}
+        }
+        Fl_Button pcu_4 {
+          label {PCU-4}
+          callback {int i=0;
+for(int i=0;i<8;i++){
+	(controlpage->child(i))->deactivate();
+}
+
+	pcu_4->color((Fl_Color)2);	
+	enter1->activate();
+	btn_return->deactivate();	
+	G_SetAndClearPakage(1,4,&g_MonPcuCmdPakage);
+	SetMonitorBigPakage(4,gwCurrCarNo);}
+          xywh {490 50 140 95}
+        }
+        Fl_Button pcu_5 {
+          label {PCU-5}
+          callback {int i=0;
+for(int i=0;i<8;i++){
+	(controlpage->child(i))->deactivate();
+}
+
+	pcu_5->color((Fl_Color)2);	
+	enter1->activate();
+	btn_return->deactivate();	
+	G_SetAndClearPakage(1,5,&g_MonPcuCmdPakage);
+	SetMonitorBigPakage(5,gwCurrCarNo);} selected
+          xywh {10 165 140 95}
+        }
+        Fl_Button pcu_6 {
+          label {PCU-6}
+          callback {int i=0;
+for(int i=0;i<8;i++){
+	(controlpage->child(i))->deactivate();
+}
+
+	pcu_6->color((Fl_Color)2);	
+	enter1->activate();
+	btn_return->deactivate();	
+	G_SetAndClearPakage(1,6,&g_MonPcuCmdPakage);
+	SetMonitorBigPakage(6,gwCurrCarNo);}
+          xywh {170 165 140 95}
+        }
+        Fl_Button pcu_7 {
+          label {PCU-7}
+          callback {int i=0;
+for(int i=0;i<8;i++){
+	(controlpage->child(i))->deactivate();
+}
+
+	pcu_7->color((Fl_Color)2);	
+	enter1->activate();
+	btn_return->deactivate();	
+	G_SetAndClearPakage(1,7,&g_MonPcuCmdPakage);
+	SetMonitorBigPakage(7,gwCurrCarNo);}
+          xywh {330 165 140 95}
+        }
+        Fl_Button pcu_8 {
+          label {PCU-8}
+          callback {int i=0;
+for(int i=0;i<8;i++){
+	(controlpage->child(i))->deactivate();
+}
+
+	pcu_8->color((Fl_Color)2);	
+	enter1->activate();
+	btn_return->deactivate();	
+	G_SetAndClearPakage(1,8,&g_MonPcuCmdPakage);
+	SetMonitorBigPakage(8,gwCurrCarNo);}
+          xywh {490 165 140 95}
+        }
+        Fl_Return_Button btn_return {
+          label {返回}
+          callback {gp_main_file_active_page=AnnOrMonitorSelect;
+wz_window_view->value(gp_main_file_active_page);
+//gp_main_file_active_page=gp_select_car_ann_page;
+wz_select_window->activate();
+bcu_state.iph_monitor_cur_page=0;}
+          xywh {645 275 140 95}
+        }
+        Fl_Tile title {
+          label {请取消监听后,返回上一页!} open
+          xywh {10 5 515 35} align 0
+        } {}
+        Fl_Button enter1 {
+          label {确认}
+          callback {MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EVENT_CALL,&g_MonPcuCmdPakage);
+enter1->deactivate();
+btn_return->deactivate();}
+          xywh {330 275 140 95} selection_color 2
+        }
+        Fl_Button cancle_iph {
+          label {取消}
+          callback {int i;
+for(i=0;i<8;i++)
+{
+
+   	(controlpage->child(i))->color((Fl_Color)50);
+	(controlpage->child(i))->activate();
+	(controlpage->child(i))->redraw();
+	
+
+}
+
+G_SetAndClearPakage(0,1,&g_MonPcuCmdPakage);
+MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EXIT_CALL,&g_MonPcuCmdPakage);
+memset(&g_MonPcuCmdPakage,0,sizeof(send_infomation_t));
+btn_return->activate();}
+          xywh {490 275 140 95} selection_color 2
+        }
+      }
+      Fl_Group gp_select_car_ann_page {open
+        xywh {0 -5 850 387} color 246 hide
+        code0 {gp_select_car_ann_page->hide();}
+      } {
+        Fl_Button btn_ann_t1 {
+          label {ANN-T1}
+          callback {UpdateSelectCarInfo(1);}
+          xywh {10 30 140 95}
+        }
+        Fl_Button btn_ann_t2 {
+          label {ANN-T2}
+          callback {UpdateSelectCarInfo(2);}
+          xywh {170 30 140 95}
+        }
+        Fl_Button btn_ann_t3 {
+          label {ANN-T3}
+          callback {UpdateSelectCarInfo(3);}
+          xywh {330 30 140 95}
+        }
+        Fl_Button btn_ann_t4 {
+          label {ANN-T4}
+          callback {UpdateSelectCarInfo(4);}
+          xywh {490 30 140 95}
+        }
+        Fl_Button btn_ann_t5 {
+          label {ANN-T5}
+          callback {UpdateSelectCarInfo(5);}
+          xywh {650 30 140 95}
+        }
+        Fl_Button btn_ann_t6 {
+          label {ANN-T6}
+          callback {UpdateSelectCarInfo(6);}
+          xywh {10 145 140 95}
+        }
+        Fl_Button btn_ann_t7 {
+          label {ANN-T7}
+          callback {UpdateSelectCarInfo(7);}
+          xywh {170 145 140 95}
+        }
+        Fl_Button btn_ann_t8 {
+          label {ANN-T8}
+          callback {UpdateSelectCarInfo(8);}
+          xywh {330 145 140 95}
+        }
+        Fl_Button btn_ann_t9 {
+          label {ANN-T9}
+          callback {UpdateSelectCarInfo(9);}
+          xywh {490 145 140 95}
+        }
+        Fl_Button btn_ann_t10 {
+          label {ANN-T10}
+          callback {UpdateSelectCarInfo(10);}
+          xywh {650 145 140 95}
+        }
+        Fl_Button btn_ann_t11 {
+          label {ANN-T11}
+          callback {UpdateSelectCarInfo(11);}
+          xywh {10 260 140 95}
+        }
+        Fl_Button next_page {
+          label {下一步}
+          callback {gp_main_file_active_page = AnnOrMonitorSelect;
+
+wz_window_view->value(gp_main_file_active_page);
+if(bcu_state.car_select_count_for_monitor==1)
+{
+	
+	btn_monitor->activate();
+	btn_enter->activate();
+}
+else{
+
+	btn_monitor->deactivate();
+	btn_enter->activate();
+
+
+}}
+          xywh {490 260 140 95}
+          code0 {next_page->deactivate();}
+        }
+        Fl_Return_Button btn_return1 {
+          label {返回}
+          callback {gp_main_file_active_page=gp_static_show;
+wz_window_view->value(gp_main_file_active_page);
+RecovoryBtnState(4);///<恢复相关按钮}
+          xywh {650 260 140 95}
+        }
+        Fl_Button enter_select {
+          label {确认选车}
+          callback {int i ;int ret;
+	int car_select_num = 0;
+	common_big_package_t common_big_send_package;
+	for(i = 0; i < 11; ++i)
+	{
+		if(bcu_state.car_select_flag[i] == 1)
+		{
+			common_big_send_package.common_big_data_u.car_select_flag[i] = 1;
+			car_select_num += 1;
+			printf("i %d car_select_num %d\\n",i,car_select_num);
+		}
+	}
+
+	if(car_select_num > 0)
+	{
+		next_page->activate();
+		enter_select->deactivate();
+		bcu_state.car_select_count_for_monitor=car_select_num;
+		common_big_send_package.pkg_type=1;
+		common_big_send_package.common_big_data_u.select_enable_flag=1;
+		common_big_send_package.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
+		
+		ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+		if (ret <0){
+			diag_printf("BlockBufferWrite faill. \\n");
+			BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+
+		}
+		
+	}
+	else
+	{
+		return;
+	}
+	
+	bcu_state.car_select_finish = 1;}
+          xywh {170 260 140 95}
+          code0 {enter_select->deactivate();}
+        }
+        Fl_Button cancel_select {
+          label {取消选车}
+          callback {int i ;int ret;
+	int car_select_num = 0;
+	common_big_package_t common_big_send_package;
+	for(i = 0; i < 11; ++i)
+	{
+		if(bcu_state.car_select_flag[i] == 1)
+		{
+		diag_printf("debug cancel_select12\\n");
+
+			bcu_state.car_select_flag[i] = 0;
+			common_big_send_package.common_big_data_u.car_select_flag[i] = 1;
+			car_select_num += 1;
+		}
+	}
+
+	if(car_select_num > 0)
+	{
+		for(i = 0; i < 11; i++)
+		{
+			(gp_select_car_ann_page->child(i))->color((Fl_Color)50);
+			(gp_select_car_ann_page->child(i))->activate();
+			bcu_state.car_occupy_state[i] = 0;
+		}
+		diag_printf("debug cancel_select \\n");
+		bcu_state.car_select_count_for_monitor=0;
+		common_big_send_package.pkg_type=1;
+		common_big_send_package.common_big_data_u.select_enable_flag=0;
+		common_big_send_package.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
+		ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+		if (ret <0){
+			diag_printf("BlockBufferWrite faill. \\n");
+			BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+
+		}
+	}
+	
+	bcu_state.car_select_finish = 0;
+	next_page->deactivate();}
+          xywh {330 260 140 95}
+          code0 {cancel_select->activate();}
+        }
+      }
+      Fl_Group AnnOrMonitorSelect {open
+        xywh {0 0 850 388} color 246 hide
+        code0 {AnnOrMonitorSelect->hide();}
+      } {
+        Fl_Button btn_enter {
+          label {广播}
+          callback {static int flag;
+int         i;
+if(flag==0)
+{	
+	flag=1;
+	btn_monitor->deactivate();
+	ExchangeToLive();
+	btn_enter->color((Fl_Color)2);
+	lable_state->hide();
+	lable_state->label("车地广播中....\\n\\n\\n取消广播后,请取消选车.");
+	lable_state->redraw();
+	lable_state->show();
+	btn_return0->deactivate();
+
+	
+}
+else
+{
+	flag=0;
+
+	ExitLive();
+	btn_monitor->activate();
+
+	lable_state->hide();	
+	lable_state->label("提示:请规范操作,谢谢!");
+	lable_state->redraw();	
+	lable_state->show();
+	btn_enter->hide();	
+	btn_enter->color((Fl_Color)50);
+	btn_enter->redraw();
+	btn_enter->show();
+	btn_return0->activate();
+		
+}}
+          xywh {160 125 140 95} selection_color 2
+          code0 {btn_enter->deactivate();btn_enter->color((Fl_Color)50);}
+        }
+        Fl_Button btn_monitor {
+          label {监听}
+          callback {gp_main_file_active_page = controlpage;
+wz_window_view->value(gp_main_file_active_page);
+bcu_state.iph_monitor_cur_page=1;}
+          xywh {430 125 140 95} selection_color 79
+          code0 {btn_monitor->deactivate();}
+        }
+        Fl_Tile lable_state {
+          label {提示:请规范操作,谢谢!}
+          xywh {265 10 210 85} align 0
+        } {}
+        Fl_Return_Button btn_return0 {
+          label {返回}
+          callback {gp_main_file_active_page=gp_select_car_ann_page;
+wz_window_view->value(gp_main_file_active_page);
+wz_select_window->activate();}
+          xywh {650 280 140 95}
+        }
+      }
+      Fl_Group D2D_intercom_page {
+        xywh {0 2 850 383} color 246 hide
+        code0 {D2D_intercom_page->hide();}
+      } {
+        Fl_Button btn_d2d_1 {
+          label button
+          xywh {10 12 140 95}
+        }
+        Fl_Button btn_d2d_2 {
+          label button
+          xywh {170 12 140 95}
+        }
+        Fl_Button btn_d2d_3 {
+          label button
+          xywh {330 12 140 95}
+        }
+        Fl_Button btn_d2d_4 {
+          label button
+          xywh {490 12 140 95}
+        }
+        Fl_Button btn_d2d_5 {
+          label button
+          xywh {10 125 140 95}
+        }
+        Fl_Button btn_d2d_6 {
+          label button
+          xywh {170 125 140 95}
+        }
+        Fl_Button btn_d2d_7 {
+          label button
+          xywh {330 125 140 95}
+        }
+        Fl_Button btn_d2d_8 {
+          label button
+          xywh {490 125 140 95}
+        }
+        Fl_Button enter_d2d {
+          label button
+          xywh {490 275 140 95}
+        }
+        Fl_Return_Button return_D2D {
+          label button
+          xywh {650 275 140 95}
+        }
+      }
+    }
+    Fl_Wizard wz_select_window {
+      xywh {0 384 800 96} box UP_BOX
+      code0 {//select_window->hide();}
+    } {
+      Fl_Group main_group {open
+        xywh {0 384 800 96} color 191
+      } {
+        Fl_Button btn_main_file {
+          label {主菜单}
+          callback {btn_main_file->color((Fl_Color)70);
+btn_main_file->redraw();
+gp_input_password->hide();
+
+gp_main_file_active_page = gp_main_file;
+wz_window_view->value(gp_main_file_active_page);
+
+current_is_on_static_page = 0;}
+          xywh {15 396 150 70} box ROUNDED_BOX down_box ROUNDED_BOX color 50 align 128 hotspot
+          code0 {wz_window_view->value(gp_static_show);}
+          code1 {gp_main_file_active_page = gp_main_file;}
+        }
+        Fl_Button btn_emerg_ann {
+          label {车地广播}
+          callback {ChangeBtnState(3);}
+          xywh {225 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
+        }
+        Fl_Button btn_live {
+          label {选车界面}
+          callback {if(bcu_state.iph_monitor_cur_page==1)
+{
+	return ;
+}
+gp_main_file_active_page=gp_select_car_ann_page;
+wz_window_view->value(gp_main_file_active_page);
+ChangeBtnState(4);}
+          xywh {445 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
+          code0 {gp_main_file_active_page=gp_select_car_ann_page;}
+        }
+        Fl_Button btn_intercomm {
+          label {紧急报警}
+          callback {ShowD2Ppage();}
+          xywh {645 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128 deactivate
+        }
+      }
+      Fl_Group gp_select_black {open
+        xywh {0 384 800 96} color 0 hide
+      } {}
+    }
+  }
+  code {SystemInitBeforeRun();
+  p_current_ann_group = gp_main_file;
+  p_current_intercomm_group = gp_main_file;
+  wz_select_window->value(main_group);
+  //wz_window_view->value(gp_static_show);
+  wd_touch_screen->show();
+\#ifdef NEW_TS_STRATEGE
+  while (Fl::wait())
+  {
+	  if(switchFlag != 0)
+	  {
+			if(switchFlag == 1)//当前没有PCU请求
+			{
+				ShowNoPCURequest();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 2)//设置紧急对讲按钮
+			{
+				SetD2PTipButtonState(1);
+				switchFlag = 0;
+			}
+			else if(switchFlag == 3)//恢复紧急对讲按钮
+			{
+				SetD2PTipButtonState(0);
+				switchFlag = 0;
+			}
+			else if(switchFlag == 4)//显示PCU请求
+			{
+				ShowD2PRequest();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 5)//切换到PCU请求界面
+			{
+				ShowD2Ppage();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 6)//本BCU D2P功能正常
+			{
+				EnableThisBCUD2PFunction();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 7)//本BCU D2P功能失效
+			{
+				DisableThisBCUD2PFunction();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 8)//BCU激活端控制
+			{
+				BCUActivejudge();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 10)//更新音量显示界面信息
+			{
+				UpdateVolumeInfo(whether_want_to_update_page);
+				switchFlag = 0;
+			}
+			else if(switchFlag == 12)
+			{
+			
+				wz_select_window->value(main_group);
+				switchFlag=0;	
+			}	
+				
+			else  if(switchFlag == 13)//使能触摸屏
+			{
+				EnableTS();
+				switchFlag = 0;
+			}
+			else  if(switchFlag == 14)//失效触摸屏
+			{
+				DisableTS();
+				switchFlag = 0;
+			}
+			else  if(switchFlag == 16)//获取外部button按钮，并且进行相应界面切换
+			{
+				GetOuterButtonState();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 17)//根据PC按键切换触摸屏界面-有触摸屏界面显示
+			{
+				JudegD2PButton();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 18)//根据PC按键切换触摸屏界面-没有触摸屏界面显示
+			{
+				JudegD2PButtonTCMS();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 23)//更新所有设备故障信息总体按钮状态-有故障
+			{
+			//	ChangeFailureStatisticsButtonColor(1);
+				switchFlag = 0;
+			}
+			else if(switchFlag == 24)//更新所有设备故障信息总体按钮状态-无故障
+			{
+			//	ChangeFailureStatisticsButtonColor(0);
+				switchFlag = 0;
+			}
+			else if(switchFlag == 28)//根据优先级改变按钮先后顺序，并且调整线路号信息
+			{
+				ExchangeBtnPosition();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 29)//无TCMS 下切换界面
+			{
+				ExchangeToLive();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 30)//有TCMS下切换界面
+			{
+			//	ExchangeToLiveWithoutTS();
+				switchFlag = 0;
+			}
+			else if(switchFlag == 31)//修改D2P按钮颜色
+			{
+				ChangeIntercommLabelState(current_is_being_d2d);
+				switchFlag = 0;
+			}
+			else if(switchFlag == 33)//无TCMS 下切换界面
+			{
+				SyncSelectCarInfo();
+				switchFlag = 0;
+			}
+					
+		}
+     }
+
+\#else
+    return Fl::run();
+\#endif} {}
+} 
+
+Function {TouchScreenMain(int a, int b)} {open return_type void
+} {
+  code {ts_buffer_id = a;
+ts_volume_id = b;
+  touch_screen_main();} {}
+} 
