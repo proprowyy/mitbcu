@@ -17,37 +17,18 @@
 
 #ifndef ZHW_NETWORK_CONFIG_H_
 #define ZHW_NETWORK_CONFIG_H_
-//#include "network_include_extern_head.h"
-
-#ifndef uchar
-//#define uchar unsigned char
-#endif
 
 #define SOCKFD_EAMP_PORT 19999
 #define SOCKFD_EAMP_DATA_PORT 19998
 #define SOCKFD_PCU_CMD_PORT 19997
 #define SOCKFD_PCU_DATA_PORT 19996
-
 #define SOCKFD_HEART_PORT 20000
-
 #if 1
 #define net_debug_printf(s) diag_printf s
 #define net_debug_printf2(s) //diag_printf s
 #define DEBUG diag_printf
 //#define net_debug_printf(s)  //diag_printf s       ///<debug for wilson,on the platform of Beta1.0
 #endif
-
-//EAMP 接受音频数据的多播组
-//#define MUL_IP_EAMP_DATA "230.10.10.66"
-
-//EAMP 接受控制命令的多播组
-//#define MUL_IP_EAMP_CMD "230.10.10.77"
-
-//BCU 接受PCU请求命令的多播组
-//#define MUL_IP_BCU_CMD "230.10.10.55"
-
-//设备的心跳多播组
-//#define MUL_IP_HEART "230.10.10.88"
 
 #define LOOP_NUM 20
 #define BACKLOG 40
