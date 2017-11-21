@@ -207,12 +207,10 @@ bcu_state_machine.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/bcu_state_machine.h
 bcu_extern_button.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/bcu_extern_button.h
-bcu_update_table_from_ccu.h
-/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/bcu_update_table_from_ccu.h
 network/zhw_network_main.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/network/zhw_network_main.h
-TouchScreen_horizontal.h
-/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/TouchScreen_horizontal.h
+touch_screen/touch_screen_function.h
+/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/touch_screen_function.h
 
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/bcu_intercom.cxx
 bcu_intercom.h
@@ -233,8 +231,8 @@ alarm_audio_data.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/bcu_main.cxx
 bcu_main.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/bcu_main.h
-TouchScreen_horizontal.h
-/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/TouchScreen_horizontal.h
+cyg/hal/plf_io.h
+-
 
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/bcu_main.h
 stdio.h

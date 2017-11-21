@@ -175,14 +175,6 @@ int BcuGetNetTxCmdBuffId(void);
  */
 int InitBuffer(void);
 
-/** InitStationInformation function description
- *  Intialize the station information
- *
- *  @param   null
- *  @return  null
- */
-void InitStationInformation();
-
 /** ClearAllAudioDataBuffer function description
  *  This function belongs to bcu,which is used to clear all audio data buffer
  *
@@ -806,13 +798,6 @@ void RefuseAllPCUReqest();
  */
 void ClearAllPCURequestInfo();
 
-/** RequestCurrentKeyinfo function description
- *  查询当前钥匙信息
- *
- *  @param   null
- *  @return  null
- */
-void RequestCurrentKeyinfo();
 
 /** SendToOverOtherBCUD2D function description
  *  发送司机对讲结束给对方
@@ -852,107 +837,9 @@ void judgeWheteherExitD2DEnterD2P();
  *  @param   控制命令包
  *  @return  null
  */
-void UpdateDeviceState(send_infomation_t send_infomation);
 
-/** InitBCULogInfo function description
- *  初始化BCUlog日志信息
- *
- *  @param   控制命令包指针
- *  @return  null
- */
-//void InitBCULogInfo(common_big_package_t *bcu_send_log_info_to_ccu);
 
-/** SendBCULogInfoToCCU function description
- *  发送BCUlog日志信息给ccu
- *
- *  @param   log信息
- *  @return  null
- */
-void SendBCULogInfoToCCU(char p_str[]);
-
-/** BCUCMUCommunication function description
- *  BCU发送通信包给CMU
- *
- *  @param   发给CMU信息包
- *  @return  if success return 0
- */
-int BCUCMUCommunication(send_infomation_t bcu_cmu_comm);
-
-/** BCUUpdateTCMSLineInfo function description
- *  BCU更新TCMS线路号信息
- *
- *  @param   TCMS发送过来的线路号信息
- *  @return  if success return 0
- */
-int BCUUpdateTCMSLineInfo(send_infomation_t bcu_recv_tcms_line_info_cmd);
-
-/** OpenOrCloseBCUTS function description
- *  开屏或者关闭屏幕
- *
- *  @param   TCMS发送过来的通信包信息
- *  @return  if success return 0
- */
-int OpenOrCloseBCUTS(send_infomation_t bcu_recv_tcms_effecient_info_cmd);
-
-/** AskLineInfoToCCU function description
- *  发送线路号查询信息包给CCU
- *
- *  @param   null
- *  @return  null
- */
-void AskLineInfoToCCU();
-
-/** AskTCMSEffectiveFlagInfoToCCU function description
- *  发送TCMS是否有效查询信息包给CCU
- *
- *  @param   null
- *  @return  null
- */
-void AskTCMSEffectiveFlagInfoToCCU();
-
-/** AskCMuState function description
- *  发送CMU状态
- *
- *  @param   null
- *  @return  null
- */
-void AskCMuState();
-
-/** SendCommonCMDToCCUTORecordingAudioData function description
- *  发送Log记录信息包给CCU
- *
- *  @param   对讲类型
- *  @param   源设备号
- *  @param   目标设备号
- *  @param   开始或者结算
- *  @return  null
- */
-void SendCommonCMDToCCUTORecordingAudioData(unsigned char intercomm_type,unsigned char src_no,unsigned char dst_no,unsigned char begin_or_over);
-
-/** SendThisBCUAnnStateToEAMP function description
- *  发送当前BCU广播状态给EAMP
- *
- *  @param   null
- *  @return  null
- */
 void SendThisBCUAnnStateToEAMP();
-
-/** GetPerDevFailureInfo function description
- *  获取外围设备故障信息
- *
- *  @param   故障信息缓存区
- *  @param   故障信息大小
- *  @return  null
- */
-void GetPerDevFailureInfo(unsigned char failure_info_buffer[],int buffer_size);
-
-/** OpenOrCloseBCUTS function description
- *  是否收到设备故障信息
- *
- *  @param   null
- *  @return  if have return 1
- */
-int WhetherHaveDevFailureInfo();
 
 /** alarm_func_handle_key_info function description
  *  钥匙信息查询定时器处理函数
@@ -1019,61 +906,7 @@ void BCUSendDevVolumeInfoToD2POtherDev();
  */
 void BCUSendDevVolumeInfoToD2DOtherDev();
 
-/** UpdateSecondDeviceState function description
- *   更新二级总线上设备故障
- *
- *  @param   null
- *  @return  null
- */
-void UpdateSecondDeviceState();
 
-/** InitDBVersionInfo function description
- *   初始化设备版本号信息
- *
- *  @param   null
- *  @return  null
- */
-void InitDBVersionInfo();
-
-/** RefreshDBVersionPage function description
- *   刷新当前设备版本号界面
- *
- *  @param   null
- *  @return  null
- */
-void RefreshDBVersionPage();
-
-/** CheckCertificateDeviceFailureInfo function description
- *   检查具体类型设备故障信息
- *
- *  @param   当前故障显示设备类型
- *  @return  null
- */
-unsigned char CheckCertificateDeviceFailureInfo(unsigned char flag);
-
-/** CheckDeviceFailureStatusPerTypeDeviceFFromNet function description
- *   检查每种类型设备故障信息
- *
- *  @param   null
- *  @return  null
- */
-unsigned char  CheckDeviceFailureStatusPerTypeDeviceFFromNet();
-
-/** GetBCUDeviceVersionInfo function description
- *   BCU版本号查询
- *
- *  @param   null
- *  @return  null
- */
-void GetBCUDeviceVersionInfo();
-
-/** UpdateTSInfoAccordingToDB function description
- *  根据数据库更新触摸屏
- *
- *  @param   null
- *  @return  null
- */
-void UpdateTSInfoAccordingToDB();
 
 /** RequestBCUKeyInfo function description
  *  请求钥匙信号
@@ -1107,11 +940,9 @@ void StartSimlateAnn();
 void CloseAUTOSIMTimer();
 void RestartAUTOSIMTimer();
 void CreateAUTOSIMTimer();
-void alarm_func_handle_sim_auto(cyg_handle_t counter_handle, cyg_addrword_t data);
-void SendAtoTestLineSet(send_infomation_t *line_set_send_package);
-void SendAtoEnd(send_infomation_t *ato_end_send_package);
 //end of add
 int TransformIntercomPackage(network_send_package_t *p_recv_network_info);
 int TransformSendPackage(network_pcu_t *p_temp_pcu_network_package,network_send_package_t *p_recv_network_info);
+int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo);
 #endif	/*BCU_FUNCTION_H*/
 

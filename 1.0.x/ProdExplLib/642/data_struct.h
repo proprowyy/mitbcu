@@ -221,6 +221,9 @@ typedef struct
 typedef struct{
 	unsigned int  	 seat_id;
 	unsigned int  	 car_no;
+	unsigned int     iph_requset_no;
+	unsigned int     iph_receive_no;
+	unsigned int     iph_refuse_no;
 	unsigned char   select_enable_flag;
 	unsigned char 	car_select_flag[11];
 	unsigned char 	iph_select_flag[8];
@@ -240,6 +243,7 @@ typedef struct
 	int src_dev_number;						//1-5
 	int pkg_type; //1,选车（地面口播），2选车+IPH（地面监听），3选车+选IPH（地面紧急对讲）
 				  //4.选车（ISCS口播），5.选车+IPH（ISCS监听） ，6.选车+选IPH（ISCS紧急对讲）
+			      //7.sync 8,requset iph,9,recv iph,10,refuse iph;
  	common_big_data_t common_big_data_u;
 }common_big_package_t;
 

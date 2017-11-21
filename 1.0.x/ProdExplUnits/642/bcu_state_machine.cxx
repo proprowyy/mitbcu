@@ -110,7 +110,6 @@ int BcuTestSelectNextEvent(void)
         if( count_next_event >= BCU_ANN_OPTION_ITEMS )
         {
              count_next_event = 0; //reset
-//             debug_print(("BcuTestSelectNextEvent: end\n"));
              return -1;
         }
         ret = bcu_ann_option_table[count_next_event++].unique_id;		

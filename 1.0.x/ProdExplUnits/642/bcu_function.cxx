@@ -21,7 +21,6 @@ unsigned char ts_priority = 10;
 unsigned char control_priority = 10;
 
 unsigned char whether_updata_db = 0;
-unsigned char wherther_start_auto_ann = 0;	//by pan --add 2015-12-25
 unsigned char sim_auto_flag = 0;//by pan --add 2015-12-25
 
 /*----------------begin of bcu beta 1.1----------------------*/
@@ -595,7 +594,6 @@ void BCUStateInit()
 #if 1
 	bcu_state.bcu_info.current_state_ann = ANN_IDLE;
 	bcu_state.bcu_info.current_state_intercom = INTERCOM_IDLE;
-
 	bcu_state.bcu_active_ann_state =  &idle_ann_state;
 	bcu_state.bcu_active_intercom_state = &idle_intercom_state;
 	bcu_state.mic_owner = NONE;
@@ -1974,33 +1972,6 @@ send_infomation_t send_to_eamp_for_auto_test;//add by pan 2015-12-16
 
 
 
-void alarm_func_handle_sim_auto(cyg_handle_t counter_handle, cyg_addrword_t data)
-{
-	wherther_start_auto_ann = 1;
-}
-void CreateAUTOSIMTimer()
-{
-	cyg_clock_to_counter(cyg_real_time_clock(),&counter_handle_sim_auto);
-	cyg_alarm_create(counter_handle_sim_auto,alarm_func_handle_sim_auto,0,&alarm_handle_sim_auto,&alarm_object_sim_auto);
-	cyg_alarm_initialize(alarm_handle_sim_auto,cyg_current_time()+5000,5000);
-	cyg_alarm_disable(alarm_handle_sim_auto);
-	diag_printf("CreateAUTOSIMTimer\n");
-}
-void RestartAUTOSIMTimer()
-{
-	cyg_alarm_initialize(alarm_handle_sim_auto,cyg_current_time()+5000,5000);
-	cyg_alarm_enable(alarm_handle_sim_auto);
-//	diag_printf("RestartAUTOSIMTimer\n");
-}
-void CloseAUTOSIMTimer()
-{
-	cyg_alarm_disable(alarm_handle_sim_auto);
-//	diag_printf("CloseAUTOSIMTimer\n");
-}
-
-
-
-
 
 int TransformIntercomPackage(network_send_package_t *p_recv_network_info)
 {
@@ -2063,4 +2034,79 @@ int TransformSendPackage(network_pcu_t *p_temp_pcu_network_package,network_send_
 	p_temp_pcu_network_package->d2p_intercomm_whether_is_connecting = p_recv_network_info->send_information.event_info_intercom.d2p_intercomm.d2p_intercomm_whether_is_connecting;
 	return 0;
 }
+
+int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
+{
+	int ret=0;
+	int i=0,j=0;
+	int common_type_package=p_BigConmInfo->pkg_type;
+	switch(common_type_package)
+	{
+	case 4:
+			diag_printf("ocs ann\n");
+			if(p_BigConmInfo->common_big_data_u.ann_event_flag ==1)
+			{
+				diag_printf("this is a ann cmd1 ,ocs \n");
+				if(bcu_state.mic_owner == NONE || bcu_state.mic_owner == ANNOUNCE )
+				{
+					if(bcu_state.bcu_active_ann_state->state_id != LIVE_ANN_EVENT)
+					{
+						SetLiveCmd(0);
+					}
+				}
+			}
+			if(p_BigConmInfo->common_big_data_u.ann_event_flag==0)
+			{
+				diag_printf("this is a ann cmd 2,ocs \n");
+			    SetLiveCmd(2);
+			}
+			ret=4;
+			break;
+	case 5:
+			diag_printf("slect car\n");
+			for(i=0; i<8; i++)
+			{
+				diag_printf("enable=%d:no=%d :iph=0x%02x\n",
+				   p_BigConmInfo->common_big_data_u.monitor_event_flag,i,p_BigConmInfo->common_big_data_u.iph_select_flag[i]);
+				if(p_BigConmInfo->common_big_data_u.iph_select_flag[i]==1&&
+				   p_BigConmInfo->common_big_data_u.monitor_event_flag==1)
+				{
+					G_SetAndClearPakage(1,i+1,&g_iph_pcu);
+					MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EVENT_CALL,&g_iph_pcu);
+					break;
+				}
+				if(p_BigConmInfo->common_big_data_u.iph_select_flag[i]==1 &&
+				   p_BigConmInfo->common_big_data_u.monitor_event_flag == 0)
+				{
+					G_SetAndClearPakage(0,i+1,&g_iph_pcu);
+					MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EXIT_CALL,&g_iph_pcu);
+					break;
+				}
+
+			}
+			ret =5;
+			break;
+	case 7:
+			diag_printf("recv select sync comm big form ocs!!\n");
+			for(j = 0 ; j < 11 ; ++j)
+			{
+				if(p_BigConmInfo->common_big_data_u.car_occupy_state[j] == 1)
+				{
+					bcu_state.car_occupy_state[j] = 1;
+				}
+			}
+			AlarmTSToChangeScreen(33);
+		break;
+	case 8:
+		break;
+	default:
+		    diag_printf("no package type\n");
+
+	}
+
+
+	return ret;
+}
+
+
 //end of add

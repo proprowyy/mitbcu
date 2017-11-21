@@ -323,10 +323,6 @@ void *SystemControl(void *arg)
 
 	bcu_state.other_bcu_intercomm_state = INTERCOM_IDLE;
 
-
-	
-	CreateAUTOSIMTimer();//add by pan-20151225
-
 	///<创建同步定时器
 	CreateSYNCTimer();
 
@@ -413,53 +409,7 @@ void *SystemControl(void *arg)
 #endif
 		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0){
 			diag_printf("recv a big common pakge !\n");
-			if(recv_temp_big.pkg_type == 4){
-				if(recv_temp_big.common_big_data_u.ann_event_flag ==1){
-					diag_printf("this is a ann cmd1 ,ocs \n");
-					if(bcu_state.mic_owner == NONE || bcu_state.mic_owner == ANNOUNCE ){
-						if(bcu_state.bcu_active_ann_state->state_id != LIVE_ANN_EVENT)
-							SetLiveCmd(0);
-					}
-				}
-				if(recv_temp_big.common_big_data_u.ann_event_flag==0){
-					diag_printf("this is a ann cmd 2,ocs \n");
-					SetLiveCmd(2);
-				}
-
-			}
-
-			if(recv_temp_big.pkg_type == 5){
-						int i=0;
-						for(i=0; i<8; i++)
-						{
-							diag_printf("enable=%d:no=%d :iph=0x%02x\n",recv_temp_big.common_big_data_u.monitor_event_flag,i,recv_temp_big.common_big_data_u.iph_select_flag[i]);
-							if(recv_temp_big.common_big_data_u.iph_select_flag[i]==1&&recv_temp_big.common_big_data_u.monitor_event_flag==1){
-							G_SetAndClearPakage(1,i+1,&g_iph_pcu);
-							MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EVENT_CALL,&g_iph_pcu);
-							break;
-						}
-						if(recv_temp_big.common_big_data_u.iph_select_flag[i]==1 && recv_temp_big.common_big_data_u.monitor_event_flag == 0){
-							G_SetAndClearPakage(0,i+1,&g_iph_pcu);
-							MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EXIT_CALL,&g_iph_pcu);
-							break;
-						}
-
-						}
-
-						}
-				if(recv_temp_big.pkg_type==7)
-				{
-					diag_printf("recv select sync comm big form ocs!!\n");
-					int i;
-						for(i = 0 ; i < 11 ; ++i)
-						{
-							if(recv_temp_big.common_big_data_u.car_occupy_state[i] == 1)
-							{
-								bcu_state.car_occupy_state[i] = 1;
-							}
-						}
-						AlarmTSToChangeScreen(33);
-				}
+			ProbeBigCommPackage(&recv_temp_big);
 		}
 		/*if there have cmd information comes from touch screen thread,we should response it as soon as possible*/
 		if(BlockBufferRead(bcu_state.recv_cmd_from_touch,&recv_send_info_from_touch_screen,sizeof(recv_send_info_from_touch_screen)) > 0)

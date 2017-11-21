@@ -23,14 +23,7 @@ unsigned char pa_state_flag = 0;
 unsigned char pc_state_flag = 0;
 unsigned char cc_state_flag = 0;
 unsigned char out_3d5_state_flag = 0;
-//extern int last_control_flag;
-//extern int control_flag;
-extern int last_sample_flag;
-extern int sample_flag;
-extern int thread_change_flag;
-extern int last_thread_change_flag;
-extern int network_flag;
-extern int last_network_flag;
+
 
 int GetLiveExternButtonState()
 {///<获取口播按钮状态
