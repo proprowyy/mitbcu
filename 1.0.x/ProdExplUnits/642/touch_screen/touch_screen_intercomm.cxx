@@ -61,7 +61,6 @@ void ShowD2PRequest(){
 			(gp_intercomm->child(i))->label(buffer[i]);
 			(gp_intercomm->child(i ))->show();
 			temp=temp->next;
-
 			}
 	    }
     }
@@ -86,24 +85,6 @@ void ShowD2PRequest(){
 			(gp_intercomm->child(i))->hide();
 		  }
        }
-#if 0
-	if(bcu_state.pcu_request_info.request_number >= 12)
-		{
-			btn_d2p_intercomm_turn_up_page->show();
-			btn_d2p_intercomm_turn_down_page->show();
-		}
-		else
-		{
-			btn_d2p_intercomm_turn_up_page->hide();
-			btn_d2p_intercomm_turn_down_page->hide();
-		}
-
-	if(bcu_state.pcu_request_info.request_number > 12)
-		{///<显示上下翻页按钮
-			btn_d2p_intercomm_turn_up_page->deactivate();
-			btn_d2p_intercomm_turn_down_page->activate();
-		}
-#endif
 		wz_select_window->value(main_group);
 
 }

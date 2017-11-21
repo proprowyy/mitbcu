@@ -410,6 +410,11 @@ void *SystemControl(void *arg)
 		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0){
 			diag_printf("recv a big common pakge !\n");
 			ProbeBigCommPackage(&recv_temp_big);
+			if(bcu_state.pcu_request_info.request_number != 0)
+			{
+				AlarmTSToChangeScreen(4);
+				StartOrBrokeBroadcastPcuRequestAlarmAudioData();
+			}
 		}
 		/*if there have cmd information comes from touch screen thread,we should response it as soon as possible*/
 		if(BlockBufferRead(bcu_state.recv_cmd_from_touch,&recv_send_info_from_touch_screen,sizeof(recv_send_info_from_touch_screen)) > 0)
@@ -431,7 +436,7 @@ void *SystemControl(void *arg)
 		{
 			/*show the detail of cmd information*/
 
-			if(!TransformIntercomPackage(&recv_network_info_from_network)){diag_printf("error:%d:%s\n",__LINE__,__FUNCTION__);}
+			//if(!TransformIntercomPackage(&recv_network_info_from_network)){diag_printf("error:%d:%s\n",__LINE__,__FUNCTION__);}
 
 				DisplayNetworkCmd(recv_network_info_from_network);
 
@@ -454,11 +459,6 @@ void *SystemControl(void *arg)
 			{
 
 				JudgeWhetherHaveD2DRequest(&recv_cmd_info_of_intercom,&recv_network_info_from_network);
-			}
-			if(bcu_state.pcu_request_info.request_number != 0){
-				AlarmTSToChangeScreen(4);
-				StartOrBrokeBroadcastPcuRequestAlarmAudioData();
-
 			}
 
 		}

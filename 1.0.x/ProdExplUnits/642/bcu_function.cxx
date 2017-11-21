@@ -2035,11 +2035,30 @@ int TransformSendPackage(network_pcu_t *p_temp_pcu_network_package,network_send_
 	return 0;
 }
 
+
+static int IphRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
+{
+		Node * tempnode = create_node();
+		int ret;
+		strcpy( tempnode->devices_name, "PCU");
+		tempnode->vehicle_number = p_BigConmInfo_temp->common_big_data_u.car_no;
+		tempnode->devices_id = p_BigConmInfo_temp->common_big_data_u.iph_requset_no;
+		tempnode->current_state = 0;
+		tempnode->next = NULL;
+		PCURequsthead = insert_list( PCURequsthead, tempnode);
+		ret = dispalys( PCURequsthead);//显示请求，返回请求数
+		return ret;
+}
+
+
+
+
 int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 {
 	int ret=0;
 	int i=0,j=0;
 	int common_type_package=p_BigConmInfo->pkg_type;
+
 	switch(common_type_package)
 	{
 	case 4:
@@ -2098,10 +2117,11 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 			AlarmTSToChangeScreen(33);
 		break;
 	case 8:
+		bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
 		break;
 	default:
-		    diag_printf("no package type\n");
-
+		diag_printf("no package type\n");
+		break;
 	}
 
 

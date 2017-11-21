@@ -224,7 +224,7 @@ typedef struct{
 	unsigned int     iph_requset_no;
 	unsigned int     iph_receive_no;
 	unsigned int     iph_refuse_no;
-	unsigned char   select_enable_flag;
+	unsigned char    select_enable_flag;
 	unsigned char 	car_select_flag[11];
 	unsigned char 	iph_select_flag[8];
 	unsigned char  	car_occupy_state[11];//占用 1,空闲 0

@@ -156,7 +156,7 @@ void UpdateGlobalInfo(send_infomation_t receive_package)
 			break;
 
 		case TYPE_OF_PECU:
-#if 1
+#if 0
 			if(source_device_number<=8){
 				if(	receive_package.event_info_intercom.d2p_intercomm.d2p_intercomm_active == 1
 				   &&receive_package.event_info_intercom.d2p_intercomm.d2p_intercomm_request_or_over == 1

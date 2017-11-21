@@ -1216,8 +1216,10 @@ else
 	flag=0;
 
 	ExitLive();
-	btn_monitor->activate();
-
+	if(bcu_state.car_select_count_for_monitor==1)
+	{
+		btn_monitor->activate();
+	}
 	lable_state->hide();	
 	lable_state->label("提示:请规范操作,谢谢!");
 	lable_state->redraw();	
@@ -1685,6 +1687,7 @@ int touch_screen_main() {
       } // Fl_Group* gp_window_black_screen
       { controlpage = new Fl_Group(0, -5, 805, 390);
         controlpage->color((Fl_Color)246);
+        controlpage->hide();
         { pcu_1 = new Fl_Button(10, 50, 140, 95, "PCU-1");
           pcu_1->callback((Fl_Callback*)cb_pcu_1);
         } // Fl_Button* pcu_1
@@ -1784,7 +1787,6 @@ int touch_screen_main() {
       } // Fl_Group* gp_select_car_ann_page
       { AnnOrMonitorSelect = new Fl_Group(0, 0, 850, 388);
         AnnOrMonitorSelect->color((Fl_Color)246);
-        AnnOrMonitorSelect->hide();
         { btn_enter = new Fl_Button(160, 125, 140, 95, "\345\271\277\346\222\255");
           btn_enter->selection_color((Fl_Color)2);
           btn_enter->callback((Fl_Callback*)cb_btn_enter);
