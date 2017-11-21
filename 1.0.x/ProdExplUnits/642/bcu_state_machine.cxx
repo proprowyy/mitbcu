@@ -49,26 +49,7 @@ state_process_t *bcu_all_states[] =
 unsigned int bcu_all_states_items = (sizeof(bcu_all_states))/(sizeof(bcu_all_states[0]));
 //add end, ach, 2013
 
-//now, begin to define params
-#ifdef WITH_DB
-event_option_table_t  bcu_ann_option_table[] = 
-{
-      	{"OCC", OCC_EVENT},
-      	{"Outer3D5",MIC_3D5_OUTER_EVENT},
-      	{"LIVE", LIVE_ANN_EVENT},
-      	{"EMERG", EMERG_ANN_EVENT},
-      	{"MANUAL", MANUAL_ANN_EVENT},
-      	{"TMS-MANUAL", TMS_MANUAL_ANN_EVENT},
-      	{"TMS-AUTO", TMS_AUTO_ANN_EVENT},
-      	{"ANN-IDLE",ANN_IDLE},
-      	{"D2D", D2D_INTERCOMM_EVENT},
-      	{"D2P", D2P_INTERCOMM_EVENT},
-      	{"D2DXD2P", D2D_HANGUP_D2P_EVENT},
-      	{"D2PPEND", D2P_INTERCOM_PENDING},
-      	{"INTERCOM-IDLE",INTERCOM_IDLE},
-      	{"LINENO", LINE_NUMBER_CHANGE_EVENT}
-};
-#else
+
 event_option_table_t  bcu_ann_option_table[] =
 {
       	{"OCC", OCC_EVENT},
@@ -86,12 +67,11 @@ event_option_table_t  bcu_ann_option_table[] =
       	{"INTERCOM-IDLE",INTERCOM_IDLE},
       	{"LINENO", LINE_NUMBER_CHANGE_EVENT}
 };
-#endif
 #define BCU_ANN_OPTION_ITEMS ((sizeof(bcu_ann_option_table))/(sizeof(bcu_ann_option_table[0])))
 
 static state_priority_list_t  bcu_ann_priority_list_node_idle = 
 {
-      ANN_IDLE,
+		ANN_IDLE,
        0xFFFFFFFF, //this is always the lowest priority for idle state
        &idle_ann_state,
        NULL  //when power up, there is only idle node in the list
@@ -446,11 +426,6 @@ int BcuStateEventIdJudge(int event_id )
 		 	ret =2;
 		        break;
 
-//		case ANN_IDLE:
-//		case INTERCOM_IDLE:
-//			ret = -1;
-//			break;
-
 		default:
 			ret = -1;
 			break;               
@@ -465,12 +440,6 @@ int BcuStateParseAnnNewCommand(send_infomation_t *pnew_command)
 		debug_print(("BcuStateParseAnnNewCommand:  null pointer\n"));
 		return -1;
 	}
-
-	//switch( pnew_command->event_type_ann )
-	{
-
-	}
-
 	return 0;
 }
 int BcuStateParseIntercomNewCommand(send_infomation_t *pnew_command)

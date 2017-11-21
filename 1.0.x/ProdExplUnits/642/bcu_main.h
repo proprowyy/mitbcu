@@ -21,7 +21,6 @@
 #ifndef CMDTOCMU
 #define CMDTOCMU
 #endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,13 +36,9 @@
 #include <cyg/io/serialio.h>
 #include <cyg/infra/diag.h>
 #include <cyg/infra/testcase.h>
-
 #include <cyg/kernel/kapi.h>
-
 #include <cyg/hal/hal_io.h>
 #include <cyg/hal/plf_io.h>
-
-
 #include <cyg/hal/hal_if.h>
 #include <cyg/hal/hal_intr.h>
 #include <cyg/hal/drv_api.h>

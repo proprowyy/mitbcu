@@ -637,30 +637,6 @@ sourcecode/network/zhw_dev_config_info.cxx.s:
 	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/network/zhw_dev_config_info.cxx.s
 .PHONY : sourcecode/network/zhw_dev_config_info.cxx.s
 
-sourcecode/network/zhw_dev_selftest_module.o: sourcecode/network/zhw_dev_selftest_module.cxx.o
-.PHONY : sourcecode/network/zhw_dev_selftest_module.o
-
-# target to build an object file
-sourcecode/network/zhw_dev_selftest_module.cxx.o:
-	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/network/zhw_dev_selftest_module.cxx.o
-.PHONY : sourcecode/network/zhw_dev_selftest_module.cxx.o
-
-sourcecode/network/zhw_dev_selftest_module.i: sourcecode/network/zhw_dev_selftest_module.cxx.i
-.PHONY : sourcecode/network/zhw_dev_selftest_module.i
-
-# target to preprocess a source file
-sourcecode/network/zhw_dev_selftest_module.cxx.i:
-	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/network/zhw_dev_selftest_module.cxx.i
-.PHONY : sourcecode/network/zhw_dev_selftest_module.cxx.i
-
-sourcecode/network/zhw_dev_selftest_module.s: sourcecode/network/zhw_dev_selftest_module.cxx.s
-.PHONY : sourcecode/network/zhw_dev_selftest_module.s
-
-# target to generate assembly for a file
-sourcecode/network/zhw_dev_selftest_module.cxx.s:
-	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/network/zhw_dev_selftest_module.cxx.s
-.PHONY : sourcecode/network/zhw_dev_selftest_module.cxx.s
-
 sourcecode/network/zhw_middle_forward.o: sourcecode/network/zhw_middle_forward.cxx.o
 .PHONY : sourcecode/network/zhw_middle_forward.o
 
@@ -1021,30 +997,6 @@ sourcecode/touch_screen/TouchScreen_horizontal.cxx.s:
 	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/touch_screen/TouchScreen_horizontal.cxx.s
 .PHONY : sourcecode/touch_screen/TouchScreen_horizontal.cxx.s
 
-sourcecode/touch_screen/change_chinese_line.o: sourcecode/touch_screen/change_chinese_line.cxx.o
-.PHONY : sourcecode/touch_screen/change_chinese_line.o
-
-# target to build an object file
-sourcecode/touch_screen/change_chinese_line.cxx.o:
-	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/touch_screen/change_chinese_line.cxx.o
-.PHONY : sourcecode/touch_screen/change_chinese_line.cxx.o
-
-sourcecode/touch_screen/change_chinese_line.i: sourcecode/touch_screen/change_chinese_line.cxx.i
-.PHONY : sourcecode/touch_screen/change_chinese_line.i
-
-# target to preprocess a source file
-sourcecode/touch_screen/change_chinese_line.cxx.i:
-	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/touch_screen/change_chinese_line.cxx.i
-.PHONY : sourcecode/touch_screen/change_chinese_line.cxx.i
-
-sourcecode/touch_screen/change_chinese_line.s: sourcecode/touch_screen/change_chinese_line.cxx.s
-.PHONY : sourcecode/touch_screen/change_chinese_line.s
-
-# target to generate assembly for a file
-sourcecode/touch_screen/change_chinese_line.cxx.s:
-	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/touch_screen/change_chinese_line.cxx.s
-.PHONY : sourcecode/touch_screen/change_chinese_line.cxx.s
-
 sourcecode/touch_screen/error_handle.o: sourcecode/touch_screen/error_handle.cxx.o
 .PHONY : sourcecode/touch_screen/error_handle.o
 
@@ -1334,9 +1286,6 @@ help:
 	@echo "... sourcecode/network/zhw_dev_config_info.o"
 	@echo "... sourcecode/network/zhw_dev_config_info.i"
 	@echo "... sourcecode/network/zhw_dev_config_info.s"
-	@echo "... sourcecode/network/zhw_dev_selftest_module.o"
-	@echo "... sourcecode/network/zhw_dev_selftest_module.i"
-	@echo "... sourcecode/network/zhw_dev_selftest_module.s"
 	@echo "... sourcecode/network/zhw_middle_forward.o"
 	@echo "... sourcecode/network/zhw_middle_forward.i"
 	@echo "... sourcecode/network/zhw_middle_forward.s"
@@ -1382,9 +1331,6 @@ help:
 	@echo "... sourcecode/touch_screen/TouchScreen_horizontal.o"
 	@echo "... sourcecode/touch_screen/TouchScreen_horizontal.i"
 	@echo "... sourcecode/touch_screen/TouchScreen_horizontal.s"
-	@echo "... sourcecode/touch_screen/change_chinese_line.o"
-	@echo "... sourcecode/touch_screen/change_chinese_line.i"
-	@echo "... sourcecode/touch_screen/change_chinese_line.s"
 	@echo "... sourcecode/touch_screen/error_handle.o"
 	@echo "... sourcecode/touch_screen/error_handle.i"
 	@echo "... sourcecode/touch_screen/error_handle.s"
