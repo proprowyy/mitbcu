@@ -33,7 +33,7 @@ extern int current_is_being_d2d;
  *  @param   ������PCU������������
  *  @return  null
  */
-void SetReceptPCUNo(unsigned char param_pcu_position);
+void SetReceptPCUNo(unsigned char param_pcu_position,unsigned char vn);
 
 /** InitPCURequestTable function description
  *  ���������PCU���������

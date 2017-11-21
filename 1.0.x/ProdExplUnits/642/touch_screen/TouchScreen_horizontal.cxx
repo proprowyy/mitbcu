@@ -45,15 +45,14 @@ Fl_Button *btn_d2p_request_1=(Fl_Button *)0;
 static void cb_btn_d2p_request_1(Fl_Button*, void*) {
   if(is_intercomming_with_pcu == 0)
 {
-	
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 	char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_1->label());
 		
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	
 	currend_d2P_position = 1;
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -65,13 +64,15 @@ Fl_Button *btn_d2p_request_2=(Fl_Button *)0;
 static void cb_btn_d2p_request_2(Fl_Button*, void*) {
   if(is_intercomming_with_pcu == 0)
 {
+	
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
 	char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_2->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 2;
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
 };
@@ -87,8 +88,9 @@ static void cb_btn_d2p_request_3(Fl_Button*, void*) {
 
 	char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_3->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 3;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -106,8 +108,9 @@ static void cb_btn_d2p_request_4(Fl_Button*, void*) {
 
 	char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_4->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor );
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 4;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -123,8 +126,9 @@ static void cb_btn_d2p_request_5(Fl_Button*, void*) {
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
  		char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_5->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
  	currend_d2P_position = 5;
  
 	 (gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -140,9 +144,9 @@ static void cb_btn_d2p_request_6(Fl_Button*, void*) {
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 		char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_6->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 6;
 	
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -158,9 +162,9 @@ static void cb_btn_d2p_request_7(Fl_Button*, void*) {
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 	char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_7->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-
-	SetReceptPCUNo(d2p_reponse_sursor );
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 7;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -176,8 +180,9 @@ static void cb_btn_d2p_request_8(Fl_Button*, void*) {
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 		char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_8->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 8;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -193,8 +198,9 @@ static void cb_btn_d2p_request_9(Fl_Button*, void*) {
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 		char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_9->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 9;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -209,7 +215,7 @@ static void cb_btn_d2p_request_10(Fl_Button*, void*) {
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
-	SetReceptPCUNo(d2p_reponse_sursor + 9);
+	//SetReceptPCUNo(d2p_reponse_sursor + 9);
 	currend_d2P_position = 10;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -224,7 +230,7 @@ static void cb_btn_d2p_request_11(Fl_Button*, void*) {
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
-	SetReceptPCUNo(d2p_reponse_sursor + 10);
+	//SetReceptPCUNo(d2p_reponse_sursor + 10);
 	currend_d2P_position = 11;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -240,7 +246,7 @@ static void cb_btn_d2p_request_12(Fl_Button*, void*) {
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
 	currend_d2P_position = 12;
-	SetReceptPCUNo(d2p_reponse_sursor + 11);
+//	SetReceptPCUNo(d2p_reponse_sursor + 11);
 	
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
 };
@@ -260,92 +266,6 @@ static void cb_btn_intercomm_refuse(Fl_Button*, void*) {
 	CloseAudioSampleTimer();
 }
 RefuseD2PRequest();
-}
-
-Fl_Button *btn_d2p_intercomm_turn_up_page=(Fl_Button *)0;
-
-static void cb_btn_d2p_intercomm_turn_up_page(Fl_Button*, void*) {
-  d2p_reponse_sursor = d2p_reponse_sursor - 12;
-
-if(is_intercomming_with_pcu == 0)
-{
-	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
-	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-}
-else
-{
-	if(connecting_d2p_response_sursor == d2p_reponse_sursor)
-	{
-			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
-		(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-	}
-	else
-	{
-			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
-			(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-	}	
-}
-if(d2p_reponse_sursor == 1)
-{
-	btn_d2p_intercomm_turn_up_page->deactivate();
-}
-
-
-if(bcu_state.pcu_request_info.request_number - d2p_reponse_sursor < 24 && bcu_state.pcu_request_info.request_number - d2p_reponse_sursor >= 12)
-{
-	btn_d2p_intercomm_turn_down_page->activate();
-}
-
-
-ShowD2PRequest();
-if(is_intercomming_with_pcu == 0)
-{
-	SetReceptPCUNo(d2p_reponse_sursor);
-	currend_d2P_position = 1;
-	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
-};
-}
-
-Fl_Button *btn_d2p_intercomm_turn_down_page=(Fl_Button *)0;
-
-static void cb_btn_d2p_intercomm_turn_down_page(Fl_Button*, void*) {
-  d2p_reponse_sursor = d2p_reponse_sursor + 12;
-
-if(is_intercomming_with_pcu == 0)
-{
-	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
-	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-}	
-else
-{
-	if(connecting_d2p_response_sursor == d2p_reponse_sursor)
-	{
-			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
-		(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-	}
-	else
-	{
-			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
-			(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-	}	
-}
-
-if(d2p_reponse_sursor == 13)
-{
-	btn_d2p_intercomm_turn_up_page->activate();	
-}
-if(bcu_state.pcu_request_info.request_number - d2p_reponse_sursor < 12)
-{
-	btn_d2p_intercomm_turn_down_page->deactivate();	
-}
-ShowD2PRequest();
-
-if(is_intercomming_with_pcu == 0)
-{
-	SetReceptPCUNo(d2p_reponse_sursor);
-	currend_d2P_position = 1;
-	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
-};
 }
 
 Fl_Button *btn_intercomm_back=(Fl_Button *)0;
@@ -1341,7 +1261,6 @@ int touch_screen_main() {
       { gp_intercomm = new Fl_Group(0, 0, 800, 384);
         gp_intercomm->color((Fl_Color)246);
         gp_intercomm->align(Fl_Align(129));
-        gp_intercomm->hide();
         { btn_d2p_request_1 = new Fl_Button(10, 13, 140, 95);
           btn_d2p_request_1->callback((Fl_Callback*)cb_btn_d2p_request_1);
         } // Fl_Button* btn_d2p_request_1
@@ -1384,12 +1303,6 @@ int touch_screen_main() {
         { btn_intercomm_refuse = new Fl_Button(655, 300, 135, 70, "\346\214\202\346\226\255");
           btn_intercomm_refuse->callback((Fl_Callback*)cb_btn_intercomm_refuse);
         } // Fl_Button* btn_intercomm_refuse
-        { btn_d2p_intercomm_turn_up_page = new Fl_Button(655, 20, 135, 70, "@8->");
-          btn_d2p_intercomm_turn_up_page->callback((Fl_Callback*)cb_btn_d2p_intercomm_turn_up_page);
-        } // Fl_Button* btn_d2p_intercomm_turn_up_page
-        { btn_d2p_intercomm_turn_down_page = new Fl_Button(655, 115, 135, 70, "@8<-");
-          btn_d2p_intercomm_turn_down_page->callback((Fl_Callback*)cb_btn_d2p_intercomm_turn_down_page);
-        } // Fl_Button* btn_d2p_intercomm_turn_down_page
         { btn_intercomm_back = new Fl_Button(652, 301, 135, 70, "\344\270\200\351\224\256\346\270\205\351\231\244\350\257\267\346\261\202");
           btn_intercomm_back->callback((Fl_Callback*)cb_btn_intercomm_back);
           btn_intercomm_back->hide();
@@ -1787,6 +1700,7 @@ int touch_screen_main() {
       } // Fl_Group* gp_select_car_ann_page
       { AnnOrMonitorSelect = new Fl_Group(0, 0, 850, 388);
         AnnOrMonitorSelect->color((Fl_Color)246);
+        AnnOrMonitorSelect->hide();
         { btn_enter = new Fl_Button(160, 125, 140, 95, "\345\271\277\346\222\255");
           btn_enter->selection_color((Fl_Color)2);
           btn_enter->callback((Fl_Callback*)cb_btn_enter);

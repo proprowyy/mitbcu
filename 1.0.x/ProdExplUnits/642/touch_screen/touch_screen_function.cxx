@@ -729,7 +729,7 @@ void ShowD2Ppage()
 	if(is_intercomming_with_pcu == 0)
 	{///<当前拒绝或者挂断PCU，设置拒绝PCU号
 		diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
-		SetReceptPCUNo(PCURequsthead->next->devices_id);
+		SetReceptPCUNo(PCURequsthead->next->devices_id,PCURequsthead->vehicle_number);
 	}
 
 	bcu_state.d2p_button_state = 1;
@@ -1142,33 +1142,18 @@ int SetMonitorBigPakage(int iph,unsigned int vn)
 
 
 
-int G_SetAndClearAnnVehicleNumber2(int op,int iph,common_big_package_t  *parame)
+int SetIntercomBigPackage(int vn,int iph,common_big_package_t  *parame)
 {
-
 		memset(parame,0,sizeof(common_big_package_t));
-	     if(op == 0){//enter
-
-	    	  strcpy(parame->src_dev_name,"DBCU");
-	    	  parame->src_dev_number =  bcu_state.bcu_info.devices_no;
-	    	  strcpy(parame->dst_dev_name,"OCS");
-	    	  parame->dst_dev_number = 230;
-	    	  parame->pkg_type=3;
-	    	  parame->common_big_data_u.car_no=gwCurrCarNo;
-	    	  parame->common_big_data_u.iph_select_flag[iph-1]=1;
-
-	     }
-	     else if(op == 1){//cancel
-	    	 	 	 	  strcpy(parame->src_dev_name,"DBCU");
-	    		    	  parame->src_dev_number =  bcu_state.bcu_info.devices_no;
-	    		    	  strcpy(parame->dst_dev_name,"OCS");
-	    		    	  parame->dst_dev_number = 230;
-	    		    	  parame->pkg_type=3;
-	    		    	  parame->common_big_data_u.car_no=gwCurrCarNo;
-	    		    	  parame->common_big_data_u.iph_select_flag[iph-1]=0;
-
-	     }
-
-	     	 return 0;
+		strcpy(parame->src_dev_name,"DBCU");
+	    parame->src_dev_number =  bcu_state.bcu_info.devices_no;
+	    parame->common_big_data_u.seat_id= bcu_state.bcu_info.devices_no;
+	    strcpy(parame->dst_dev_name,"OCS");
+	    parame->dst_dev_number = 230;
+	    parame->pkg_type=9;
+	    parame->common_big_data_u.car_no=vn;
+	    parame->common_big_data_u.iph_receive_no=iph;
+	    return 0;
 
 }
 int G_SetAndClearPakage(int op,int pn,send_infomation_t *temp){
@@ -1208,7 +1193,7 @@ int G_SetAndClearPakage(int op,int pn,send_infomation_t *temp){
 
 }
 
-int parse_btn_lable_value(const char *src,unsigned char *dst)
+int parse_btn_lable_value(const char *src,unsigned char *dst_device,unsigned char *dst_vn)
 {
 
 	int ret=0;
@@ -1221,15 +1206,37 @@ int parse_btn_lable_value(const char *src,unsigned char *dst)
 	diag_printf("value[8]=%c\n",src[8]);
 	switch (src[8])
 	{
-		case 49:*dst=1;break;
-		case 50:*dst=2;break;
-		case 51:*dst=3;break;
-		case 52:*dst=4;break;
-		case 53:*dst=5;break;
-		case 54:*dst=6;break;
-		case 55:*dst=7;break;
-		case 56:*dst=8;break;
+		case 49:*dst_device=1;break;
+		case 50:*dst_device=2;break;
+		case 51:*dst_device=3;break;
+		case 52:*dst_device=4;break;
+		case 53:*dst_device=5;break;
+		case 54:*dst_device=6;break;
+		case 55:*dst_device=7;break;
+		case 56:*dst_device=8;break;
 		default:diag_printf("Without this type !\n");break;
+	}
+	switch(src[2])
+	{
+			case 49:*dst_vn=1;break;
+			case 50:*dst_vn=2;break;
+			case 51:*dst_vn=3;break;
+			case 52:*dst_vn=4;break;
+			case 53:*dst_vn=5;break;
+			case 54:*dst_vn=6;break;
+			case 55:*dst_vn=7;break;
+			case 56:*dst_vn=8;break;
+			case 57:*dst_vn=9;break;
+			default:
+				if(src[3]==48&&src[2]==49)
+				{
+					*dst_vn=10;
+				}
+				if(src[3]==49&&src[2]==49)
+				{
+					*dst_vn=11;
+				}
+				break;
 	}
 		return ret;
 }

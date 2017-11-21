@@ -30,15 +30,16 @@ char current_recept_pcu_no_buffer[30] = "\0";//当前接受PCU缓存区
 int current_is_being_d2d = 0;//当前坐在司机对讲
 SetRecOrRef Record[8];
 
-void SetReceptPCUNo(unsigned char param_pcu_position)
+void SetReceptPCUNo(unsigned char param_pcu_position,unsigned char vn)
 {///<设置当前接收的PCU号
 	diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
 	diag_printf("param_pcu_position = %d\n",param_pcu_position);
+	diag_printf("vn = %d\n",vn);
 	if(param_pcu_position == 0)
 	{
 		return ;
 	}
-	G_SetAndClearAnnVehicleNumber2(0,param_pcu_position,iph_select_intercom);
+	SetIntercomBigPackage(vn,param_pcu_position,iph_select_intercom);
 	int ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
 	bcu_state.pcu_request_info.recept_pcu_no =param_pcu_position;
 
@@ -55,7 +56,7 @@ void ShowD2PRequest(){
 	Node *temp;
     temp=PCURequsthead->next;
     if(bcu_state.pcu_request_info.request_number>8){
-    	for(i = 0;i < 8;i ++){
+    	for(i = 0;i < 12;i ++){
 		if(temp != NULL){
 			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
 			(gp_intercomm->child(i))->label(buffer[i]);
@@ -81,7 +82,7 @@ void ShowD2PRequest(){
 				temp=temp->next;
 			}
 	      }
-		for(i = bcu_state.pcu_request_info.request_number; i < 8;i ++){
+		for(i = bcu_state.pcu_request_info.request_number; i < 12;i ++){
 			(gp_intercomm->child(i))->hide();
 		  }
        }

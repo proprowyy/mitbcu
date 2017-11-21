@@ -6,8 +6,8 @@ Function {touch_screen_main()} {open return_type int
 } {
   Fl_Window wd_touch_screen {
     label {Touch Screen} open
-    xywh {284 95 800 480} type Double box BORDER_BOX color 0 selection_color 0 hide resizable
-    code0 {\#include "ts_head_file.h"}
+    xywh {284 95 800 480} type Double box BORDER_BOX color 0 selection_color 0 resizable
+    code0 {\#include "ts_head_file.h"} visible
   } {
     Fl_Wizard wz_window_view {open
       xywh {-70 -124 1290 794} box UP_BOX color 246
@@ -45,22 +45,21 @@ current_is_on_static_page = 1;}
           xywh {650 270 140 95}
         }
       }
-      Fl_Group gp_intercomm {
-        xywh {0 0 800 384} color 246 align 129 hide
+      Fl_Group gp_intercomm {open selected
+        xywh {0 0 800 384} color 246 align 129
         code0 {gp_intercomm->hide();}
       } {
         Fl_Button btn_d2p_request_1 {
           callback {if(is_intercomming_with_pcu == 0)
 {
-	
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 	char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_1->label());
 		
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	
 	currend_d2P_position = 1;
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -70,13 +69,15 @@ current_is_on_static_page = 1;}
         Fl_Button btn_d2p_request_2 {
           callback {if(is_intercomming_with_pcu == 0)
 {
+	
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
 	char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_2->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 2;
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
 }}
@@ -90,8 +91,9 @@ current_is_on_static_page = 1;}
 
 	char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_3->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 3;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -107,8 +109,9 @@ current_is_on_static_page = 1;}
 
 	char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_4->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor );
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 4;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -122,8 +125,9 @@ current_is_on_static_page = 1;}
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
  		char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_5->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
  	currend_d2P_position = 5;
  
 	 (gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -137,9 +141,9 @@ current_is_on_static_page = 1;}
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 		char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_6->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 6;
 	
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -153,9 +157,9 @@ current_is_on_static_page = 1;}
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 	char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_7->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-
-	SetReceptPCUNo(d2p_reponse_sursor );
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 7;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -169,8 +173,9 @@ current_is_on_static_page = 1;}
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 		char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_8->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 8;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -184,8 +189,9 @@ current_is_on_static_page = 1;}
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 		char buf[10];
 	sprintf(buf,"%s",btn_d2p_request_9->label());
-	parse_btn_lable_value(buf,&d2p_reponse_sursor);	
-	SetReceptPCUNo(d2p_reponse_sursor);
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
 	currend_d2P_position = 9;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -198,7 +204,7 @@ current_is_on_static_page = 1;}
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
-	SetReceptPCUNo(d2p_reponse_sursor + 9);
+	//SetReceptPCUNo(d2p_reponse_sursor + 9);
 	currend_d2P_position = 10;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -211,7 +217,7 @@ current_is_on_static_page = 1;}
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
-	SetReceptPCUNo(d2p_reponse_sursor + 10);
+	//SetReceptPCUNo(d2p_reponse_sursor + 10);
 	currend_d2P_position = 11;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -225,7 +231,7 @@ current_is_on_static_page = 1;}
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
 	currend_d2P_position = 12;
-	SetReceptPCUNo(d2p_reponse_sursor + 11);
+//	SetReceptPCUNo(d2p_reponse_sursor + 11);
 	
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
 }}
@@ -244,90 +250,6 @@ current_is_on_static_page = 1;}
 }
 RefuseD2PRequest();}
           xywh {655 300 135 70}
-        }
-        Fl_Button btn_d2p_intercomm_turn_up_page {
-          label {@8->}
-          callback {d2p_reponse_sursor = d2p_reponse_sursor - 12;
-
-if(is_intercomming_with_pcu == 0)
-{
-	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
-	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-}
-else
-{
-	if(connecting_d2p_response_sursor == d2p_reponse_sursor)
-	{
-			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
-		(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-	}
-	else
-	{
-			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
-			(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-	}	
-}
-if(d2p_reponse_sursor == 1)
-{
-	btn_d2p_intercomm_turn_up_page->deactivate();
-}
-
-
-if(bcu_state.pcu_request_info.request_number - d2p_reponse_sursor < 24 && bcu_state.pcu_request_info.request_number - d2p_reponse_sursor >= 12)
-{
-	btn_d2p_intercomm_turn_down_page->activate();
-}
-
-
-ShowD2PRequest();
-if(is_intercomming_with_pcu == 0)
-{
-	SetReceptPCUNo(d2p_reponse_sursor);
-	currend_d2P_position = 1;
-	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
-}}
-          xywh {655 20 135 70}
-        }
-        Fl_Button btn_d2p_intercomm_turn_down_page {
-          label {@8<-}
-          callback {d2p_reponse_sursor = d2p_reponse_sursor + 12;
-
-if(is_intercomming_with_pcu == 0)
-{
-	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
-	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-}	
-else
-{
-	if(connecting_d2p_response_sursor == d2p_reponse_sursor)
-	{
-			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
-		(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-	}
-	else
-	{
-			(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
-			(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-	}	
-}
-
-if(d2p_reponse_sursor == 13)
-{
-	btn_d2p_intercomm_turn_up_page->activate();	
-}
-if(bcu_state.pcu_request_info.request_number - d2p_reponse_sursor < 12)
-{
-	btn_d2p_intercomm_turn_down_page->deactivate();	
-}
-ShowD2PRequest();
-
-if(is_intercomming_with_pcu == 0)
-{
-	SetReceptPCUNo(d2p_reponse_sursor);
-	currend_d2P_position = 1;
-	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
-}}
-          xywh {655 115 135 70}
         }
         Fl_Button btn_intercomm_back {
           label {一键清除请求}
@@ -1226,7 +1148,7 @@ RecovoryBtnState(4);///<恢复相关按钮}
         }
       }
       Fl_Group AnnOrMonitorSelect {open
-        xywh {0 0 850 388} color 246
+        xywh {0 0 850 388} color 246 hide
         code0 {AnnOrMonitorSelect->hide();}
       } {
         Fl_Button btn_enter {
@@ -1266,7 +1188,7 @@ else
 	btn_enter->show();
 	btn_return0->activate();
 		
-}} selected
+}}
           xywh {160 125 140 95} selection_color 2
           code0 {btn_enter->deactivate();btn_enter->color((Fl_Color)50);}
         }

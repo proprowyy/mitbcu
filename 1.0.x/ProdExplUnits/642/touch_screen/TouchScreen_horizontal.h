@@ -28,8 +28,6 @@ extern Fl_Button *btn_d2p_request_11;
 extern Fl_Button *btn_d2p_request_12;
 extern Fl_Button *btn_intercomm_accept;
 extern Fl_Button *btn_intercomm_refuse;
-extern Fl_Button *btn_d2p_intercomm_turn_up_page;
-extern Fl_Button *btn_d2p_intercomm_turn_down_page;
 extern Fl_Button *btn_intercomm_back;
 extern Fl_Group *gp_static_show;
 #include <FL/Fl_Tile.H>
