@@ -729,7 +729,7 @@ void ShowD2Ppage()
 	if(is_intercomming_with_pcu == 0)
 	{///<当前拒绝或者挂断PCU，设置拒绝PCU号
 		diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
-		SetReceptPCUNo(PCURequsthead->next->devices_id,PCURequsthead->vehicle_number);
+		SetReceptPCUNo(PCURequsthead->next->devices_id,PCURequsthead->next->vehicle_number);
 	}
 
 	bcu_state.d2p_button_state = 1;
@@ -796,11 +796,6 @@ unsigned char GetIntercommButtonState()
 {///<获取对讲按钮（软）状态
 	return whether_intercomm_button_is_active;
 }
-
-
-
-
-
 void RecoverIdleButtonState()
 {///<恢复按钮状态
 	btn_emerg_ann->color((Fl_Color)50);
