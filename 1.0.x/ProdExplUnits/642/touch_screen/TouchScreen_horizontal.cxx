@@ -1862,7 +1862,6 @@ int touch_screen_main() {
   			}
   			else if(switchFlag == 12)
   			{
-  			
   				wz_select_window->value(main_group);
   				switchFlag=0;	
   			}	
@@ -1887,21 +1886,7 @@ int touch_screen_main() {
   				JudegD2PButton();
   				switchFlag = 0;
   			}
-  			else if(switchFlag == 18)//根据PC按键切换触摸屏界面-没有触摸屏界面显示
-  			{
-  				JudegD2PButtonTCMS();
-  				switchFlag = 0;
-  			}
-  			else if(switchFlag == 23)//更新所有设备故障信息总体按钮状态-有故障
-  			{
-  			//	ChangeFailureStatisticsButtonColor(1);
-  				switchFlag = 0;
-  			}
-  			else if(switchFlag == 24)//更新所有设备故障信息总体按钮状态-无故障
-  			{
-  			//	ChangeFailureStatisticsButtonColor(0);
-  				switchFlag = 0;
-  			}
+  			
   			else if(switchFlag == 28)//根据优先级改变按钮先后顺序，并且调整线路号信息
   			{
   				ExchangeBtnPosition();

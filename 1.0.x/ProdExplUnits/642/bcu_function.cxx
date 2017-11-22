@@ -1550,41 +1550,6 @@ void StopDelayD2DTimer()
 	whether_could_be_finished_d2d = 0;
 }
 
-
-void JudegD2PButtonTCMS()
-{
-		diag_printf("bcu_state.d2p_button_state = %d\n",bcu_state.d2p_button_state);
-		if(bcu_state.d2p_button_state == 0 && bcu_state.pcu_request_info.request_number>0)///< show d2p page
-		{
-			diag_printf("111Show D2P page\n");
-			diag_printf("Show D2P page\n");
-			ResetSoundTimer();
-			wz_window_view->box(FL_UP_BOX);
-			wz_select_window->box(FL_UP_BOX);
-			ShowD2Ppage();
-			wd_touch_screen->show();
-		}
-		else if(bcu_state.d2p_button_state == 1 && bcu_state.other_bcu_intercomm_state == INTERCOM_IDLE)///<receive d2p
-		{
-			diag_printf("Recv D2P page\n");
-			ResetSoundTimer();
-			RecvD2PRequest();
-
-			wd_touch_screen->show();
-		}
-		else if(bcu_state.d2p_button_state == 2)///<refuse d2p
-		{
-			diag_printf("Refuse D2P page\n");
-			if(bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT && is_intercomming_with_pcu == 1)
-			{
-				CloseAudioSampleTimer();
-			}
-			RefuseD2PRequest();
-
-			wd_touch_screen->show();
-		}
-
-}
 void GetOuterButtonState()
 {///<获取外部口播按钮状态
 
@@ -2052,13 +2017,48 @@ static int IphRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 
 
 
+static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
+{
+	int ret;
+	diag_printf("Over the intercom .\n");
+
+	PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
+
+	ret= dispalys(PCURequsthead);//显示请求，返回请求数
+
+	if(	ret == 0)
+	{
+		AlarmTSToChangeScreen(12);
+	}
+	return ret;
+
+}
+
+
+
+static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
+{
+	int ret=0;
+	Node *temp;
+	int vn=p_BigConmInfo_temp->common_big_data_u.car_no;
+	int iph=p_BigConmInfo_temp->common_big_data_u.iph_receive_no;
+	temp=update_list(PCURequsthead,vn,iph,1);
+	if( temp == NULL )
+	{
+		return ret=-1 ;
+	}
+	AlarmTSToChangeScreen(6);
+	AlarmTSToChangeScreen(5);
+	return ret;
+
+}
+
 
 int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 {
 	int ret=0;
 	int i=0,j=0;
 	int common_type_package=p_BigConmInfo->pkg_type;
-
 	switch(common_type_package)
 	{
 	case 4:
@@ -2118,6 +2118,12 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 		break;
 	case 8:
 		bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
+		break;
+	case 9:
+		IphUpdateLink(p_BigConmInfo);
+		break;
+	case 10:
+		bcu_state.pcu_request_info.request_number=IphDeleteLink(p_BigConmInfo);
 		break;
 	default:
 		diag_printf("no package type\n");

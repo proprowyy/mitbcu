@@ -442,12 +442,13 @@ void NetWorkMain(network_buffer_t network_buffer)
 #endif
 					}
 
-					if(common_big_package_buffer.pkg_type==2)
-					{
-						DEBUG(" iph big pkg\n");
 
-					}
 					UdpSendFunCMD(udp_common_big_socket,&common_big_package_buffer,sizeof(common_big_package_t),OCS_IP,UDP_COMMON_BIG_PORT);//发送控制数据
+
+					if(common_big_package_buffer.pkg_type==9||common_big_package_buffer.pkg_type==10)
+					{
+						UdpSendFunCMD(udp_common_big_socket,&common_big_package_buffer,sizeof(common_big_package_t),MUL_IP_SYNC_COMMON_BCU,UDP_SYNC_COMMON_BCU_PORT);//发送控制数据
+					}
 				}
 			}
 

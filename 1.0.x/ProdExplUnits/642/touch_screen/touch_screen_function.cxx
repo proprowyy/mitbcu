@@ -717,21 +717,8 @@ void ShowD2Ppage()
 	ChangeBtnState(5);
 	current_is_on_static_page = 0;
 	//当前没有对讲
-	if(is_intercomming_with_pcu == 0)
-	{
-		(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
-	}
-
 	p_current_intercomm_group = gp_intercomm;//当前是在对讲页面
-
 	ShowD2PRequest();//显示请求pcu
-
-	if(is_intercomming_with_pcu == 0)
-	{///<当前拒绝或者挂断PCU，设置拒绝PCU号
-		diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
-		SetReceptPCUNo(PCURequsthead->next->devices_id,PCURequsthead->next->vehicle_number);
-	}
-
 	bcu_state.d2p_button_state = 1;
 	wz_window_view->value(gp_intercomm);
 	wz_select_window->value(main_group);
@@ -765,7 +752,6 @@ void RefuseD2PRequest()
 	if(is_intercomming_with_pcu == 1)
 	{///<当前正在与PCU进行对讲
 		diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
-		bcu_state.pcu_request_info.request_number = bcu_state.pcu_request_info.request_number - 1;
 		is_intercomming_with_pcu = 0;
 		btn_intercomm_accept->activate();
 		ts_package_sequence = 2;
@@ -776,16 +762,11 @@ void RefuseD2PRequest()
 	else
 	{///<当前没有接通PCU，直接拒绝相关PCU请求
 		if(bcu_state.pcu_request_info.request_number > 0)
-		{///<注销相关PCU请求信息
-			bcu_state.pcu_request_info.request_number = bcu_state.pcu_request_info.request_number - 1;
-
+		{
 				diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
-
 				SetD2PCmd(1,0,bcu_state.pcu_request_info.recept_pcu_no,0);
-
 		}
 	}
-
 #endif
 	ShowD2Ppage();//显示请求pcu
 	p_current_intercomm_group = gp_main_file;

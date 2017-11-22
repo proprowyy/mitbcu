@@ -6,8 +6,8 @@ Function {touch_screen_main()} {open return_type int
 } {
   Fl_Window wd_touch_screen {
     label {Touch Screen} open
-    xywh {284 95 800 480} type Double box BORDER_BOX color 0 selection_color 0 resizable
-    code0 {\#include "ts_head_file.h"} visible
+    xywh {284 95 800 480} type Double box BORDER_BOX color 0 selection_color 0 hide resizable
+    code0 {\#include "ts_head_file.h"}
   } {
     Fl_Wizard wz_window_view {open
       xywh {-70 -124 1290 794} box UP_BOX color 246
@@ -255,7 +255,7 @@ BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,si
 
 cyg_thread_delay(100);
 
-RefuseD2PRequest();} selected
+RefuseD2PRequest();}
           xywh {660 305 135 70}
         }
         Fl_Button btn_intercomm_back {
@@ -1269,7 +1269,7 @@ wz_select_window->activate();}
       xywh {0 384 800 96} box UP_BOX
       code0 {//select_window->hide();}
     } {
-      Fl_Group main_group {open
+      Fl_Group main_group {
         xywh {0 384 800 96} color 191
       } {
         Fl_Button btn_main_file {
@@ -1397,21 +1397,7 @@ ChangeBtnState(4);}
 				JudegD2PButton();
 				switchFlag = 0;
 			}
-			else if(switchFlag == 18)//根据PC按键切换触摸屏界面-没有触摸屏界面显示
-			{
-				JudegD2PButtonTCMS();
-				switchFlag = 0;
-			}
-			else if(switchFlag == 23)//更新所有设备故障信息总体按钮状态-有故障
-			{
-			//	ChangeFailureStatisticsButtonColor(1);
-				switchFlag = 0;
-			}
-			else if(switchFlag == 24)//更新所有设备故障信息总体按钮状态-无故障
-			{
-			//	ChangeFailureStatisticsButtonColor(0);
-				switchFlag = 0;
-			}
+			
 			else if(switchFlag == 28)//根据优先级改变按钮先后顺序，并且调整线路号信息
 			{
 				ExchangeBtnPosition();
@@ -1443,7 +1429,8 @@ ChangeBtnState(4);}
 
 \#else
     return Fl::run();
-\#endif} {}
+\#endif} {selected
+  }
 } 
 
 Function {TouchScreenMain(int a, int b)} {open return_type void

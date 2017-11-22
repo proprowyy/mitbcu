@@ -241,15 +241,6 @@ void D2DIntercomEnter(send_infomation_t *send_information_intercomm_d2d)
 
 
 	begin_to_broadcast_d2d = 1;
-
-	diag_printf("this bcu info:%s%d\n",bcu_state.bcu_info.devices_name,bcu_state.bcu_info.devices_no);
-	diag_printf("other bcu info:%s%d\n",bcu_state.bcu_info.devices_name,bcu_state.opposite_bcu_no);
-
-
-
-	SetAudioDataDestination("CC",230);
-
-
 	StartAudioSampleTimer();///<2013-10-24
 	debug_print(("0108-d2d-enter: timer \n"));
 
