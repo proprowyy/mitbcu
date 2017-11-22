@@ -29,8 +29,6 @@
 #include "network_include_extern_head.h"
 
 //#define FILENAME "state_line_3/1_1.mp3"
-
-
 /** MountRomfs function description
  *  This function belongs to eamp,which is used to load the file system,which is Romfs
  *
@@ -42,6 +40,4 @@ int MountYaffs0(void);
 int MountYaffs2(void);
 int ZhwMkdir(char *newdir,int amode);
 int DirCreateOfNandflash();
-
-
 #endif /* ZHW_MOUNT_ROMFS_H_ */

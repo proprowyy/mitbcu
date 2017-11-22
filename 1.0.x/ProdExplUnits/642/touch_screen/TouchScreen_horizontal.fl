@@ -45,7 +45,7 @@ current_is_on_static_page = 1;}
           xywh {650 270 140 95}
         }
       }
-      Fl_Group gp_intercomm {open selected
+      Fl_Group gp_intercomm {open
         xywh {0 0 800 384} color 246 align 129
         code0 {gp_intercomm->hide();}
       } {
@@ -248,7 +248,14 @@ current_is_on_static_page = 1;}
 {
 	CloseAudioSampleTimer();
 }
-RefuseD2PRequest();}
+
+iph_select_intercom->pkg_type=10;
+
+BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
+
+cyg_thread_delay(100);
+
+RefuseD2PRequest();} selected
           xywh {655 300 135 70}
         }
         Fl_Button btn_intercomm_back {

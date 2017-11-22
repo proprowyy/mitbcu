@@ -265,6 +265,13 @@ static void cb_btn_intercomm_refuse(Fl_Button*, void*) {
 {
 	CloseAudioSampleTimer();
 }
+
+iph_select_intercom->pkg_type=10;
+
+BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
+
+cyg_thread_delay(100);
+
 RefuseD2PRequest();
 }
 
