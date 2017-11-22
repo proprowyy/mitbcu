@@ -240,7 +240,7 @@ current_is_on_static_page = 1;}
         Fl_Button btn_intercomm_accept {
           label {接通}
           callback {RecvD2PRequest();}
-          xywh {655 210 135 70}
+          xywh {660 225 135 70}
         }
         Fl_Button btn_intercomm_refuse {
           label {挂断}
@@ -256,7 +256,7 @@ BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,si
 cyg_thread_delay(100);
 
 RefuseD2PRequest();} selected
-          xywh {655 300 135 70}
+          xywh {660 305 135 70}
         }
         Fl_Button btn_intercomm_back {
           label {一键清除请求}
@@ -1265,7 +1265,7 @@ wz_select_window->activate();}
         }
       }
     }
-    Fl_Wizard wz_select_window {
+    Fl_Wizard wz_select_window {open
       xywh {0 384 800 96} box UP_BOX
       code0 {//select_window->hide();}
     } {

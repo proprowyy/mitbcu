@@ -791,6 +791,7 @@ void RefuseD2PRequest()
 	p_current_intercomm_group = gp_main_file;
 	wz_window_view->value(gp_static_show);
 	wz_select_window->value(main_group);
+	bcu_state.iph_monitor_cur_page=0;
 }
 unsigned char GetIntercommButtonState()
 {///<获取对讲按钮（软）状态
@@ -1148,6 +1149,7 @@ int SetIntercomBigPackage(int vn,int iph,common_big_package_t  *parame)
 	    parame->pkg_type=9;
 	    parame->common_big_data_u.car_no=vn;
 	    parame->common_big_data_u.iph_receive_no=iph;
+	    parame->common_big_data_u.iph_refuse_no=iph;
 	    return 0;
 
 }

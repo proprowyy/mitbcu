@@ -1304,10 +1304,10 @@ int touch_screen_main() {
         { btn_d2p_request_12 = new Fl_Button(490, 230, 140, 95);
           btn_d2p_request_12->callback((Fl_Callback*)cb_btn_d2p_request_12);
         } // Fl_Button* btn_d2p_request_12
-        { btn_intercomm_accept = new Fl_Button(655, 210, 135, 70, "\346\216\245\351\200\232");
+        { btn_intercomm_accept = new Fl_Button(660, 225, 135, 70, "\346\216\245\351\200\232");
           btn_intercomm_accept->callback((Fl_Callback*)cb_btn_intercomm_accept);
         } // Fl_Button* btn_intercomm_accept
-        { btn_intercomm_refuse = new Fl_Button(655, 300, 135, 70, "\346\214\202\346\226\255");
+        { btn_intercomm_refuse = new Fl_Button(660, 305, 135, 70, "\346\214\202\346\226\255");
           btn_intercomm_refuse->callback((Fl_Callback*)cb_btn_intercomm_refuse);
         } // Fl_Button* btn_intercomm_refuse
         { btn_intercomm_back = new Fl_Button(652, 301, 135, 70, "\344\270\200\351\224\256\346\270\205\351\231\244\350\257\267\346\261\202");
