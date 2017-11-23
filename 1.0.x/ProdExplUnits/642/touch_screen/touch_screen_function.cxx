@@ -1218,3 +1218,72 @@ int parse_btn_lable_value(const char *src,unsigned char *dst_device,unsigned cha
 	}
 		return ret;
 }
+
+int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn)
+{
+
+	int ret=0;
+	if(src==NULL)
+	{
+		diag_printf("src argument is null, return <0.\n");
+		return (ret-1);
+	}
+	diag_printf("value=%s\n",src);
+	diag_printf("value[8]=%c\n",src[8]);
+	switch (src[8])
+	{
+		case 49:*dst_device=1;break;
+		case 50:*dst_device=2;break;
+		default:diag_printf("Without this type !\n");break;
+	}
+	switch(src[2])
+	{
+			case 49:*dst_vn=1;break;
+			case 50:*dst_vn=2;break;
+			case 51:*dst_vn=3;break;
+			case 52:*dst_vn=4;break;
+			case 53:*dst_vn=5;break;
+			case 54:*dst_vn=6;break;
+			case 55:*dst_vn=7;break;
+			case 56:*dst_vn=8;break;
+			case 57:*dst_vn=9;break;
+			default:
+				if(src[3]==48&&src[2]==49)
+				{
+					*dst_vn=10;
+				}
+				if(src[3]==49&&src[2]==49)
+				{
+					*dst_vn=11;
+				}
+				break;
+	}
+		return ret;
+}
+
+void SetD2dCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation)
+{
+
+			common_big_package_t parame;
+			strcpy(parame.src_dev_name,"DBCU");
+		    parame.src_dev_number =  bcu_state.bcu_info.devices_no;
+		    parame.common_big_data_u.seat_id= bcu_state.bcu_info.devices_no;
+		    strcpy(parame.dst_dev_name,"OCS");
+		    parame.dst_dev_number = 230;
+		    parame.pkg_type=12;
+		    parame.common_big_data_u.car_no=vn;
+		    parame.common_big_data_u.bcu_receive_no=bcu_no;
+		    parame.common_big_data_u.iph_refuse_no=bcu_no;
+		    int ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));
+		    memset(param_send_infomation,0,sizeof(send_infomation_t));
+			strcpy(param_send_infomation->src_devices_name,"BCU");
+			param_send_infomation->src_devices_no = bcu_state.bcu_info.devices_no;
+			param_send_infomation->event_type_ann = ANN_IDLE;
+			param_send_infomation->event_type_intercom = D2D_INTERCOMM_EVENT;
+			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_active = 1;
+			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_request_or_over = 0;
+			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_response = 0;
+			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_bcu_device_no =bcu_no;
+			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_ppt_state = 1;
+
+}

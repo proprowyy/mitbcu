@@ -30,11 +30,13 @@ static void Init_ocs_select_car_struct(void)
 			diag_printf("this malloc select car struct fail .\n");
 			exit(1);
 		}
+
 		memset(common_package_select_car_to_ocs,0,sizeof(common_big_package_t));
 		memset(iph_select,0,sizeof(common_big_package_t));
 		memset(iph_select_intercom,0,sizeof(common_big_package_t));
 		memset(&g_MonPcuCmdPakage,0,sizeof(g_MonPcuCmdPakage));
 		memset(&g_iph_pcu,0,sizeof(g_MonPcuCmdPakage));
+		memset(&bcu_send_infomation,0,sizeof(bcu_send_infomation));
 
 
 }

@@ -1182,19 +1182,83 @@ Fl_Group *D2D_intercom_page=(Fl_Group *)0;
 
 Fl_Button *btn_d2d_1=(Fl_Button *)0;
 
+static void cb_btn_d2d_1(Fl_Button*, void*) {
+  char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_1->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
+}
+
 Fl_Button *btn_d2d_2=(Fl_Button *)0;
+
+static void cb_btn_d2d_2(Fl_Button*, void*) {
+  char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_2->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
+}
 
 Fl_Button *btn_d2d_3=(Fl_Button *)0;
 
+static void cb_btn_d2d_3(Fl_Button*, void*) {
+  char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_3->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
+}
+
 Fl_Button *btn_d2d_4=(Fl_Button *)0;
+
+static void cb_btn_d2d_4(Fl_Button*, void*) {
+  char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_4->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
+}
 
 Fl_Button *btn_d2d_5=(Fl_Button *)0;
 
+static void cb_btn_d2d_5(Fl_Button*, void*) {
+  char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_5->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
+}
+
 Fl_Button *btn_d2d_6=(Fl_Button *)0;
+
+static void cb_btn_d2d_6(Fl_Button*, void*) {
+  char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_6->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
+}
 
 Fl_Button *btn_d2d_7=(Fl_Button *)0;
 
+static void cb_btn_d2d_7(Fl_Button*, void*) {
+  char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_7->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
+}
+
 Fl_Button *btn_d2d_8=(Fl_Button *)0;
+
+static void cb_btn_d2d_8(Fl_Button*, void*) {
+  char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_2->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
+}
 
 Fl_Button *enter_d2d=(Fl_Button *)0;
 
@@ -1741,32 +1805,40 @@ int touch_screen_main() {
       { D2D_intercom_page = new Fl_Group(0, 2, 850, 383);
         D2D_intercom_page->color((Fl_Color)246);
         { btn_d2d_1 = new Fl_Button(10, 12, 140, 95);
+          btn_d2d_1->callback((Fl_Callback*)cb_btn_d2d_1);
           btn_d2d_1->hide();
         } // Fl_Button* btn_d2d_1
         { btn_d2d_2 = new Fl_Button(170, 12, 140, 95);
+          btn_d2d_2->callback((Fl_Callback*)cb_btn_d2d_2);
           btn_d2d_2->hide();
         } // Fl_Button* btn_d2d_2
         { btn_d2d_3 = new Fl_Button(330, 12, 140, 95);
+          btn_d2d_3->callback((Fl_Callback*)cb_btn_d2d_3);
           btn_d2d_3->hide();
         } // Fl_Button* btn_d2d_3
         { btn_d2d_4 = new Fl_Button(490, 12, 140, 95);
+          btn_d2d_4->callback((Fl_Callback*)cb_btn_d2d_4);
           btn_d2d_4->hide();
         } // Fl_Button* btn_d2d_4
         { btn_d2d_5 = new Fl_Button(10, 125, 140, 95);
+          btn_d2d_5->callback((Fl_Callback*)cb_btn_d2d_5);
           btn_d2d_5->hide();
         } // Fl_Button* btn_d2d_5
         { btn_d2d_6 = new Fl_Button(170, 125, 140, 95);
+          btn_d2d_6->callback((Fl_Callback*)cb_btn_d2d_6);
           btn_d2d_6->hide();
         } // Fl_Button* btn_d2d_6
         { btn_d2d_7 = new Fl_Button(330, 125, 140, 95);
+          btn_d2d_7->callback((Fl_Callback*)cb_btn_d2d_7);
           btn_d2d_7->hide();
         } // Fl_Button* btn_d2d_7
         { btn_d2d_8 = new Fl_Button(490, 125, 140, 95);
+          btn_d2d_8->callback((Fl_Callback*)cb_btn_d2d_8);
           btn_d2d_8->hide();
         } // Fl_Button* btn_d2d_8
         { enter_d2d = new Fl_Button(335, 275, 140, 95);
         } // Fl_Button* enter_d2d
-        { return_D2D = new Fl_Return_Button(650, 275, 140, 95, "button");
+        { return_D2D = new Fl_Return_Button(650, 275, 140, 95, "\350\277\224\345\233\236");
         } // Fl_Return_Button* return_D2D
         { canenl_d2d = new Fl_Button(495, 275, 140, 95);
           canenl_d2d->callback((Fl_Callback*)cb_canenl_d2d);
@@ -1911,6 +1983,7 @@ int touch_screen_main() {
   				JudegD2PButton();
   				switchFlag = 0;
   			}
+  			
   			else if(switchFlag == 28)//根据优先级改变按钮先后顺序，并且调整线路号信息
   			{
   				ExchangeBtnPosition();

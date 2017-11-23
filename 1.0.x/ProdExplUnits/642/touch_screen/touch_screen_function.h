@@ -804,4 +804,6 @@ extern int sync_select_page(unsigned char *flag);
 extern int sum_select_car();
 extern void chack_slecet_car_sum_enable_btn();
 extern int parse_btn_lable_value(const char *src,unsigned char *dst,unsigned char *vn);
+extern int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn);
+extern void SetD2dCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation);
 #endif

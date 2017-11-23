@@ -104,7 +104,7 @@ extern unsigned char sim_auto_flag;//add by pan 2015-12-25
 
 
 extern common_big_package_t *common_package_select_car_to_ocs,*iph_select,*iph_select_intercom;
-extern send_infomation_t g_MonPcuCmdPakage ,g_iph_pcu;
+extern send_infomation_t g_MonPcuCmdPakage ,g_iph_pcu,bcu_send_infomation;
 
 
 

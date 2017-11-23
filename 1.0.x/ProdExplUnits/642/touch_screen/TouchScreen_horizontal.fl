@@ -45,7 +45,7 @@ current_is_on_static_page = 1;}
           xywh {650 270 140 95}
         }
       }
-      Fl_Group gp_intercomm {
+      Fl_Group gp_intercomm {open
         xywh {0 0 800 385} color 246 align 129 hide
         code0 {gp_intercomm->hide();}
       } {
@@ -1219,39 +1219,79 @@ wz_select_window->activate();}
           xywh {650 280 140 95}
         }
       }
-      Fl_Group D2D_intercom_page {selected
+      Fl_Group D2D_intercom_page {open
         xywh {0 2 850 383} color 246
         code0 {D2D_intercom_page->hide();}
       } {
         Fl_Button btn_d2d_1 {
+          callback {char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_1->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
           xywh {10 12 140 95}
           code0 {btn_d2d_1->hide();}
         }
         Fl_Button btn_d2d_2 {
+          callback {char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_2->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
           xywh {170 12 140 95}
           code0 {btn_d2d_2->hide();}
         }
         Fl_Button btn_d2d_3 {
+          callback {char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_3->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
           xywh {330 12 140 95}
           code0 {btn_d2d_3->hide();}
         }
         Fl_Button btn_d2d_4 {
+          callback {char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_4->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
           xywh {490 12 140 95}
           code0 {btn_d2d_4->hide();}
         }
         Fl_Button btn_d2d_5 {
+          callback {char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_5->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
           xywh {10 125 140 95}
           code0 {btn_d2d_5->hide();}
         }
         Fl_Button btn_d2d_6 {
+          callback {char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_6->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
           xywh {170 125 140 95}
           code0 {btn_d2d_6->hide();}
         }
         Fl_Button btn_d2d_7 {
+          callback {char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_7->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
           xywh {330 125 140 95}
           code0 {btn_d2d_7->hide();}
         }
         Fl_Button btn_d2d_8 {
+          callback {char buf[10];
+int vn,bcu_no;
+sprintf(buf,"%s",btn_d2d_2->label());
+parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
           xywh {490 125 140 95}
           code0 {btn_d2d_8->hide();}
         }
@@ -1259,7 +1299,7 @@ wz_select_window->activate();}
           xywh {335 275 140 95}
         }
         Fl_Return_Button return_D2D {
-          label button
+          label {返回} selected
           xywh {650 275 140 95}
         }
         Fl_Button canenl_d2d {
