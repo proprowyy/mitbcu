@@ -6,8 +6,8 @@ Function {touch_screen_main()} {open return_type int
 } {
   Fl_Window wd_touch_screen {
     label {Touch Screen} open
-    xywh {284 95 800 480} type Double box BORDER_BOX color 0 selection_color 0 hide resizable
-    code0 {\#include "ts_head_file.h"}
+    xywh {284 95 800 480} type Double box BORDER_BOX color 0 selection_color 0 resizable
+    code0 {\#include "ts_head_file.h"} visible
   } {
     Fl_Wizard wz_window_view {open
       xywh {-70 -124 1290 794} box UP_BOX color 246
@@ -45,8 +45,8 @@ current_is_on_static_page = 1;}
           xywh {650 270 140 95}
         }
       }
-      Fl_Group gp_intercomm {open
-        xywh {0 0 800 384} color 246 align 129
+      Fl_Group gp_intercomm {
+        xywh {0 0 800 385} color 246 align 129 hide
         code0 {gp_intercomm->hide();}
       } {
         Fl_Button btn_d2p_request_1 {
@@ -293,7 +293,7 @@ btn_main_file->redraw();
 SetD2PCmd(1,0,255,0);//进入、运行、退出-响应类型-pcu_no-bcu_no
 
 wz_window_view->value(gp_main_file);}
-          xywh {652 301 135 70} hide
+          xywh {660 305 135 70} hide
         }
       }
       Fl_Group gp_static_show {
@@ -1154,7 +1154,7 @@ RecovoryBtnState(4);///<恢复相关按钮}
           code0 {cancel_select->activate();}
         }
       }
-      Fl_Group AnnOrMonitorSelect {open
+      Fl_Group AnnOrMonitorSelect {
         xywh {0 0 850 388} color 246 hide
         code0 {AnnOrMonitorSelect->hide();}
       } {
@@ -1219,57 +1219,60 @@ wz_select_window->activate();}
           xywh {650 280 140 95}
         }
       }
-      Fl_Group D2D_intercom_page {
-        xywh {0 2 850 383} color 246 hide
+      Fl_Group D2D_intercom_page {selected
+        xywh {0 2 850 383} color 246
         code0 {D2D_intercom_page->hide();}
       } {
         Fl_Button btn_d2d_1 {
-          label button
           xywh {10 12 140 95}
+          code0 {btn_d2d_1->hide();}
         }
         Fl_Button btn_d2d_2 {
-          label button
           xywh {170 12 140 95}
+          code0 {btn_d2d_2->hide();}
         }
         Fl_Button btn_d2d_3 {
-          label button
           xywh {330 12 140 95}
+          code0 {btn_d2d_3->hide();}
         }
         Fl_Button btn_d2d_4 {
-          label button
           xywh {490 12 140 95}
+          code0 {btn_d2d_4->hide();}
         }
         Fl_Button btn_d2d_5 {
-          label button
           xywh {10 125 140 95}
+          code0 {btn_d2d_5->hide();}
         }
         Fl_Button btn_d2d_6 {
-          label button
           xywh {170 125 140 95}
+          code0 {btn_d2d_6->hide();}
         }
         Fl_Button btn_d2d_7 {
-          label button
           xywh {330 125 140 95}
+          code0 {btn_d2d_7->hide();}
         }
         Fl_Button btn_d2d_8 {
-          label button
           xywh {490 125 140 95}
+          code0 {btn_d2d_8->hide();}
         }
         Fl_Button enter_d2d {
-          label button
-          xywh {490 275 140 95}
+          xywh {335 275 140 95}
         }
         Fl_Return_Button return_D2D {
           label button
           xywh {650 275 140 95}
         }
+        Fl_Button canenl_d2d {
+          callback {JudgeWhetherD2DHaveFinished();/*Judge whether have finish d2d*/}
+          xywh {495 275 140 95}
+        }
       }
     }
-    Fl_Wizard wz_select_window {open
+    Fl_Wizard wz_select_window {
       xywh {0 384 800 96} box UP_BOX
       code0 {//select_window->hide();}
     } {
-      Fl_Group main_group {
+      Fl_Group main_group {open
         xywh {0 384 800 96} color 191
       } {
         Fl_Button btn_main_file {
@@ -1288,7 +1291,9 @@ current_is_on_static_page = 0;}
         }
         Fl_Button btn_emerg_ann {
           label {车地广播}
-          callback {ChangeBtnState(3);}
+          callback {ChangeBtnState(3);
+gp_main_file_active_page=D2D_intercom_page;
+wz_window_view->value(gp_main_file_active_page);}
           xywh {225 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
         }
         Fl_Button btn_live {
@@ -1365,6 +1370,11 @@ ChangeBtnState(4);}
 				BCUActivejudge();
 				switchFlag = 0;
 			}
+			else if(switchFlag ==9)
+			{
+				ShowD2DRequest();
+				switchFlag=0;	
+			}
 			else if(switchFlag == 10)//更新音量显示界面信息
 			{
 				UpdateVolumeInfo(whether_want_to_update_page);
@@ -1429,8 +1439,7 @@ ChangeBtnState(4);}
 
 \#else
     return Fl::run();
-\#endif} {selected
-  }
+\#endif} {}
 } 
 
 Function {TouchScreenMain(int a, int b)} {open return_type void

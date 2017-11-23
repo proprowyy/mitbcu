@@ -1093,9 +1093,7 @@ void JudgeWhetherHaveD2DRequest(send_infomation_t *param_cmd_info,network_send_p
 				bcu_state.bcu_active_ann_state->state_id == OCC_EVENT) &&
 				bcu_state.bcu_active_intercom_state->state_id != D2P_INTERCOMM_EVENT)//提示仲裁界面
 		{
-//			last_control_flag = control_flag;control_flag = 271;
-			//ShowArbitratePage(bcu_state.bcu_active_ann_state->state_id);
-			//上海业主要求直接切换-2015-6-13
+
 			if(bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT)
 			{
 
@@ -1107,20 +1105,17 @@ void JudgeWhetherHaveD2DRequest(send_infomation_t *param_cmd_info,network_send_p
 		}
 		if(bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT)	/*There have driver request*/
 		{
-			/*Current state is D2P_INTERCOMM_EVENT*/
-//			last_control_flag = control_flag;control_flag = 273;
+
 			if(WhetherWantToExchangeState(param_network_cmd_info->send_information))//系统转换成司机对讲状态，并且使的PCU进入Pending状态
 			{
-//				last_control_flag = control_flag;control_flag = 274;
+
 				memcpy((void *)&param_send_infomation,(void *)&param_network_cmd_info->send_information,sizeof(param_network_cmd_info->send_information));
 				param_send_infomation.event_info_intercom.d2d_intercomm.d2d_intercomm_response = 1;
 
 
 				param_send_infomation.init = NULL;/*need to modify*/
 				param_send_infomation.setinformation = NULL;
-//				last_control_flag = control_flag;control_flag = 275;
 				StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_TRANSFER_TO_D2D_OR_DRIVER_CALL,&param_send_infomation);
-//				last_control_flag = control_flag;control_flag = 276;
 			}
 			else
 			{
@@ -1166,9 +1161,6 @@ void JudgeWhetherHaveD2DRequest(send_infomation_t *param_cmd_info,network_send_p
 				judgeWheteherExitD2DEnterD2P();
 
 			}
-
-
-
 		}
 }
 void SendPTTStateToPCU()
@@ -1999,8 +1991,19 @@ int TransformSendPackage(network_pcu_t *p_temp_pcu_network_package,network_send_
 	p_temp_pcu_network_package->d2p_intercomm_whether_is_connecting = p_recv_network_info->send_information.event_info_intercom.d2p_intercomm.d2p_intercomm_whether_is_connecting;
 	return 0;
 }
-
-
+static int BcuRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
+{
+		Node * tempnode = create_node();
+		int ret;
+		strcpy( tempnode->devices_name, "BCU");
+		tempnode->vehicle_number = p_BigConmInfo_temp->common_big_data_u.car_no;
+		tempnode->devices_id = p_BigConmInfo_temp->common_big_data_u.iph_requset_no;
+		tempnode->current_state = 0;
+		tempnode->next = NULL;
+		BCURequsthead = insert_list( BCURequsthead, tempnode);
+		ret = dispalys( BCURequsthead);//显示请求，返回请求数
+		return ret;
+}
 static int IphRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 {
 		Node * tempnode = create_node();
@@ -2014,9 +2017,6 @@ static int IphRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 		ret = dispalys( PCURequsthead);//显示请求，返回请求数
 		return ret;
 }
-
-
-
 static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 {
 	int ret;
@@ -2033,9 +2033,38 @@ static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 	return ret;
 
 }
+static int BcuDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
+{
+	int ret;
+	diag_printf("Over the d2d intercom .\n");
 
+	BCURequsthead = deletes_list( BCURequsthead, p_BigConmInfo_temp->common_big_data_u.bcu_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
 
+	ret= dispalys(BCURequsthead);//显示请求，返回请求数
 
+	if(	ret == 0)
+	{
+		AlarmTSToChangeScreen(12);
+	}
+	return ret;
+
+}
+
+static int BcuUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
+{
+	int ret=0;
+	Node *temp;
+	int vn=p_BigConmInfo_temp->common_big_data_u.car_no;
+	int iph=p_BigConmInfo_temp->common_big_data_u.bcu_receive_no;
+	temp=update_list(BCURequsthead,vn,iph,1);
+	if( temp == NULL )
+	{
+		return ret=-1 ;
+	}
+
+	return ret;
+
+}
 static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 {
 	int ret=0;
@@ -2125,14 +2154,18 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 	case 10:
 		bcu_state.pcu_request_info.request_number=IphDeleteLink(p_BigConmInfo);
 		break;
+	case 11:
+		bcu_state.bcu_request_number=BcuRequestInsertLink(p_BigConmInfo);
+		break;
+	case 12:
+		BcuUpdateLink(p_BigConmInfo);
+		break;
+	case 13:
+		bcu_state.bcu_request_number=BcuDeleteLink(p_BigConmInfo);
 	default:
 		diag_printf("no package type\n");
 		break;
 	}
-
-
 	return ret;
 }
-
-
 //end of add

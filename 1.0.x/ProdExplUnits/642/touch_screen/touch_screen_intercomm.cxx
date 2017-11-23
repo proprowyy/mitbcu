@@ -91,6 +91,50 @@ void ShowD2PRequest(){
 }
 
 
+void ShowD2DRequest(){
+
+	int i=0;
+	static char buffer[8][20];
+	memset(Record,0,sizeof(Record));
+	diag_printf("pcu_request_number=%d\n",bcu_state.bcu_request_number);
+	Node *temp;
+    temp=PCURequsthead->next;
+    if(bcu_state.bcu_request_number>8){
+    	for(i = 0;i < 8;i ++){
+		if(temp != NULL){
+			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
+			(D2D_intercom_page->child(i))->label(buffer[i]);
+			(D2D_intercom_page->child(i ))->show();
+			temp=temp->next;
+			}
+	    }
+    }
+    else{
+    	for(i = 0;i < bcu_state.bcu_request_number; i ++){
+    		if(temp!=NULL){
+    			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
+				(D2D_intercom_page->child(i ))->show();
+				(D2D_intercom_page->child(i ))->label(buffer[i]);
+				 Record[i].carno=temp->vehicle_number;
+				 Record[i].devno=temp->devices_id;
+				 if(temp->current_state == 1) {
+					(D2D_intercom_page->child(i))->deactivate();
+				 }
+				 else{
+					(D2D_intercom_page->child(i))->activate();
+				 }
+				temp=temp->next;
+			}
+	      }
+		for(i = bcu_state.bcu_request_number; i < 8;i ++){
+			(D2D_intercom_page->child(i))->hide();
+		  }
+       }
+		wz_select_window->value(main_group);
+
+}
+
+
 
 
 

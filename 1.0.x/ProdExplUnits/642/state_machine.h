@@ -153,7 +153,7 @@ typedef struct
     unsigned char car_select_finish;
     unsigned char car_select_count_for_monitor;
     unsigned char iph_monitor_cur_page;
-
+    int bcu_request_number;
 	int opposite_bcu_no;
 	int other_bcu_ptt_state;
 	int this_bcu_ptt_state;

@@ -1200,6 +1200,12 @@ Fl_Button *enter_d2d=(Fl_Button *)0;
 
 Fl_Return_Button *return_D2D=(Fl_Return_Button *)0;
 
+Fl_Button *canenl_d2d=(Fl_Button *)0;
+
+static void cb_canenl_d2d(Fl_Button*, void*) {
+  JudgeWhetherD2DHaveFinished();/*Judge whether have finish d2d*/;
+}
+
 Fl_Wizard *wz_select_window=(Fl_Wizard *)0;
 
 Fl_Group *main_group=(Fl_Group *)0;
@@ -1221,6 +1227,8 @@ Fl_Button *btn_emerg_ann=(Fl_Button *)0;
 
 static void cb_btn_emerg_ann(Fl_Button*, void*) {
   ChangeBtnState(3);
+gp_main_file_active_page=D2D_intercom_page;
+wz_window_view->value(gp_main_file_active_page);
 }
 
 Fl_Button *btn_live=(Fl_Button *)0;
@@ -1265,9 +1273,10 @@ int touch_screen_main() {
         gp_main_file->end();
         Fl_Group::current()->resizable(gp_main_file);
       } // Fl_Group* gp_main_file
-      { gp_intercomm = new Fl_Group(0, 0, 800, 384);
+      { gp_intercomm = new Fl_Group(0, 0, 800, 385);
         gp_intercomm->color((Fl_Color)246);
         gp_intercomm->align(Fl_Align(129));
+        gp_intercomm->hide();
         { btn_d2p_request_1 = new Fl_Button(10, 13, 140, 95);
           btn_d2p_request_1->callback((Fl_Callback*)cb_btn_d2p_request_1);
         } // Fl_Button* btn_d2p_request_1
@@ -1310,7 +1319,7 @@ int touch_screen_main() {
         { btn_intercomm_refuse = new Fl_Button(660, 305, 135, 70, "\346\214\202\346\226\255");
           btn_intercomm_refuse->callback((Fl_Callback*)cb_btn_intercomm_refuse);
         } // Fl_Button* btn_intercomm_refuse
-        { btn_intercomm_back = new Fl_Button(652, 301, 135, 70, "\344\270\200\351\224\256\346\270\205\351\231\244\350\257\267\346\261\202");
+        { btn_intercomm_back = new Fl_Button(660, 305, 135, 70, "\344\270\200\351\224\256\346\270\205\351\231\244\350\257\267\346\261\202");
           btn_intercomm_back->callback((Fl_Callback*)cb_btn_intercomm_back);
           btn_intercomm_back->hide();
         } // Fl_Button* btn_intercomm_back
@@ -1731,27 +1740,37 @@ int touch_screen_main() {
       } // Fl_Group* AnnOrMonitorSelect
       { D2D_intercom_page = new Fl_Group(0, 2, 850, 383);
         D2D_intercom_page->color((Fl_Color)246);
-        D2D_intercom_page->hide();
-        { btn_d2d_1 = new Fl_Button(10, 12, 140, 95, "button");
+        { btn_d2d_1 = new Fl_Button(10, 12, 140, 95);
+          btn_d2d_1->hide();
         } // Fl_Button* btn_d2d_1
-        { btn_d2d_2 = new Fl_Button(170, 12, 140, 95, "button");
+        { btn_d2d_2 = new Fl_Button(170, 12, 140, 95);
+          btn_d2d_2->hide();
         } // Fl_Button* btn_d2d_2
-        { btn_d2d_3 = new Fl_Button(330, 12, 140, 95, "button");
+        { btn_d2d_3 = new Fl_Button(330, 12, 140, 95);
+          btn_d2d_3->hide();
         } // Fl_Button* btn_d2d_3
-        { btn_d2d_4 = new Fl_Button(490, 12, 140, 95, "button");
+        { btn_d2d_4 = new Fl_Button(490, 12, 140, 95);
+          btn_d2d_4->hide();
         } // Fl_Button* btn_d2d_4
-        { btn_d2d_5 = new Fl_Button(10, 125, 140, 95, "button");
+        { btn_d2d_5 = new Fl_Button(10, 125, 140, 95);
+          btn_d2d_5->hide();
         } // Fl_Button* btn_d2d_5
-        { btn_d2d_6 = new Fl_Button(170, 125, 140, 95, "button");
+        { btn_d2d_6 = new Fl_Button(170, 125, 140, 95);
+          btn_d2d_6->hide();
         } // Fl_Button* btn_d2d_6
-        { btn_d2d_7 = new Fl_Button(330, 125, 140, 95, "button");
+        { btn_d2d_7 = new Fl_Button(330, 125, 140, 95);
+          btn_d2d_7->hide();
         } // Fl_Button* btn_d2d_7
-        { btn_d2d_8 = new Fl_Button(490, 125, 140, 95, "button");
+        { btn_d2d_8 = new Fl_Button(490, 125, 140, 95);
+          btn_d2d_8->hide();
         } // Fl_Button* btn_d2d_8
-        { enter_d2d = new Fl_Button(490, 275, 140, 95, "button");
+        { enter_d2d = new Fl_Button(335, 275, 140, 95);
         } // Fl_Button* enter_d2d
         { return_D2D = new Fl_Return_Button(650, 275, 140, 95, "button");
         } // Fl_Return_Button* return_D2D
+        { canenl_d2d = new Fl_Button(495, 275, 140, 95);
+          canenl_d2d->callback((Fl_Callback*)cb_canenl_d2d);
+        } // Fl_Button* canenl_d2d
         D2D_intercom_page->hide();
         D2D_intercom_page->end();
       } // Fl_Group* D2D_intercom_page
@@ -1855,6 +1874,11 @@ int touch_screen_main() {
   				BCUActivejudge();
   				switchFlag = 0;
   			}
+  			else if(switchFlag ==9)
+  			{
+  				ShowD2DRequest();
+  				switchFlag=0;	
+  			}
   			else if(switchFlag == 10)//更新音量显示界面信息
   			{
   				UpdateVolumeInfo(whether_want_to_update_page);
@@ -1862,6 +1886,7 @@ int touch_screen_main() {
   			}
   			else if(switchFlag == 12)
   			{
+  			
   				wz_select_window->value(main_group);
   				switchFlag=0;	
   			}	
@@ -1886,7 +1911,6 @@ int touch_screen_main() {
   				JudegD2PButton();
   				switchFlag = 0;
   			}
-  			
   			else if(switchFlag == 28)//根据优先级改变按钮先后顺序，并且调整线路号信息
   			{
   				ExchangeBtnPosition();

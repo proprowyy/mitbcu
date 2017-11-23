@@ -40,7 +40,8 @@ static void Init_ocs_select_car_struct(void)
 }
 
 extern char pcu_alarm_audio[];
-Node *PCURequsthead=NULL;
+Node *PCURequsthead = NULL;
+Node *BCURequsthead = NULL;
 common_big_package_t recv_temp_big;
 int main(int argc, char **argv)
 {
@@ -86,6 +87,7 @@ int main(int argc, char **argv)
 	GetOtherDeviceNo();
     /*创建pcu请求链表*/
     PCURequsthead=creat_linked_list();
+    BCURequsthead=creat_linked_list();
    /*Initial the mutex*/
 	InitMutex();
 	/*Initialize the Buffer*/
@@ -410,6 +412,11 @@ void *SystemControl(void *arg)
 		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0){
 			diag_printf("recv a big common pakge !\n");
 			ProbeBigCommPackage(&recv_temp_big);
+
+			if(bcu_state.bcu_request_number !=0)
+			{
+				AlarmTSToChangeScreen(9);
+			}
 			if(bcu_state.pcu_request_info.request_number != 0)
 			{
 				AlarmTSToChangeScreen(4);

@@ -562,7 +562,7 @@ void AdjustVolumeAfterCODEC()
 void D2DReqAndResponseHandle()
 {
 			JudgeWhetherD2DHaveFinished();/*Judge whether have finish d2d*/
-			JudegWhetherRequestD2D();/*Judge whether want to enter D2D state*/
+			//JudegWhetherRequestD2D();/*Judge whether want to enter D2D state*/
 }
 
 

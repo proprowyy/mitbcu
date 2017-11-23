@@ -126,6 +126,7 @@ extern Fl_Button *btn_d2d_7;
 extern Fl_Button *btn_d2d_8;
 extern Fl_Button *enter_d2d;
 extern Fl_Return_Button *return_D2D;
+extern Fl_Button *canenl_d2d;
 extern Fl_Wizard *wz_select_window;
 extern Fl_Group *main_group;
 extern Fl_Button *btn_main_file;

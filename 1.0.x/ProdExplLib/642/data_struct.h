@@ -57,19 +57,6 @@ typedef union
 }event_infomation_intercomm_t;
 
 
-typedef struct
-{
-
-unsigned int event_type;
-unsigned int car_no;
-unsigned int car_state[11];
-unsigned char affirm;
-unsigned char cancel;
-unsigned int reserve[4];
-
-}select_vehicle_info;
-
-
 /** 本结构体功能：广播控制盒状态
  *	本结构体主要是标识广播控制盒状态信息
  */
@@ -224,6 +211,9 @@ typedef struct{
 	unsigned int     iph_requset_no;
 	unsigned int     iph_receive_no;
 	unsigned int     iph_refuse_no;
+	unsigned int     bcu_requset_no;
+	unsigned int     bcu_receive_no;
+	unsigned int     bcu_refuse_no;
 	unsigned char    select_enable_flag;
 	unsigned char 	car_select_flag[11];
 	unsigned char 	iph_select_flag[8];

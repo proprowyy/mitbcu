@@ -28,6 +28,7 @@ typedef struct linkstruct
 
 
 extern Node *PCURequsthead;
+extern Node *BCURequsthead;
 
 extern Node	*creat_linked_list();/*creat a link*/
 

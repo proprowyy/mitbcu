@@ -60,7 +60,7 @@ void UpdataPCURequestTable(unsigned char param_add_or_remove,unsigned char param
  *  @return  null
  */
 void ShowD2PRequest();
-
+void ShowD2DRequest();
 //void AdjustD2PRequestSequence(int param_pcu_no);
 
 /** SetD2PCmd function description
