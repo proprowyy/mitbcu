@@ -186,7 +186,7 @@ void NetWorkMain(network_buffer_t network_buffer)
 			net_debug_printf(("udp_heart_socket %d set mul_ip:%s,port :%d err!!!\n",
 			udp_heart_socket,MUL_IP_COMMON,UDP_HEART_PORT));
 		}
-		if(ZhwSetMulitIp(udp_common_big_socket, set_ip, MUL_IP_SYNC_COMMON_BCU, UDP_SYNC_COMMON_BCU_PORT) < 0){
+		if(ZhwSetMulitIp(udp_common_big_socket, set_ip, MUL_IP_SYNC_COMMON_BCU, UDP_BIG_PORT) < 0){
 			net_debug_printf(("BCU, sync, udp_common_big_socket=%d, mul_ip=%s,port=%d, error\n",
 			udp_common_big_socket, MUL_IP_SYNC_COMMON_BCU, UDP_SYNC_COMMON_BCU_PORT));
 		}
@@ -447,7 +447,7 @@ void NetWorkMain(network_buffer_t network_buffer)
 
 					if(common_big_package_buffer.pkg_type==9||common_big_package_buffer.pkg_type==10)
 					{
-						UdpSendFunCMD(udp_common_big_socket,&common_big_package_buffer,sizeof(common_big_package_t),MUL_IP_SYNC_COMMON_BCU,UDP_SYNC_COMMON_BCU_PORT);//发送控制数据
+						UdpSendFunCMD(udp_common_big_socket,&common_big_package_buffer,sizeof(common_big_package_t),MUL_IP_SYNC_COMMON_BCU,UDP_BIG_PORT);//发送控制数据
 					}
 				}
 			}

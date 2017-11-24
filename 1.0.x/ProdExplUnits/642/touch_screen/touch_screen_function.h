@@ -31,7 +31,7 @@ extern char d2d_intercomm_volume_digit_2_string_buffer[10];
 
 extern unsigned char d2p_reponse_sursor;
 extern unsigned int gwCurrCarNo;
-extern unsigned int gwCurrPcuNo;
+extern unsigned int gwCurrIphNO;
 extern Fl_Button *p_to_btn_first;
 extern Fl_Button *p_to_btn_second ;
 extern Fl_Button *p_to_btn_third ;
@@ -799,6 +799,7 @@ void ShowDeviceFailurePageButtonNameInfo(unsigned char flag);
 extern int G_SetAndClearPakage(int op,int pn,send_infomation_t *temp);
 extern int Select_car_count(unsigned int vn, int op,common_big_package_t  *parame,unsigned int *count);
 extern int SetMonitorBigPakage(int iph,unsigned int vn);
+extern int CannelMonitorBigPakage(int iph,unsigned int vn);
 extern int SetIntercomBigPackage(int vn,int iph,common_big_package_t  *parame);
 extern int sync_select_page(unsigned char *flag);
 extern int sum_select_car();
@@ -806,4 +807,5 @@ extern void chack_slecet_car_sum_enable_btn();
 extern int parse_btn_lable_value(const char *src,unsigned char *dst,unsigned char *vn);
 extern int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn);
 extern void SetD2dCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation);
+
 #endif

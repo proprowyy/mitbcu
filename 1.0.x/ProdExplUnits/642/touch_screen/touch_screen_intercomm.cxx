@@ -86,8 +86,8 @@ void ShowD2PRequest(){
 			(gp_intercomm->child(i))->hide();
 		  }
        }
+    	wz_window_view->value(gp_intercomm);
 		wz_select_window->value(main_group);
-
 }
 
 
@@ -185,8 +185,6 @@ void ChangeIntercommLabelState(int param_current_intercomm_state)
 		{
 			(gp_intercomm->child(i))->activate();
 		}
-
-
 		if(is_intercomming_with_pcu == 0)
 		{
 			btn_intercomm_accept->activate();
@@ -195,8 +193,6 @@ void ChangeIntercommLabelState(int param_current_intercomm_state)
 
 		btn_intercomm_refuse->activate();
 		btn_intercomm_refuse->show();
-
-
 	}
 	intercomm_debug_print(("ChangeIntercommLabelState finish"));
 }

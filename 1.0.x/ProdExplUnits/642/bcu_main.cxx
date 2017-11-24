@@ -445,7 +445,7 @@ void *SystemControl(void *arg)
 		{
 			/*show the detail of cmd information*/
 
-			//if(!TransformIntercomPackage(&recv_network_info_from_network)){diag_printf("error:%d:%s\n",__LINE__,__FUNCTION__);}
+			if(!TransformIntercomPackage(&recv_network_info_from_network)){diag_printf("error:%d:%s\n",__LINE__,__FUNCTION__);}
 
 				DisplayNetworkCmd(recv_network_info_from_network);
 
@@ -455,7 +455,7 @@ void *SystemControl(void *arg)
 				PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT+2);
 				PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT+1);
 			}
-			UpdataGlobalDeviceInfo(recv_network_info_from_network.send_information);
+			//UpdataGlobalDeviceInfo(recv_network_info_from_network.send_information);
 			cyg_thread_delay(10);
 			if(strcmp(recv_network_info_from_network.send_information.src_devices_name,"PCU") == 0)
 			{

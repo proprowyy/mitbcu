@@ -23,8 +23,6 @@ int ZhwSetMulitIp(int socke_fd, char client_ip[16], char mcast_ip[16], int port_
 	unsigned char loop = 0;
 	struct ip_mreq mreq;
 	bzero(&mreq, sizeof(struct ip_mreq));
-//	mreq.imr_multiaddr.s_addr = inet_addr(mcast_ip);
-//	mreq.imr_interface.s_addr = inet_addr(client_ip);
 
 	if (setsockopt(socke_fd, IPPROTO_IP, IP_MULTICAST_LOOP, &loop, sizeof(loop)) < 0)
 	{

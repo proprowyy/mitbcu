@@ -145,16 +145,10 @@ void IdleIntercomEnter(send_infomation_t *send_information_intercomm_idle)
 		///<发送相关命令给PCU
 		SendCmd(&send_information_intercomm_idle,"PCU",bcu_state.pcu_request_info.recept_pcu_no);
 
-		///<告知对端BCU当前PCU状态
-		//SendCmd(&p,"BCU",bcu_state.opposite_bcu_no);
-		///<告知CCU当前PCU状态
-		//SendCmd(&p1,"CCU",MUL_DST_NO);
 	}
-	if(send_information_intercomm_idle->event_type_intercom == D2D_INTERCOMM_EVENT)
-	{///<发送命令给对端BCU
-		SendCmd(&send_information_intercomm_idle,"BCU",bcu_state.opposite_bcu_no);
-	}
+	if(send_information_intercomm_idle->event_type_intercom==22)
 	SendCmd(&send_information_intercomm_idle,"PCU",send_information_intercomm_idle->event_info_intercom.d2p_intercomm.d2p_intercomm_pcu_device_no);
+
 	ClearAllAudioDataBuffer();
 #endif
 }
@@ -272,8 +266,6 @@ void D2DIntercomExit()
 
 	bcu_state.mic_owner = NONE;
 
-	///<发送本端BCU的PTT松开状态给BCU
-	SendBCUPTTReleaseStateTOBCU();
 	bcu_state.other_bcu_ptt_state = 0;
 
 	ClearAllAudioDataBuffer();

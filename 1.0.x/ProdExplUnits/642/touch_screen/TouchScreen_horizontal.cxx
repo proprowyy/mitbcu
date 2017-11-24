@@ -256,6 +256,7 @@ Fl_Button *btn_intercomm_accept=(Fl_Button *)0;
 
 static void cb_btn_intercomm_accept(Fl_Button*, void*) {
   RecvD2PRequest();
+BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
 }
 
 Fl_Button *btn_intercomm_refuse=(Fl_Button *)0;
@@ -273,6 +274,8 @@ BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,si
 cyg_thread_delay(100);
 
 RefuseD2PRequest();
+
+BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
 }
 
 Fl_Button *btn_intercomm_back=(Fl_Button *)0;
@@ -788,6 +791,7 @@ for(int i=0;i<8;i++){
 	enter1->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,1,&g_MonPcuCmdPakage);
+	gwCurrIphNO=1;
 	SetMonitorBigPakage(1,gwCurrCarNo);
 }
 
@@ -804,6 +808,7 @@ for(int i=0;i<8;i++){
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,2,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(2,gwCurrCarNo);
+	gwCurrIphNO=2;
 }
 
 Fl_Button *pcu_3=(Fl_Button *)0;
@@ -819,6 +824,7 @@ for(int i=0;i<8;i++){
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,3,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(3,gwCurrCarNo);
+	gwCurrIphNO=3;
 }
 
 Fl_Button *pcu_4=(Fl_Button *)0;
@@ -834,6 +840,7 @@ for(int i=0;i<8;i++){
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,4,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(4,gwCurrCarNo);
+	gwCurrIphNO=4;
 }
 
 Fl_Button *pcu_5=(Fl_Button *)0;
@@ -849,6 +856,7 @@ for(int i=0;i<8;i++){
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,5,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(5,gwCurrCarNo);
+	gwCurrIphNO=5;
 }
 
 Fl_Button *pcu_6=(Fl_Button *)0;
@@ -864,6 +872,7 @@ for(int i=0;i<8;i++){
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,6,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(6,gwCurrCarNo);
+	gwCurrIphNO=6;
 }
 
 Fl_Button *pcu_7=(Fl_Button *)0;
@@ -879,6 +888,7 @@ for(int i=0;i<8;i++){
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,7,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(7,gwCurrCarNo);
+	gwCurrIphNO=7;
 }
 
 Fl_Button *pcu_8=(Fl_Button *)0;
@@ -894,6 +904,7 @@ for(int i=0;i<8;i++){
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,8,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(8,gwCurrCarNo);
+	gwCurrIphNO=8;
 }
 
 Fl_Return_Button *btn_return=(Fl_Return_Button *)0;
@@ -919,7 +930,8 @@ btn_return->deactivate();
 Fl_Button *cancle_iph=(Fl_Button *)0;
 
 static void cb_cancle_iph(Fl_Button*, void*) {
-  int i;
+  CannelMonitorBigPakage(gwCurrIphNO,gwCurrCarNo);
+int i;
 for(i=0;i<8;i++)
 {
 
@@ -1392,7 +1404,6 @@ int touch_screen_main() {
       } // Fl_Group* gp_intercomm
       { gp_static_show = new Fl_Group(0, 0, 800, 384);
         gp_static_show->color((Fl_Color)246);
-        gp_static_show->hide();
         { title_static_volume_info = new Fl_Tile(20, 94, 135, 41, "\346\234\254\346\234\272\351\237\263\351\207\217");
           title_static_volume_info->labelsize(25);
           title_static_volume_info->align(Fl_Align(FL_ALIGN_WRAP));
@@ -1804,6 +1815,7 @@ int touch_screen_main() {
       } // Fl_Group* AnnOrMonitorSelect
       { D2D_intercom_page = new Fl_Group(0, 2, 850, 383);
         D2D_intercom_page->color((Fl_Color)246);
+        D2D_intercom_page->hide();
         { btn_d2d_1 = new Fl_Button(10, 12, 140, 95);
           btn_d2d_1->callback((Fl_Callback*)cb_btn_d2d_1);
           btn_d2d_1->hide();
@@ -1958,7 +1970,7 @@ int touch_screen_main() {
   			}
   			else if(switchFlag == 12)
   			{
-  			
+  				wz_window_view->value(gp_static_show);
   				wz_select_window->value(main_group);
   				switchFlag=0;	
   			}	

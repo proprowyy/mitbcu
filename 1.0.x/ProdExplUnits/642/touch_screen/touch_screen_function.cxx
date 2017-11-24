@@ -32,6 +32,7 @@ char d2d_intercomm_volume_digit_2_string_buffer[10] = "";//司机对讲音量信
 unsigned char d2p_reponse_sursor = 1;//选择PCU位置信息
 unsigned char whether_intercomm_button_is_active = 0;//紧急对讲按钮是否可以操作
 unsigned int gwCurrCarNo=0;
+unsigned int gwCurrIphNO=0;
 
 void SetPassword(const int password_number,char param_password_buffer[])
 {///<接收用户输入的密码
@@ -1096,7 +1097,6 @@ void DisableTS()
 
 int SetMonitorBigPakage(int iph,unsigned int vn)
 {
-
 			  int ret;
 			  common_big_package_t  parame;
 			  memset(&parame,0,sizeof(common_big_package_t));
@@ -1109,14 +1109,25 @@ int SetMonitorBigPakage(int iph,unsigned int vn)
 	    	  parame.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
 	    	  parame.common_big_data_u.iph_select_flag[iph-1]=1;
 	    	  ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));
-	    	  if (ret <0){
-	  			diag_printf("BlockBufferWrite faill. \n");
-	  			BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));
-
-	    	  }
 	    	  return 0;
 }
 
+int CannelMonitorBigPakage(int iph,unsigned int vn)
+{
+			  int ret;
+			  common_big_package_t  parame;
+			  memset(&parame,0,sizeof(common_big_package_t));
+	    	  strcpy(parame.src_dev_name,"DBCU");
+	    	  parame.src_dev_number =  bcu_state.bcu_info.devices_no;
+	    	  strcpy(parame.dst_dev_name,"OCS");
+	    	  parame.dst_dev_number = 230;
+	    	  parame.pkg_type=14;
+	    	  parame.common_big_data_u.car_no=vn;
+	    	  parame.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
+	    	  parame.common_big_data_u.iph_select_flag[iph-1]=1;
+	    	  ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));
+	    	  return 0;
+}
 
 
 int SetIntercomBigPackage(int vn,int iph,common_big_package_t  *parame)
@@ -1180,8 +1191,22 @@ int parse_btn_lable_value(const char *src,unsigned char *dst_device,unsigned cha
 		diag_printf("src argument is null, return <0.\n");
 		return (ret-1);
 	}
-	diag_printf("value=%s\n",src);
+	diag_printf("value=%c\n",src[3]);
+	diag_printf("value=%c\n",src[2]);
+	diag_printf("value=%c\n",src[4]);
 	diag_printf("value[8]=%c\n",src[8]);
+	switch (src[9])
+		{
+			case 49:*dst_device=1;break;
+			case 50:*dst_device=2;break;
+			case 51:*dst_device=3;break;
+			case 52:*dst_device=4;break;
+			case 53:*dst_device=5;break;
+			case 54:*dst_device=6;break;
+			case 55:*dst_device=7;break;
+			case 56:*dst_device=8;break;
+			default:diag_printf("Without this type !\n");break;
+		}
 	switch (src[8])
 	{
 		case 49:*dst_device=1;break;
@@ -1193,6 +1218,18 @@ int parse_btn_lable_value(const char *src,unsigned char *dst_device,unsigned cha
 		case 55:*dst_device=7;break;
 		case 56:*dst_device=8;break;
 		default:diag_printf("Without this type !\n");break;
+	}
+	if(src[2]==49&&src[3]==48)
+	{
+	*dst_vn=10;
+	diag_printf("v===========%d\n",*dst_vn);
+	return ret;
+	}
+	if(src[3]==49&&src[2]==49)
+	{
+			*dst_vn=11;
+			diag_printf("v===========%d\n",*dst_vn);
+			return ret;
 	}
 	switch(src[2])
 	{
@@ -1206,14 +1243,7 @@ int parse_btn_lable_value(const char *src,unsigned char *dst_device,unsigned cha
 			case 56:*dst_vn=8;break;
 			case 57:*dst_vn=9;break;
 			default:
-				if(src[3]==48&&src[2]==49)
-				{
-					*dst_vn=10;
-				}
-				if(src[3]==49&&src[2]==49)
-				{
-					*dst_vn=11;
-				}
+
 				break;
 	}
 		return ret;

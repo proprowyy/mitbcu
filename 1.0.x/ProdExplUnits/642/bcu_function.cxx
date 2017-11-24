@@ -2028,6 +2028,7 @@ static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 
 	if(	ret == 0)
 	{
+		BcuResetPlayAlarmAudioWhenD2pReq();
 		AlarmTSToChangeScreen(12);
 	}
 	return ret;
@@ -2041,7 +2042,7 @@ static int BcuDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 	BCURequsthead = deletes_list( BCURequsthead, p_BigConmInfo_temp->common_big_data_u.bcu_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
 
 	ret= dispalys(BCURequsthead);//显示请求，返回请求数
-
+	AlarmTSToChangeScreen(5);
 	if(	ret == 0)
 	{
 		AlarmTSToChangeScreen(12);
@@ -2149,9 +2150,12 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 		bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
 		break;
 	case 9:
+		diag_printf("this recv \n");
 		IphUpdateLink(p_BigConmInfo);
+
 		break;
 	case 10:
+		diag_printf("this refuse \n");
 		bcu_state.pcu_request_info.request_number=IphDeleteLink(p_BigConmInfo);
 		break;
 	case 11:
