@@ -41,6 +41,7 @@ extern Node *create_node();
 
 extern int dispalys(Node *head);
 
+extern int dispalys_no_recv(Node*head);
 
 extern Node* deletes_list( Node *head, int p_device_no, int p_vehicle_number);
 

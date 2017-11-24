@@ -271,3 +271,9 @@ void ShowNoPCURequest()
 
 
 }
+void disable_recv_refuse()
+{
+	btn_intercomm_accept->deactivate();
+	btn_intercomm_refuse->deactivate();
+
+}

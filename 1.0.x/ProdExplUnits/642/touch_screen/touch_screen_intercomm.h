@@ -113,4 +113,5 @@ void RecoverD2DBreakUpD2PBtnState();
  *  @return  null
  */
 void ShowNoPCURequest();
+void disable_recv_refuse();
 #endif

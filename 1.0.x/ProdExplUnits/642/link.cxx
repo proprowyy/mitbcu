@@ -168,6 +168,40 @@ int dispalys(Node*head)
 
 }
 
+
+int dispalys_no_recv(Node*head)
+{
+	diag_printf("The %s !\n",__FUNCTION__);
+
+	Node *temp = NULL;
+
+	temp = head->next;
+
+	int i = 0;
+
+	if(head->next == NULL)
+	{
+
+		diag_printf("This is empty !\n");
+
+	}
+	while( temp ){
+
+
+		diag_printf("Dispalys=%d,%d,%s\n",temp->vehicle_number,temp->devices_id,temp->devices_name);
+		if(temp->current_state==0)
+		{
+			i = i + 1;
+		}
+		temp = temp->next;
+
+
+}
+
+	return i;
+
+}
+
  Node* deletes_list( Node *head, int p_device_no, int p_vehicle_number){
 
 	 diag_printf("The %s !\n",__FUNCTION__);

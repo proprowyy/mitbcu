@@ -1302,7 +1302,8 @@ current_is_on_static_page = 0;
 Fl_Button *btn_emerg_ann=(Fl_Button *)0;
 
 static void cb_btn_emerg_ann(Fl_Button*, void*) {
-  ChangeBtnState(3);
+  return ;
+ChangeBtnState(3);
 gp_main_file_active_page=D2D_intercom_page;
 wz_window_view->value(gp_main_file_active_page);
 }
@@ -1404,6 +1405,7 @@ int touch_screen_main() {
       } // Fl_Group* gp_intercomm
       { gp_static_show = new Fl_Group(0, 0, 800, 384);
         gp_static_show->color((Fl_Color)246);
+        gp_static_show->hide();
         { title_static_volume_info = new Fl_Tile(20, 94, 135, 41, "\346\234\254\346\234\272\351\237\263\351\207\217");
           title_static_volume_info->labelsize(25);
           title_static_volume_info->align(Fl_Align(FL_ALIGN_WRAP));
@@ -1691,7 +1693,6 @@ int touch_screen_main() {
       } // Fl_Group* gp_window_black_screen
       { controlpage = new Fl_Group(0, -5, 805, 390);
         controlpage->color((Fl_Color)246);
-        controlpage->hide();
         { pcu_1 = new Fl_Button(10, 50, 140, 95, "PCU-1");
           pcu_1->callback((Fl_Callback*)cb_pcu_1);
         } // Fl_Button* pcu_1
@@ -2020,6 +2021,11 @@ int touch_screen_main() {
   			{
   				SyncSelectCarInfo();
   				switchFlag = 0;
+  			}
+  			else if(switchFlag ==45)
+  			{
+  				disable_recv_refuse();
+  				switchFlag=0;	
   			}
   					
   		}

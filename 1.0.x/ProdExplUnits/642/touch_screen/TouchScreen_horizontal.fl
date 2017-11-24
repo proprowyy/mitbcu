@@ -6,10 +6,10 @@ Function {touch_screen_main()} {open return_type int
 } {
   Fl_Window wd_touch_screen {
     label {Touch Screen} open
-    xywh {284 95 800 480} type Double box BORDER_BOX color 0 selection_color 0 resizable
-    code0 {\#include "ts_head_file.h"} visible
+    xywh {284 95 800 480} type Double box BORDER_BOX color 0 selection_color 0 hide resizable
+    code0 {\#include "ts_head_file.h"}
   } {
-    Fl_Wizard wz_window_view {
+    Fl_Wizard wz_window_view {open
       xywh {-70 -124 1290 794} box UP_BOX color 246
     } {
       Fl_Group gp_main_file {open
@@ -300,7 +300,7 @@ wz_window_view->value(gp_main_file);}
         }
       }
       Fl_Group gp_static_show {
-        xywh {0 0 800 384} color 246
+        xywh {0 0 800 384} color 246 hide
         code0 {gp_static_show->hide();}
       } {
         Fl_Tile title_static_volume_info {
@@ -802,7 +802,7 @@ SetDeviceVolumeCMDPackage(4,bcu_state.device_volume.d2d_volume);}
           xywh {495 301 135 70}
         }
       }
-      Fl_Group gp_setting_items {
+      Fl_Group gp_setting_items {open
         xywh {0 0 800 384} color 246 hide
         code0 {gp_setting_items->hide();}
       } {
@@ -829,8 +829,8 @@ gp_main_file_active_page->show();}
         xywh {0 0 800 384} color 0 hide
         code0 {gp_window_black_screen->hide();}
       } {}
-      Fl_Group controlpage {
-        xywh {0 -5 805 390} color 246 hide
+      Fl_Group controlpage {open
+        xywh {0 -5 805 390} color 246
         code0 {controlpage->hide();}
       } {
         Fl_Button pcu_1 {
@@ -1320,7 +1320,7 @@ SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
         }
       }
     }
-    Fl_Wizard wz_select_window {
+    Fl_Wizard wz_select_window {open
       xywh {0 384 800 96} box UP_BOX
       code0 {//select_window->hide();}
     } {
@@ -1343,9 +1343,10 @@ current_is_on_static_page = 0;}
         }
         Fl_Button btn_emerg_ann {
           label {车地广播}
-          callback {ChangeBtnState(3);
+          callback {return ;
+ChangeBtnState(3);
 gp_main_file_active_page=D2D_intercom_page;
-wz_window_view->value(gp_main_file_active_page);}
+wz_window_view->value(gp_main_file_active_page);} selected
           xywh {225 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
         }
         Fl_Button btn_live {
@@ -1485,14 +1486,18 @@ ChangeBtnState(4);}
 				SyncSelectCarInfo();
 				switchFlag = 0;
 			}
+			else if(switchFlag ==45)
+			{
+				disable_recv_refuse();
+				switchFlag=0;	
+			}
 					
 		}
      }
 
 \#else
     return Fl::run();
-\#endif} {selected
-  }
+\#endif} {}
 } 
 
 Function {TouchScreenMain(int a, int b)} {open return_type void

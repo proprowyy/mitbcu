@@ -2077,9 +2077,24 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 	{
 		return ret=-1 ;
 	}
-	AlarmTSToChangeScreen(6);
-	AlarmTSToChangeScreen(5);
-	return ret;
+
+	if(p_BigConmInfo_temp->common_big_data_u.seat_id!=bcu_state.bcu_info.devices_no)
+	{
+		PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
+
+	  ret= dispalys(PCURequsthead);//显示请求，返回请求数
+	}
+	 ret= dispalys(PCURequsthead);//显示请求，返回请求数
+
+
+		AlarmTSToChangeScreen(6);
+		AlarmTSToChangeScreen(5);
+		if(	ret == 0)
+		{
+			AlarmTSToChangeScreen(12);
+		}
+
+		return ret;
 
 }
 
@@ -2151,7 +2166,7 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 		break;
 	case 9:
 		diag_printf("this recv \n");
-		IphUpdateLink(p_BigConmInfo);
+		bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
 
 		break;
 	case 10:
