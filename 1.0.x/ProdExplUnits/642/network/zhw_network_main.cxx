@@ -292,8 +292,6 @@ void NetWorkMain(network_buffer_t network_buffer)
 			if(FD_ISSET(udp_heart_socket,&frd))//检测heart套接字是否有数据接收
 			{
 				net_debug_printf2(("There have heart package to receive\n"));
-
-
 				int ret = 0;
 				struct sockaddr_in recv_add = {0};
 				int len_num = sizeof(heart_package_buffer);
@@ -336,7 +334,6 @@ void NetWorkMain(network_buffer_t network_buffer)
 						network_shell_package_t recv_shell_from_network;
 						memcpy(&recv_shell_from_network,shell_recv_buffer,sizeof(network_shell_package_t));
 						DEBUG(">>>>>cmd = %d\n",recv_shell_from_network.cmd);
-
 						int ret = 0;
 						ret=BlockBufferWrite(network_buffer.udp_shell_socket_buffer.udp_shell_socket_recv_buffer, (void *)&shell_recv_buffer, sizeof(shell_recv_buffer));
 						if ( ret < 0 )
