@@ -570,12 +570,8 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 
 				}
 
-
-
-
 		else if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
 		{
-			if((bcu_state.this_bcu_ptt_state == 1 &&bcu_state.other_bcu_ptt_state == 0))
 			{
 				///<采集司机对讲音量数据
 				diag_printf("d2d ------------------audio\n");

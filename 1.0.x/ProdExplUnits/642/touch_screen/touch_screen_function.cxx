@@ -1267,6 +1267,23 @@ int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn)
 		case 50:*dst_device=2;break;
 		default:diag_printf("Without this type !\n");break;
 	}
+	switch (src[9])
+		{
+			case 49:*dst_device=1;break;
+			case 50:*dst_device=2;break;
+			default:diag_printf("Without this type !\n");break;
+		}
+	if(src[3]==48&&src[2]==49)
+		{
+						*dst_vn=10;
+						return ret;
+		}
+	if(src[3]==49&&src[2]==49)
+	{
+		*dst_vn=11;
+		return ret;
+	}
+
 	switch(src[2])
 	{
 			case 49:*dst_vn=1;break;
@@ -1279,14 +1296,6 @@ int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn)
 			case 56:*dst_vn=8;break;
 			case 57:*dst_vn=9;break;
 			default:
-				if(src[3]==48&&src[2]==49)
-				{
-					*dst_vn=10;
-				}
-				if(src[3]==49&&src[2]==49)
-				{
-					*dst_vn=11;
-				}
 				break;
 	}
 		return ret;
@@ -1330,5 +1339,25 @@ void SetD2dRefuseCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_
 			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_response = 0;
 			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_bcu_device_no =bcu_no;
 			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_ppt_state = 1;
+
+}
+void send_cannel_d2d_big_package(unsigned int vn,unsigned int bcu_no)
+{
+
+
+
+			common_big_package_t parame;
+			strcpy(parame.src_dev_name,"DBCU");
+		    parame.src_dev_number =  bcu_state.bcu_info.devices_no;
+		    parame.common_big_data_u.seat_id= bcu_state.bcu_info.devices_no;
+		    strcpy(parame.dst_dev_name,"OCS");
+		    parame.dst_dev_number = 230;
+		    parame.pkg_type=13;
+		    parame.common_big_data_u.car_no=6;
+		    parame.common_big_data_u.bcu_receive_no=1;
+		    parame.common_big_data_u.bcu_refuse_no=1;
+		    int ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));
+		    ret= BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,&parame,sizeof(common_big_package_t));
+
 
 }

@@ -880,7 +880,7 @@ void PutMicSampleDataintoBuffer_BCU(cyg_io_handle_t audio_handle, int buffer_id)
 	if(GetPTTState())
 	 wr_ret = CharBufferWrite(buffer_id, audio_tx, len);
 	 sd_debug_print(("wr_ret = %d\n",wr_ret));
-//	 CharBufferWrite(bcu_state.audio_data_recv_buffer_id, audio_tx, len);
+
 	return ;
 }
 

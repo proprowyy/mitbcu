@@ -1987,7 +1987,7 @@ static int BcuRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 		tempnode->next = NULL;
 		BCURequsthead = insert_list( BCURequsthead, tempnode);
 		ret = dispalys( BCURequsthead);//显示请求，返回请求数
-
+		enter_d2d->activate();
 		diag_printf("BCU Request \n");
 		return ret;
 }
@@ -1995,13 +1995,18 @@ static int BcuDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 {
 	int ret;
 	diag_printf("Over the d2d intercom .\n");
-
 	BCURequsthead = deletes_list( BCURequsthead, p_BigConmInfo_temp->common_big_data_u.bcu_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
-
 	ret= dispalys(BCURequsthead);//显示请求，返回请求数
 	if(	ret == 0)
 	{
+		enter_d2d->deactivate();
+		AlarmTSToChangeScreen(9);
 		AlarmTSToChangeScreen(12);
+	}
+	if(ret >0)
+	{
+		enter_d2d->activate();
+		AlarmTSToChangeScreen(9);
 	}
 	return ret;
 
@@ -2018,7 +2023,14 @@ static int BcuUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 	{
 		return ret=-1 ;
 	}
+	if(p_BigConmInfo_temp->common_big_data_u.seat_id!=bcu_state.bcu_info.devices_no)
+		{
+			BCURequsthead = deletes_list( BCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
 
+		  ret= dispalys(BCURequsthead);//显示请求，返回请求数
+		}
+	ret= dispalys(BCURequsthead);//显示请求，返回请求数
+	AlarmTSToChangeScreen(9);
 	return ret;
 
 }
@@ -2041,7 +2053,6 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 	  ret= dispalys(PCURequsthead);//显示请求，返回请求数
 	}
 	 ret= dispalys(PCURequsthead);//显示请求，返回请求数
-
 
 		AlarmTSToChangeScreen(6);
 		AlarmTSToChangeScreen(5);

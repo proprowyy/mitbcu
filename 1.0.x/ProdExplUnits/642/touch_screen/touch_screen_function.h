@@ -810,4 +810,7 @@ extern int parse_btn_lable_value(const char *src,unsigned char *dst,unsigned cha
 extern int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn);
 extern void SetD2dCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation);
 extern void SetD2dRefuseCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation);
+extern void send_cannel_d2d_big_package(unsigned int vn,unsigned int bcu_no);
+
+
 #endif

@@ -280,7 +280,7 @@ void NetWorkMain(network_buffer_t network_buffer)
 				ret = recvfrom(udp_common_big_socket, (void *)&common_big_package_buffer, len_num, 0, (struct sockaddr *)&recv_add, (socklen_t*)pToPackLen);
 				if ( ret > 0)
                 {
-
+					DEBUG("recv bigcom to ocs\n");
             	  ret = BlockBufferWrite(network_buffer.server_udp_socket_buffer.udp_server_socket_recv_buffer, (void *)&common_big_package_buffer, sizeof(common_big_package_buffer));
             	  if ( ret < 0 )
             	  {
@@ -445,7 +445,8 @@ void NetWorkMain(network_buffer_t network_buffer)
 
 					UdpSendFunCMD(udp_common_big_socket,&common_big_package_buffer,sizeof(common_big_package_t),OCS_IP,UDP_COMMON_BIG_PORT);//发送控制数据
 
-					if(common_big_package_buffer.pkg_type==9||common_big_package_buffer.pkg_type==10)
+					if(common_big_package_buffer.pkg_type==9||common_big_package_buffer.pkg_type==10||
+							common_big_package_buffer.pkg_type==12||common_big_package_buffer.pkg_type==13)
 					{
 						UdpSendFunCMD(udp_common_big_socket,&common_big_package_buffer,sizeof(common_big_package_t),MUL_IP_SYNC_COMMON_BCU,UDP_BIG_PORT);//发送控制数据
 					}
