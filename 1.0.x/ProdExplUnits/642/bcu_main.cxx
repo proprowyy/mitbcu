@@ -358,7 +358,7 @@ void *SystemControl(void *arg)
 		D2DHangUpD2PTimeOutHandle();
 
 		//司机对讲请求与挂断处理
-		D2DReqAndResponseHandle();
+		///D2DReqAndResponseHandle();
        
 
 			bcu_state.this_bcu_is_active=1;
@@ -435,7 +435,7 @@ void *SystemControl(void *arg)
 			if(recv_network_info_from_network.send_information.event_type_intercom == D2D_INTERCOMM_EVENT)
 			{
 
-				JudgeWhetherHaveD2DRequest(&recv_cmd_info_of_intercom,&recv_network_info_from_network);
+			//	JudgeWhetherHaveD2DRequest(&recv_cmd_info_of_intercom,&recv_network_info_from_network);
 			}
 
 		}
@@ -578,6 +578,7 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 			if((bcu_state.this_bcu_ptt_state == 1 &&bcu_state.other_bcu_ptt_state == 0))
 			{
 				///<采集司机对讲音量数据
+				diag_printf("d2d ------------------audio\n");
 				PutMicSampleDataintoBuffer_BCU(bcu_audio_handle, bcu_state.audio_data_send_buffer_id );
 
 			}

@@ -883,8 +883,6 @@ void JudegWhetherRequestD2D()
 	{
 		debug_print(("I want to enter D2D state\n"));
 
-//		last_control_flag = control_flag;control_flag = 217;
-
 		send_infomation_t D2D_request_cmd_package;
 
 		strcpy(D2D_request_cmd_package.src_devices_name,"BCU");
@@ -898,16 +896,12 @@ void JudegWhetherRequestD2D()
 		D2D_request_cmd_package.event_info_intercom.d2d_intercomm.d2d_intercomm_response = 0;
 		D2D_request_cmd_package.event_info_intercom.d2d_intercomm.d2d_intercomm_bcu_device_no = bcu_state.opposite_bcu_no;
 		D2D_request_cmd_package.event_info_intercom.d2d_intercomm.d2d_ppt_state = 1;
-
-//		last_control_flag = control_flag;control_flag = 218;
 		UpdataGlobalDeviceInfo(D2D_request_cmd_package);/*Update global device information*/
 		bcu_state.this_bcu_request = 1;
-//		last_control_flag = control_flag;control_flag = 219;
-		/*idle->d2d*/
 		StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_OR_DRIVER_CALL,&D2D_request_cmd_package);
-//		last_control_flag = control_flag;control_flag = 220;
+
 	}
-//	last_control_flag = control_flag;control_flag = 221;
+
 }
 
 
@@ -1950,21 +1944,7 @@ int TransformSendPackage(network_pcu_t *p_temp_pcu_network_package,network_send_
 	p_temp_pcu_network_package->d2p_intercomm_whether_is_connecting = p_recv_network_info->send_information.event_info_intercom.d2p_intercomm.d2p_intercomm_whether_is_connecting;
 	return 0;
 }
-static int BcuRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
-{
-		Node * tempnode = create_node();
-		int ret;
-		strcpy( tempnode->devices_name, "BCU");
-		tempnode->vehicle_number = p_BigConmInfo_temp->common_big_data_u.car_no;
-		tempnode->devices_id = p_BigConmInfo_temp->common_big_data_u.iph_requset_no;
-		tempnode->current_state = 0;
-		tempnode->next = NULL;
-		BCURequsthead = insert_list( BCURequsthead, tempnode);
-		ret = dispalys( BCURequsthead);//显示请求，返回请求数
 
-		diag_printf("BCU Request \n");
-		return ret;
-}
 static int IphRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 {
 		Node * tempnode = create_node();
@@ -1995,6 +1975,22 @@ static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 	return ret;
 
 }
+
+static int BcuRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
+{
+		Node * tempnode = create_node();
+		int ret;
+		strcpy( tempnode->devices_name, "BCU");
+		tempnode->vehicle_number = p_BigConmInfo_temp->common_big_data_u.car_no;
+		tempnode->devices_id = p_BigConmInfo_temp->common_big_data_u.bcu_requset_no;
+		tempnode->current_state = 0;
+		tempnode->next = NULL;
+		BCURequsthead = insert_list( BCURequsthead, tempnode);
+		ret = dispalys( BCURequsthead);//显示请求，返回请求数
+
+		diag_printf("BCU Request \n");
+		return ret;
+}
 static int BcuDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 {
 	int ret;
@@ -2003,7 +1999,6 @@ static int BcuDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 	BCURequsthead = deletes_list( BCURequsthead, p_BigConmInfo_temp->common_big_data_u.bcu_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
 
 	ret= dispalys(BCURequsthead);//显示请求，返回请求数
-	AlarmTSToChangeScreen(5);
 	if(	ret == 0)
 	{
 		AlarmTSToChangeScreen(12);

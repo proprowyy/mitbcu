@@ -32,6 +32,8 @@ extern char d2d_intercomm_volume_digit_2_string_buffer[10];
 extern unsigned char d2p_reponse_sursor;
 extern unsigned int gwCurrCarNo;
 extern unsigned int gwCurrIphNO;
+extern unsigned int gwCurrBcuNo;
+extern unsigned int gwCurD2dCarNo;
 extern Fl_Button *p_to_btn_first;
 extern Fl_Button *p_to_btn_second ;
 extern Fl_Button *p_to_btn_third ;
@@ -807,5 +809,5 @@ extern void chack_slecet_car_sum_enable_btn();
 extern int parse_btn_lable_value(const char *src,unsigned char *dst,unsigned char *vn);
 extern int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn);
 extern void SetD2dCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation);
-
+extern void SetD2dRefuseCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation);
 #endif

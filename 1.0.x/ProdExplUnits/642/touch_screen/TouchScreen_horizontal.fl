@@ -6,7 +6,7 @@ Function {touch_screen_main()} {open return_type int
 } {
   Fl_Window wd_touch_screen {
     label {Touch Screen} open
-    xywh {0 60 1366 573} type Double box BORDER_BOX color 0 selection_color 0 hide resizable
+    xywh {5 78 800 480} type Double box BORDER_BOX color 0 selection_color 0 hide resizable
     code0 {\#include "ts_head_file.h"}
   } {
     Fl_Wizard wz_window_view {open
@@ -829,7 +829,7 @@ gp_main_file_active_page->show();}
         xywh {0 0 800 384} color 0 hide
         code0 {gp_window_black_screen->hide();}
       } {}
-      Fl_Group controlpage {
+      Fl_Group controlpage {open
         xywh {0 -5 805 390} color 246 hide
         code0 {controlpage->hide();}
       } {
@@ -1240,6 +1240,8 @@ wz_select_window->activate();}
 int vn,bcu_no;
 sprintf(buf,"%s",btn_d2d_1->label());
 parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+gwCurrBcuNo=bcu_no;
+gwCurD2dCarNo=vn;
 SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
           xywh {10 12 140 95}
           code0 {btn_d2d_1->hide();}
@@ -1309,6 +1311,7 @@ SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
         }
         Fl_Button enter_d2d {
           label {接通}
+          callback {StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_OR_DRIVER_CALL,&bcu_send_infomation);}
           xywh {335 275 140 95}
         }
         Fl_Return_Button return_D2D {
@@ -1317,7 +1320,20 @@ SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
         }
         Fl_Button canenl_d2d {
           label {挂断}
-          callback {JudgeWhetherD2DHaveFinished();/*Judge whether have finish d2d*/}
+          callback {SetD2dRefuseCmdPackage(gwCurD2dCarNo,gwCurrBcuNo,&bcu_send_infomation);
+	StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_RELEASE_AND_DRIVER_RELEASE,&bcu_send_infomation);
+		
+			common_big_package_t parame;
+			strcpy(parame.src_dev_name,"DBCU");
+		    parame.src_dev_number =  bcu_state.bcu_info.devices_no;
+		    parame.common_big_data_u.seat_id= bcu_state.bcu_info.devices_no;
+		    strcpy(parame.dst_dev_name,"OCS");
+		    parame.dst_dev_number = 230;
+		    parame.pkg_type=13;
+		    parame.common_big_data_u.car_no=6;
+		    parame.common_big_data_u.bcu_receive_no=1;
+		    parame.common_big_data_u.bcu_refuse_no=1;
+		    int ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));} selected
           xywh {495 275 140 95}
         }
       }
@@ -1347,7 +1363,7 @@ current_is_on_static_page = 0;}
           label {车地广播}
           callback {ChangeBtnState(3);
 gp_main_file_active_page=D2D_intercom_page;
-wz_window_view->value(gp_main_file_active_page);} selected
+wz_window_view->value(gp_main_file_active_page);}
           xywh {225 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
         }
         Fl_Button btn_live {

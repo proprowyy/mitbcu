@@ -129,12 +129,17 @@ void IdleIntercomEnter(send_infomation_t *send_information_intercomm_idle)
 	///<开始或者结束PCU请求提示音
 	StartOrBrokeBroadcastPcuRequestAlarmAudioData();
 #ifndef CONFIG_TEST_SND_IN_MULTI_THREAD
-	debug_print(("I am idle intercom enter\n"));
+	diag_printf("I am idle intercom enter\n");
 
 	debug_print(("send_information_intercomm_idle->event_type_intercom = %d\n",send_information_intercomm_idle->event_type_intercom));
 	debug_print(("D2D_INTERCOMM_EVENT = %d,D2P_INTERCOMM_EVENT = %d\n",D2D_INTERCOMM_EVENT,D2P_INTERCOMM_EVENT));
 	debug_print(("bcu_state.active_pcu_no = %d\n",bcu_state.pcu_request_info.recept_pcu_no));
+	if(send_information_intercomm_idle->event_type_intercom == 7)
+	{
+		diag_printf("send refuse bcu cmd\n");
+		SendCmd(&send_information_intercomm_idle,"OCS",230);
 
+	}
 	if(send_information_intercomm_idle->event_type_intercom == D2P_INTERCOMM_EVENT)
 	{
 		send_infomation_t a,b,*p,*p1;
@@ -283,9 +288,6 @@ void D2DIntercomExit()
 	}
 
 	bcu_state.this_bcu_request = 0;
-
-
-
 	BCU_LED_BUTTON3_DIS;
 }
 

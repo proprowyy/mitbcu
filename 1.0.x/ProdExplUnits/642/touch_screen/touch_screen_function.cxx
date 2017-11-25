@@ -33,7 +33,8 @@ unsigned char d2p_reponse_sursor = 1;//选择PCU位置信息
 unsigned char whether_intercomm_button_is_active = 0;//紧急对讲按钮是否可以操作
 unsigned int gwCurrCarNo=0;
 unsigned int gwCurrIphNO=0;
-
+unsigned int gwCurrBcuNo=0;
+unsigned int gwCurD2dCarNo=0;
 void SetPassword(const int password_number,char param_password_buffer[])
 {///<接收用户输入的密码
 	int length = (int)strlen(param_password_buffer);
@@ -1303,14 +1304,28 @@ void SetD2dCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *par
 		    parame.pkg_type=12;
 		    parame.common_big_data_u.car_no=vn;
 		    parame.common_big_data_u.bcu_receive_no=bcu_no;
-		    parame.common_big_data_u.iph_refuse_no=bcu_no;
+		    parame.common_big_data_u.bcu_refuse_no=bcu_no;
 		    int ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));
 		    memset(param_send_infomation,0,sizeof(send_infomation_t));
 			strcpy(param_send_infomation->src_devices_name,"BCU");
 			param_send_infomation->src_devices_no = bcu_state.bcu_info.devices_no;
-			param_send_infomation->event_type_ann = ANN_IDLE;
+			param_send_infomation->event_type_ann =ANN_IDLE;
 			param_send_infomation->event_type_intercom = D2D_INTERCOMM_EVENT;
 			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_active = 1;
+			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_request_or_over = 0;
+			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_response = 0;
+			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_bcu_device_no =bcu_no;
+			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_ppt_state = 1;
+
+}
+void SetD2dRefuseCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation)
+{
+		    memset(param_send_infomation,0,sizeof(send_infomation_t));
+			strcpy(param_send_infomation->src_devices_name,"BCU");
+			param_send_infomation->src_devices_no = bcu_state.bcu_info.devices_no;
+			param_send_infomation->event_type_ann =ANN_IDLE;
+			param_send_infomation->event_type_intercom = D2D_INTERCOMM_EVENT;
+			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_active = 0;
 			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_request_or_over = 0;
 			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_response = 0;
 			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_bcu_device_no =bcu_no;

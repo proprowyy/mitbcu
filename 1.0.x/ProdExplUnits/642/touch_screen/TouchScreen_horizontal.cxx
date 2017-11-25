@@ -1199,6 +1199,8 @@ static void cb_btn_d2d_1(Fl_Button*, void*) {
 int vn,bcu_no;
 sprintf(buf,"%s",btn_d2d_1->label());
 parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
+gwCurrBcuNo=bcu_no;
+gwCurD2dCarNo=vn;
 SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
 }
 
@@ -1274,12 +1276,29 @@ SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
 
 Fl_Button *enter_d2d=(Fl_Button *)0;
 
+static void cb_enter_d2d(Fl_Button*, void*) {
+  StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_OR_DRIVER_CALL,&bcu_send_infomation);
+}
+
 Fl_Return_Button *return_D2D=(Fl_Return_Button *)0;
 
 Fl_Button *canenl_d2d=(Fl_Button *)0;
 
 static void cb_canenl_d2d(Fl_Button*, void*) {
-  JudgeWhetherD2DHaveFinished();/*Judge whether have finish d2d*/;
+  SetD2dRefuseCmdPackage(gwCurD2dCarNo,gwCurrBcuNo,&bcu_send_infomation);
+	StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_RELEASE_AND_DRIVER_RELEASE,&bcu_send_infomation);
+		
+			common_big_package_t parame;
+			strcpy(parame.src_dev_name,"DBCU");
+		    parame.src_dev_number =  bcu_state.bcu_info.devices_no;
+		    parame.common_big_data_u.seat_id= bcu_state.bcu_info.devices_no;
+		    strcpy(parame.dst_dev_name,"OCS");
+		    parame.dst_dev_number = 230;
+		    parame.pkg_type=13;
+		    parame.common_big_data_u.car_no=6;
+		    parame.common_big_data_u.bcu_receive_no=1;
+		    parame.common_big_data_u.bcu_refuse_no=1;
+		    int ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));
 }
 
 Fl_Wizard *wz_select_window=(Fl_Wizard *)0;
@@ -1328,7 +1347,7 @@ static void cb_btn_intercomm(Fl_Button*, void*) {
 Fl_Group *gp_select_black=(Fl_Group *)0;
 
 int touch_screen_main() {
-  { wd_touch_screen = new Fl_Double_Window(1366, 573, "Touch Screen");
+  { wd_touch_screen = new Fl_Double_Window(800, 480, "Touch Screen");
     wd_touch_screen->box(FL_BORDER_BOX);
     wd_touch_screen->color(FL_FOREGROUND_COLOR);
     wd_touch_screen->selection_color(FL_FOREGROUND_COLOR);
@@ -1849,6 +1868,7 @@ int touch_screen_main() {
           btn_d2d_8->hide();
         } // Fl_Button* btn_d2d_8
         { enter_d2d = new Fl_Button(335, 275, 140, 95, "\346\216\245\351\200\232");
+          enter_d2d->callback((Fl_Callback*)cb_enter_d2d);
         } // Fl_Button* enter_d2d
         { return_D2D = new Fl_Return_Button(650, 275, 140, 95, "\350\277\224\345\233\236");
         } // Fl_Return_Button* return_D2D
