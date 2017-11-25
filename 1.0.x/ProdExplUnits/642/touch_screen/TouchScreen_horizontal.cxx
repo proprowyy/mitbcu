@@ -1302,8 +1302,7 @@ current_is_on_static_page = 0;
 Fl_Button *btn_emerg_ann=(Fl_Button *)0;
 
 static void cb_btn_emerg_ann(Fl_Button*, void*) {
-  return ;
-ChangeBtnState(3);
+  ChangeBtnState(3);
 gp_main_file_active_page=D2D_intercom_page;
 wz_window_view->value(gp_main_file_active_page);
 }
@@ -1329,7 +1328,7 @@ static void cb_btn_intercomm(Fl_Button*, void*) {
 Fl_Group *gp_select_black=(Fl_Group *)0;
 
 int touch_screen_main() {
-  { wd_touch_screen = new Fl_Double_Window(800, 480, "Touch Screen");
+  { wd_touch_screen = new Fl_Double_Window(1366, 573, "Touch Screen");
     wd_touch_screen->box(FL_BORDER_BOX);
     wd_touch_screen->color(FL_FOREGROUND_COLOR);
     wd_touch_screen->selection_color(FL_FOREGROUND_COLOR);
@@ -1693,6 +1692,7 @@ int touch_screen_main() {
       } // Fl_Group* gp_window_black_screen
       { controlpage = new Fl_Group(0, -5, 805, 390);
         controlpage->color((Fl_Color)246);
+        controlpage->hide();
         { pcu_1 = new Fl_Button(10, 50, 140, 95, "PCU-1");
           pcu_1->callback((Fl_Callback*)cb_pcu_1);
         } // Fl_Button* pcu_1
@@ -1816,7 +1816,6 @@ int touch_screen_main() {
       } // Fl_Group* AnnOrMonitorSelect
       { D2D_intercom_page = new Fl_Group(0, 2, 850, 383);
         D2D_intercom_page->color((Fl_Color)246);
-        D2D_intercom_page->hide();
         { btn_d2d_1 = new Fl_Button(10, 12, 140, 95);
           btn_d2d_1->callback((Fl_Callback*)cb_btn_d2d_1);
           btn_d2d_1->hide();
@@ -1849,11 +1848,11 @@ int touch_screen_main() {
           btn_d2d_8->callback((Fl_Callback*)cb_btn_d2d_8);
           btn_d2d_8->hide();
         } // Fl_Button* btn_d2d_8
-        { enter_d2d = new Fl_Button(335, 275, 140, 95);
+        { enter_d2d = new Fl_Button(335, 275, 140, 95, "\346\216\245\351\200\232");
         } // Fl_Button* enter_d2d
         { return_D2D = new Fl_Return_Button(650, 275, 140, 95, "\350\277\224\345\233\236");
         } // Fl_Return_Button* return_D2D
-        { canenl_d2d = new Fl_Button(495, 275, 140, 95);
+        { canenl_d2d = new Fl_Button(495, 275, 140, 95, "\346\214\202\346\226\255");
           canenl_d2d->callback((Fl_Callback*)cb_canenl_d2d);
         } // Fl_Button* canenl_d2d
         D2D_intercom_page->hide();

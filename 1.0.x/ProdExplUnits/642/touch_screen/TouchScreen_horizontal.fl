@@ -6,7 +6,7 @@ Function {touch_screen_main()} {open return_type int
 } {
   Fl_Window wd_touch_screen {
     label {Touch Screen} open
-    xywh {284 95 800 480} type Double box BORDER_BOX color 0 selection_color 0 hide resizable
+    xywh {0 60 1366 573} type Double box BORDER_BOX color 0 selection_color 0 hide resizable
     code0 {\#include "ts_head_file.h"}
   } {
     Fl_Wizard wz_window_view {open
@@ -829,8 +829,8 @@ gp_main_file_active_page->show();}
         xywh {0 0 800 384} color 0 hide
         code0 {gp_window_black_screen->hide();}
       } {}
-      Fl_Group controlpage {open
-        xywh {0 -5 805 390} color 246
+      Fl_Group controlpage {
+        xywh {0 -5 805 390} color 246 hide
         code0 {controlpage->hide();}
       } {
         Fl_Button pcu_1 {
@@ -1231,8 +1231,8 @@ wz_select_window->activate();}
           xywh {650 280 140 95}
         }
       }
-      Fl_Group D2D_intercom_page {
-        xywh {0 2 850 383} color 246 hide
+      Fl_Group D2D_intercom_page {open
+        xywh {0 2 850 383} color 246
         code0 {D2D_intercom_page->hide();}
       } {
         Fl_Button btn_d2d_1 {
@@ -1308,6 +1308,7 @@ SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
           code0 {btn_d2d_8->hide();}
         }
         Fl_Button enter_d2d {
+          label {接通}
           xywh {335 275 140 95}
         }
         Fl_Return_Button return_D2D {
@@ -1315,6 +1316,7 @@ SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);}
           xywh {650 275 140 95}
         }
         Fl_Button canenl_d2d {
+          label {挂断}
           callback {JudgeWhetherD2DHaveFinished();/*Judge whether have finish d2d*/}
           xywh {495 275 140 95}
         }
@@ -1343,8 +1345,7 @@ current_is_on_static_page = 0;}
         }
         Fl_Button btn_emerg_ann {
           label {车地广播}
-          callback {return ;
-ChangeBtnState(3);
+          callback {ChangeBtnState(3);
 gp_main_file_active_page=D2D_intercom_page;
 wz_window_view->value(gp_main_file_active_page);} selected
           xywh {225 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128

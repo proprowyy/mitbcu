@@ -380,37 +380,6 @@ void *SystemControl(void *arg)
 		///<PCU请求时，改变相关按钮的颜色
 		ChangeIntercommButtonColor(&whether_ts_is_running);
 
-#if 0
-
-
-		/*device volume info*/
-		if(BlockBufferRead(bcu_state.dev_vol_info_buffer_id,&ctrl_recv_from_ts,sizeof(ctrl_recv_from_ts)) > 0  &&
-				bcu_state.this_bcu_is_active ==1 )
-		{///<触摸屏设备音量
-
-		 if(strcmp(ctrl_recv_from_ts.device_name,"BCU") == 0)
-			{
-				debug_print(("ctrl_recv_from_ts.device_volume = %d\n",ctrl_recv_from_ts.device_volume));
-				bcu_state.device_volume.d2d_volume = ctrl_recv_from_ts.device_volume;
-				bcu_6d5w_ctrl_wilson(bcu_state.device_volume.d2d_volume) ;
-				diag_printf("set d2d volume = %d\n",bcu_state.device_volume.d2d_volume);
-
-				memcpy((void *)&dev_vol_to_bcu.common_data_u.ts_dev_volume_info,(void *)&ctrl_recv_from_ts,sizeof(ctrl_recv_from_ts));
-				strcpy(dev_vol_to_bcu.common_data_u.ts_dev_volume_info.device_name,"BCU");
-
-				dev_vol_to_ccu.pkg_type = COMMON_PACKAGE_TYPE_DEVICE_INFO;
-				dev_vol_to_bcu.pkg_type = COMMON_PACKAGE_TYPE_DEVICE_INFO;
-
-				if(bcu_state.bcu_active_intercom_state->state_id != INTERCOM_IDLE)
-				{
-					AdjustVolumeAfterCODEC();
-				}
-
-				memcpy((void *)&dev_vol_to_ccu.common_data_u,(void *)&dev_vol_to_bcu.common_data_u,sizeof(dev_vol_to_bcu.common_data_u));
-				BCUSendDevVolumeInfoToD2DOtherDev();
-			}
-		}
-#endif
 		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0){
 			diag_printf("recv a big common pakge !\n");
 			ProbeBigCommPackage(&recv_temp_big);

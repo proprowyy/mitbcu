@@ -1084,59 +1084,22 @@ void JudgeWhetherHaveD2DRequest(send_infomation_t *param_cmd_info,network_send_p
 	   param_network_cmd_info->send_information.event_info_intercom.d2d_intercomm.d2d_intercomm_request_or_over == 0 &&
 	   param_network_cmd_info->send_information.event_info_intercom.d2d_intercomm.d2d_intercomm_response == 0)
 	{
-		///<begin 2013-12-18
-		//bcu_state.other_bcu_ptt_state = param_network_cmd_info->send_information.event_info_intercom.d2d_intercomm.d2d_ppt_state;
-
-		///<over 2013-12-18
-		if((bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT ||
-				bcu_state.bcu_active_ann_state->state_id == MIC_3D5_OUTER_EVENT||
-				bcu_state.bcu_active_ann_state->state_id == OCC_EVENT) &&
-				bcu_state.bcu_active_intercom_state->state_id != D2P_INTERCOMM_EVENT)//提示仲裁界面
+		if((bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT ) &&bcu_state.bcu_active_intercom_state->state_id != D2P_INTERCOMM_EVENT)//提示仲裁界面
 		{
 
 			if(bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT)
 			{
 
 				ForceExitLiveStateBeforeIntercomm();
-
 			}
-
-
-		}
-		if(bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT)	/*There have driver request*/
-		{
-
-			if(WhetherWantToExchangeState(param_network_cmd_info->send_information))//系统转换成司机对讲状态，并且使的PCU进入Pending状态
-			{
-
-				memcpy((void *)&param_send_infomation,(void *)&param_network_cmd_info->send_information,sizeof(param_network_cmd_info->send_information));
-				param_send_infomation.event_info_intercom.d2d_intercomm.d2d_intercomm_response = 1;
-
-
-				param_send_infomation.init = NULL;/*need to modify*/
-				param_send_infomation.setinformation = NULL;
-				StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_TRANSFER_TO_D2D_OR_DRIVER_CALL,&param_send_infomation);
-			}
-			else
-			{
-				strcpy((char *)param_cmd_info,(char *)&param_network_cmd_info->send_information);
-			}
-		}
-		else/*Current state is IDLE_INTERCOMM*/
-		{
-//			last_control_flag = control_flag;control_flag = 277;
 			if(WhetherWantToExchangeState(param_network_cmd_info->send_information))
 			{
-//				last_control_flag = control_flag;control_flag = 278;
+
 				memcpy((void *)&param_send_infomation,(void *)&param_network_cmd_info->send_information,sizeof(param_network_cmd_info->send_information));
 				param_send_infomation.event_info_intercom.d2d_intercomm.d2d_intercomm_response = 1;
-
 				param_send_infomation.init = NULL;/*need to modify*/
-
 				param_send_infomation.setinformation = NULL;
-//				last_control_flag = control_flag;control_flag = 279;
 				StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_OR_DRIVER_CALL,&param_send_infomation);
-//				last_control_flag = control_flag;control_flag = 280;
 			}
 			else
 			{
@@ -1150,17 +1113,16 @@ void JudgeWhetherHaveD2DRequest(send_infomation_t *param_cmd_info,network_send_p
 			if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
 			{
 				bcu_state.other_bcu_ptt_state =  0;
-//				last_control_flag = control_flag;control_flag = 281;
 				NetFinishD2D();
-//				last_control_flag = control_flag;control_flag = 282;
-			}
-			else if(bcu_state.bcu_active_intercom_state->state_id == D2D_HANGUP_D2P_EVENT)
-			{
-				bcu_state.other_bcu_ptt_state =  0;
-
-				judgeWheteherExitD2DEnterD2P();
 
 			}
+			//else if(bcu_state.bcu_active_intercom_state->state_id == D2D_HANGUP_D2P_EVENT)
+			//{
+			//	bcu_state.other_bcu_ptt_state =  0;
+
+			//	judgeWheteherExitD2DEnterD2P();
+
+			//}
 		}
 }
 void SendPTTStateToPCU()
@@ -1564,8 +1526,7 @@ void GetOuterButtonState()
 			}
 }
 void JudegD2PButton()
-{///<判定D2P外部按钮
-//	if(GetD2PExternButtonState() == 1)
+{
 	{
 		diag_printf("bcu_state.pcu_request_info.request_number=%d\n",bcu_state.pcu_request_info.request_number);
 		diag_printf("bcu_state.d2p_button_state======%d\n",bcu_state.d2p_button_state);
@@ -1594,10 +1555,8 @@ void JudegD2PButton()
 			}
 
 			RefuseD2PRequest();
-
-			diag_printf("refuse d2p -02\n");
 			wd_touch_screen->show();
-			diag_printf("refuse d2p -03\n");
+
 		}
 	}
 }
@@ -2002,6 +1961,8 @@ static int BcuRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 		tempnode->next = NULL;
 		BCURequsthead = insert_list( BCURequsthead, tempnode);
 		ret = dispalys( BCURequsthead);//显示请求，返回请求数
+
+		diag_printf("BCU Request \n");
 		return ret;
 }
 static int IphRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
@@ -2165,9 +2126,11 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 		bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
 		break;
 	case 9:
-		diag_printf("this recv \n");
-		bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
-
+		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE)
+		{
+			diag_printf("this recv \n");
+			bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
+		}
 		break;
 	case 10:
 		diag_printf("this refuse \n");

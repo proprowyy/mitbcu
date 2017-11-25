@@ -37,7 +37,7 @@
 #ifndef LOW_TEST
 #define LOW_TEST 1
 #endif
-#define BCU_DEV_NO 2
+#define BCU_DEV_NO 1
 struct dev_type_and_no
 {
 	int dev_type;

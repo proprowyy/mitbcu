@@ -96,9 +96,8 @@ void ShowD2DRequest(){
 	int i=0;
 	static char buffer[8][20];
 	memset(Record,0,sizeof(Record));
-	diag_printf("pcu_request_number=%d\n",bcu_state.bcu_request_number);
 	Node *temp;
-    temp=PCURequsthead->next;
+    temp=BCURequsthead->next;
     if(bcu_state.bcu_request_number>8){
     	for(i = 0;i < 8;i ++){
 		if(temp != NULL){
@@ -130,7 +129,8 @@ void ShowD2DRequest(){
 			(D2D_intercom_page->child(i))->hide();
 		  }
        }
-		wz_select_window->value(main_group);
+    		wz_window_view->value(D2D_intercom_page);
+    		wz_select_window->value(main_group);
 
 }
 
