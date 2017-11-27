@@ -1881,6 +1881,7 @@ int touch_screen_main() {
       } // Fl_Group* gp_select_car_ann_page
       { AnnOrMonitorSelect = new Fl_Group(0, 0, 850, 388);
         AnnOrMonitorSelect->color((Fl_Color)246);
+        AnnOrMonitorSelect->hide();
         { btn_enter = new Fl_Button(205, 140, 140, 95, "\345\271\277\346\222\255");
           btn_enter->selection_color((Fl_Color)2);
           btn_enter->callback((Fl_Callback*)cb_btn_enter);
@@ -1904,7 +1905,6 @@ int touch_screen_main() {
       } // Fl_Group* AnnOrMonitorSelect
       { D2D_intercom_page = new Fl_Group(0, 2, 850, 383);
         D2D_intercom_page->color((Fl_Color)246);
-        D2D_intercom_page->hide();
         { btn_d2d_1 = new Fl_Button(10, 12, 140, 95);
           btn_d2d_1->callback((Fl_Callback*)cb_btn_d2d_1);
           btn_d2d_1->hide();

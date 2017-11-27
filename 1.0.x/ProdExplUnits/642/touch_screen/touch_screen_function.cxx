@@ -1175,10 +1175,10 @@ int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn)
 			default:diag_printf("Without this type !\n");break;
 		}
 	if(src[3]==48&&src[2]==49)
-		{
-						*dst_vn=10;
-						return ret;
-		}
+	{
+				*dst_vn=10;
+				return ret;
+	}
 	if(src[3]==49&&src[2]==49)
 	{
 		*dst_vn=11;
@@ -1251,9 +1251,9 @@ void send_cannel_d2d_big_package(unsigned int vn,unsigned int bcu_no)
 		    strcpy(parame.dst_dev_name,"OCS");
 		    parame.dst_dev_number = 230;
 		    parame.pkg_type=13;
-		    parame.common_big_data_u.car_no=6;
-		    parame.common_big_data_u.bcu_receive_no=1;
-		    parame.common_big_data_u.bcu_refuse_no=1;
+		    parame.common_big_data_u.car_no=vn;
+		    parame.common_big_data_u.bcu_receive_no=bcu_no;
+		    parame.common_big_data_u.bcu_refuse_no=bcu_no;
 		    int ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));
 		    ret= BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,&parame,sizeof(common_big_package_t));
 

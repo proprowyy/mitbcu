@@ -1997,6 +1997,7 @@ static int BcuDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 	ret= dispalys(BCURequsthead);//显示请求，返回请求数
 	if(	ret == 0)
 	{
+		bcu_state.bcu_request_number=ret;
 		enter_d2d->deactivate();
 		AlarmTSToChangeScreen(9);
 		AlarmTSToChangeScreen(12);
