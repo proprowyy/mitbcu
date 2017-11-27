@@ -2129,14 +2129,15 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 			AlarmTSToChangeScreen(33);
 		break;
 	case 8:
-		bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
+		if(bcu_state.bcu_active_intercom_state->state_id ==INTERCOM_IDLE&&
+		   bcu_state.bcu_active_intercom_state->state_id==ANN_IDLE)
+		{
+			bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
+		}
 		break;
 	case 9:
-		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE)
-		{
-			diag_printf("this recv \n");
-			bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
-		}
+		diag_printf("this recv \n");
+		bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
 		break;
 	case 10:
 		diag_printf("this refuse \n");

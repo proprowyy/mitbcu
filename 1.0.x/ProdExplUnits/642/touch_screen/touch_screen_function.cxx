@@ -301,12 +301,8 @@ void ExchangeBtnPosition()
 			p_to_btn_second = btn_live;
 		}
 		
-	//	p_to_btn_first->position(172,397);
 		p_to_btn_first->position(492,397);
-		
 		p_to_btn_second->position(332,397);
-		
-	//	p_to_btn_third->position(492,397);
 		p_to_btn_third->position(172,397);
 }
 
@@ -1343,9 +1339,6 @@ void SetD2dRefuseCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_
 }
 void send_cannel_d2d_big_package(unsigned int vn,unsigned int bcu_no)
 {
-
-
-
 			common_big_package_t parame;
 			strcpy(parame.src_dev_name,"DBCU");
 		    parame.src_dev_number =  bcu_state.bcu_info.devices_no;

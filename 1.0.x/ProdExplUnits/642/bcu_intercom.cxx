@@ -20,9 +20,6 @@
 cyg_handle_t  counter_handle_d2d_hangup_d2p_timeout;
 cyg_handle_t alarm_handle_d2d_hangup_d2p_timeout;
 cyg_alarm alarm_object_d2d_hangup_d2p_timeout;
-
-
-
 int whether_d2d_hangup_d2p_timeout = 0;//司机对讲挂起紧急对讲超时，目前没有使用
 int begin_to_broadcast_d2d = 0;//开始播放司机对讲音频数据
 unsigned  char  current_is_broadcastting_pcu_request_alarm_audio_data = 0;//当前坐在播放pcu请求提示音

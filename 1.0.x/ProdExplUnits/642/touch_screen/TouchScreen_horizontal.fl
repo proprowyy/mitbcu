@@ -1258,7 +1258,7 @@ wz_window_view->value(gp_main_file_active_page);
 wz_select_window->activate();
 	
 		
-}} selected
+}}
           xywh {205 140 140 95} selection_color 2
           code0 {btn_enter->deactivate();btn_enter->color((Fl_Color)50);}
         }
@@ -1411,7 +1411,7 @@ canenl_d2d->deactivate();}
       xywh {0 384 800 96} box UP_BOX
       code0 {//select_window->hide();}
     } {
-      Fl_Group main_group {
+      Fl_Group main_group {open
         xywh {0 384 800 96} color 191
       } {
         Fl_Button btn_main_file {
@@ -1429,10 +1429,10 @@ current_is_on_static_page = 0;}
           code1 {gp_main_file_active_page = gp_main_file;}
         }
         Fl_Button btn_emerg_ann {
-          label {车地广播}
+          label {车地对讲}
           callback {ChangeBtnState(3);
 gp_main_file_active_page=D2D_intercom_page;
-wz_window_view->value(gp_main_file_active_page);}
+wz_window_view->value(gp_main_file_active_page);} selected
           xywh {225 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
         }
         Fl_Button btn_live {

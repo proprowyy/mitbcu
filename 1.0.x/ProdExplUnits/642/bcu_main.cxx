@@ -314,7 +314,6 @@ void *SystemControl(void *arg)
 	///<相关命令包的初始化
 	ControlCommomPackageInit(&dev_vol_to_eamp,&dev_vol_to_pcu,&dev_vol_to_bcu,&dev_vol_to_ccu);
 
-	int counts_of_control_running = 0;///<控制线程运行次数
 	int whether_ts_is_running = 0;
 	int temp_current_pcu_request_number = 0;
 
@@ -325,19 +324,6 @@ void *SystemControl(void *arg)
 
 	for(;;)
 	{
-		counts_of_control_running = counts_of_control_running + 1;
-		if(counts_of_control_running == 100)
-		{
-					debug_print(("volume:d2d:%d\n   d2p:%d\n     monitor:%d\n     pa:%d,--%d,%d,%d,%d\n",
-					bcu_state.device_volume.d2d_volume,
-					bcu_state.device_volume.intercomm_volume,
-					bcu_state.device_volume.monitor_volume,bcu_state.device_volume.car_volume,
-					bcu_state.bcu_active_intercom_state->state_id,current_dia,
-					bcu_state.bcu_mcu_connect_state,
-					bcu_state.bcu_cmu_connect_car_type));
-					counts_of_control_running = 0;
-
-		}
 
 		///获取所有外部按钮当前状态
 		GetPAAllOuterButtonState();

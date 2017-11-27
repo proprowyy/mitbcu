@@ -151,20 +151,12 @@ int BcuPlayAudio(cyg_io_handle_t audio_handle, int audio_source_buffer_id)
 	}
 	char temp_buffer[2 * 1024] = "\0";
 	current_total_bytes = CharBufferRead(audio_source_buffer_id,temp_buffer,(2 * 1024));
-//	len = strlen(temp_buffer);
 	len = current_total_bytes;
 	debug_print(("before: current_total_bytes=%d, len=%d\n", current_total_bytes, len));
-//	if(len < 128)
-//	{
-//		return 0;
-//	}
-
 	len_backup = len;
 	snd_set_local = (1<<8) | CYG_SND_AUDIO_STREAM ;
 	ret_bwrite = cyg_io_bwrite( audio_handle, (void *)temp_buffer, (cyg_uint32  *)&len, snd_set_local);
-
 	debug_print(("after: bw=%d, len=%d,%d\n", ret_bwrite, len, len_backup));
-
 	return 0;
 }
 int PlayAudioTwice(cyg_io_handle_t audio_handle, int audio_source_buffer_id, int pending_audio_buffer_id)
@@ -737,13 +729,10 @@ int BcuPlayAudio_analog(cyg_io_handle_t audio_handle, int audio_source_buffer_id
 	}
 	char temp_buffer[1 * 1024] = "\0";
 	current_total_bytes = CharBufferRead(audio_source_buffer_id,temp_buffer,(1 * 1024));
-//	len = strlen(temp_buffer);
+
 	len = current_total_bytes;
 	debug_print(("before: current_total_bytes=%d, len=%d\n", current_total_bytes, len));
-//	if(len < 128)
-//	{
-//		return 0;
-//	}
+
 
 	len_backup = len;
 	snd_set_local = (1<<8) | CYG_SND_AUDIO_STREAM ;

@@ -35,16 +35,7 @@ int GetCurrentDeviceInfomation(device_id_info_t *this_device_id_info)
 /*Acquire other device number*/
 void GetOtherDeviceNo()
 {
-	if(bcu_state.bcu_info.devices_no == 1)
-	{
-		bcu_state.bcu_info.devices_no=1;
-		bcu_state.opposite_bcu_no = 2;
-	}
-	else
-	{
-		bcu_state.bcu_info.devices_no=2;
-		bcu_state.opposite_bcu_no = 1;
-	}
+		bcu_state.bcu_info.devices_no=ReadNum();
 }
 
 /*Update current device information*/
