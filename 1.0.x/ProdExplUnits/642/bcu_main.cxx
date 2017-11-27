@@ -22,16 +22,9 @@ network_shell_package_t recv_shell_from_network;
 
 static void Init_ocs_select_car_struct(void)
 {
-	    common_package_select_car_to_ocs = (common_big_package_t *)malloc( sizeof(common_big_package_t));
+
 	    iph_select = (common_big_package_t *)malloc( sizeof(common_big_package_t));
 	    iph_select_intercom=(common_big_package_t *)malloc( sizeof(common_big_package_t));
-		if(common_package_select_car_to_ocs ==  NULL && iph_select==NULL)
-		{
-			diag_printf("this malloc select car struct fail .\n");
-			exit(1);
-		}
-
-		memset(common_package_select_car_to_ocs,0,sizeof(common_big_package_t));
 		memset(iph_select,0,sizeof(common_big_package_t));
 		memset(iph_select_intercom,0,sizeof(common_big_package_t));
 		memset(&g_MonPcuCmdPakage,0,sizeof(g_MonPcuCmdPakage));

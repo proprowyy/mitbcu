@@ -31,7 +31,7 @@ common_package_t network_send_package_ptt_release_to_pcu;
 common_package_t network_send_package_ptt_press_to_pcu;
 
 //发送选车命令与监听命令
-common_big_package_t  *common_package_select_car_to_ocs,*iph_select,*iph_select_intercom;
+common_big_package_t *iph_select,*iph_select_intercom;
 send_infomation_t g_MonPcuCmdPakage ,g_iph_pcu,bcu_send_infomation;
 //××××××××××××××××××××××××××××××//
 

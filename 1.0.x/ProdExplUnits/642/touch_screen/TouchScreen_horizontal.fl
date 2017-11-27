@@ -12,7 +12,7 @@ Function {touch_screen_main()} {open return_type int
     Fl_Wizard wz_window_view {open
       xywh {-70 -124 1290 794} box UP_BOX color 246
     } {
-      Fl_Group gp_main_file {open
+      Fl_Group gp_main_file {
         xywh {0 -4 800 384} color 246 hide resizable
         code0 {gp_main_file->hide();}
       } {
@@ -828,7 +828,7 @@ gp_main_file_active_page->show();}
         xywh {0 0 800 384} color 0 hide
         code0 {gp_window_black_screen->hide();}
       } {}
-      Fl_Group controlpage {open
+      Fl_Group controlpage {
         xywh {0 -5 805 390} color 246 hide
         code0 {controlpage->hide();}
       } {
@@ -1168,8 +1168,8 @@ RecovoryBtnState(4);///<恢复相关按钮}
           code0 {cancel_select->activate();}
         }
       }
-      Fl_Group AnnOrMonitorSelect {
-        xywh {0 0 850 388} color 246 hide
+      Fl_Group AnnOrMonitorSelect {open
+        xywh {0 0 850 388} color 246
         code0 {AnnOrMonitorSelect->hide();}
       } {
         Fl_Button btn_enter {
@@ -1193,6 +1193,50 @@ if(flag==0)
 else
 {
 	flag=0;
+	
+	if(1)
+	{
+	
+	int i ;int ret;
+	int car_select_num = 0;
+	common_big_package_t common_big_send_package;
+	for(i = 0; i < 11; ++i)
+	{
+		if(bcu_state.car_select_flag[i] == 1)
+		{
+		diag_printf("debug cancel_select12\\n");
+
+			bcu_state.car_select_flag[i] = 0;
+			common_big_send_package.common_big_data_u.car_select_flag[i] = 1;
+			car_select_num += 1;
+		}
+	}
+
+	if(car_select_num > 0)
+	{
+		for(i = 0; i < 11; i++)
+		{
+			(gp_select_car_ann_page->child(i))->color((Fl_Color)50);
+			(gp_select_car_ann_page->child(i))->activate();
+			bcu_state.car_occupy_state[i] = 0;
+		}
+		diag_printf("debug cancel_select \\n");
+		bcu_state.car_select_count_for_monitor=0;
+		common_big_send_package.pkg_type=1;
+		common_big_send_package.common_big_data_u.select_enable_flag=0;
+		common_big_send_package.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
+		ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+		if (ret <0){
+			diag_printf("BlockBufferWrite faill. \\n");
+			BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+
+		}
+	}
+	
+	bcu_state.car_select_finish = 0;
+	next_page->deactivate();
+	
+	}
 
 	ExitLive();
 	if(bcu_state.car_select_count_for_monitor==1)
@@ -1208,9 +1252,14 @@ else
 	btn_enter->redraw();
 	btn_enter->show();
 	btn_return0->activate();
+	
+gp_main_file_active_page=gp_select_car_ann_page;
+wz_window_view->value(gp_main_file_active_page);
+wz_select_window->activate();
+	
 		
-}}
-          xywh {160 125 140 95} selection_color 2
+}} selected
+          xywh {205 140 140 95} selection_color 2
           code0 {btn_enter->deactivate();btn_enter->color((Fl_Color)50);}
         }
         Fl_Button btn_monitor {
@@ -1218,12 +1267,12 @@ else
           callback {gp_main_file_active_page = controlpage;
 wz_window_view->value(gp_main_file_active_page);
 bcu_state.iph_monitor_cur_page=1;}
-          xywh {430 125 140 95} selection_color 79
+          xywh {440 140 140 95} selection_color 79
           code0 {btn_monitor->deactivate();}
         }
         Fl_Tile lable_state {
           label {提示:请规范操作,谢谢!}
-          xywh {265 10 210 85} align 0
+          xywh {265 0 210 85} align 0
         } {}
         Fl_Return_Button btn_return0 {
           label {返回}
@@ -1234,7 +1283,7 @@ wz_select_window->activate();}
         }
       }
       Fl_Group D2D_intercom_page {open
-        xywh {0 2 850 383} color 246
+        xywh {0 2 850 383} color 246 hide
         code0 {D2D_intercom_page->hide();}
       } {
         Fl_Button btn_d2d_1 {
@@ -1344,7 +1393,7 @@ canenl_d2d->activate();}
           label {返回}
           callback {gp_main_file_active_page=gp_static_show;
 wz_window_view->value(gp_main_file_active_page);
-RecovoryBtnState(3);///<恢复相关按钮} selected
+RecovoryBtnState(3);///<恢复相关按钮}
           xywh {650 275 140 95}
         }
         Fl_Button canenl_d2d {
@@ -1362,7 +1411,7 @@ canenl_d2d->deactivate();}
       xywh {0 384 800 96} box UP_BOX
       code0 {//select_window->hide();}
     } {
-      Fl_Group main_group {open
+      Fl_Group main_group {
         xywh {0 384 800 96} color 191
       } {
         Fl_Button btn_main_file {

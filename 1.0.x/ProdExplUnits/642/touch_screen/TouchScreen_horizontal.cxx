@@ -1155,6 +1155,50 @@ if(flag==0)
 else
 {
 	flag=0;
+	
+	if(1)
+	{
+	
+	int i ;int ret;
+	int car_select_num = 0;
+	common_big_package_t common_big_send_package;
+	for(i = 0; i < 11; ++i)
+	{
+		if(bcu_state.car_select_flag[i] == 1)
+		{
+		diag_printf("debug cancel_select12\n");
+
+			bcu_state.car_select_flag[i] = 0;
+			common_big_send_package.common_big_data_u.car_select_flag[i] = 1;
+			car_select_num += 1;
+		}
+	}
+
+	if(car_select_num > 0)
+	{
+		for(i = 0; i < 11; i++)
+		{
+			(gp_select_car_ann_page->child(i))->color((Fl_Color)50);
+			(gp_select_car_ann_page->child(i))->activate();
+			bcu_state.car_occupy_state[i] = 0;
+		}
+		diag_printf("debug cancel_select \n");
+		bcu_state.car_select_count_for_monitor=0;
+		common_big_send_package.pkg_type=1;
+		common_big_send_package.common_big_data_u.select_enable_flag=0;
+		common_big_send_package.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
+		ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+		if (ret <0){
+			diag_printf("BlockBufferWrite faill. \n");
+			BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+
+		}
+	}
+	
+	bcu_state.car_select_finish = 0;
+	next_page->deactivate();
+	
+	}
 
 	ExitLive();
 	if(bcu_state.car_select_count_for_monitor==1)
@@ -1170,6 +1214,11 @@ else
 	btn_enter->redraw();
 	btn_enter->show();
 	btn_return0->activate();
+	
+gp_main_file_active_page=gp_select_car_ann_page;
+wz_window_view->value(gp_main_file_active_page);
+wz_select_window->activate();
+	
 		
 };
 }
@@ -1832,18 +1881,17 @@ int touch_screen_main() {
       } // Fl_Group* gp_select_car_ann_page
       { AnnOrMonitorSelect = new Fl_Group(0, 0, 850, 388);
         AnnOrMonitorSelect->color((Fl_Color)246);
-        AnnOrMonitorSelect->hide();
-        { btn_enter = new Fl_Button(160, 125, 140, 95, "\345\271\277\346\222\255");
+        { btn_enter = new Fl_Button(205, 140, 140, 95, "\345\271\277\346\222\255");
           btn_enter->selection_color((Fl_Color)2);
           btn_enter->callback((Fl_Callback*)cb_btn_enter);
           btn_enter->deactivate();btn_enter->color((Fl_Color)50);
         } // Fl_Button* btn_enter
-        { btn_monitor = new Fl_Button(430, 125, 140, 95, "\347\233\221\345\220\254");
+        { btn_monitor = new Fl_Button(440, 140, 140, 95, "\347\233\221\345\220\254");
           btn_monitor->selection_color((Fl_Color)79);
           btn_monitor->callback((Fl_Callback*)cb_btn_monitor);
           btn_monitor->deactivate();
         } // Fl_Button* btn_monitor
-        { lable_state = new Fl_Tile(265, 10, 210, 85, "\346\217\220\347\244\272:\350\257\267\350\247\204\350\214\203\346\223\215\
+        { lable_state = new Fl_Tile(265, 0, 210, 85, "\346\217\220\347\244\272:\350\257\267\350\247\204\350\214\203\346\223\215\
 \344\275\234,\350\260\242\350\260\242!");
           lable_state->align(Fl_Align(FL_ALIGN_CENTER));
           lable_state->end();
@@ -1856,6 +1904,7 @@ int touch_screen_main() {
       } // Fl_Group* AnnOrMonitorSelect
       { D2D_intercom_page = new Fl_Group(0, 2, 850, 383);
         D2D_intercom_page->color((Fl_Color)246);
+        D2D_intercom_page->hide();
         { btn_d2d_1 = new Fl_Button(10, 12, 140, 95);
           btn_d2d_1->callback((Fl_Callback*)cb_btn_d2d_1);
           btn_d2d_1->hide();
