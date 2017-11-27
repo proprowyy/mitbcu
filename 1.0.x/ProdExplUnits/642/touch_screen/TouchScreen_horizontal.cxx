@@ -1967,7 +1967,7 @@ int touch_screen_main() {
           wz_window_view->value(gp_static_show);
           gp_main_file_active_page = gp_main_file;
         } // Fl_Button* btn_main_file
-        { btn_emerg_ann = new Fl_Button(225, 395, 150, 70, "\350\275\246\345\234\260\345\271\277\346\222\255");
+        { btn_emerg_ann = new Fl_Button(225, 395, 150, 70, "\350\275\246\345\234\260\345\257\271\350\256\262");
           btn_emerg_ann->box(FL_ROUNDED_BOX);
           btn_emerg_ann->down_box(FL_ROUNDED_BOX);
           btn_emerg_ann->callback((Fl_Callback*)cb_btn_emerg_ann);

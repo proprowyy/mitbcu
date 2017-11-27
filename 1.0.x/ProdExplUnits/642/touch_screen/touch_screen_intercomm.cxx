@@ -133,13 +133,6 @@ void ShowD2DRequest(){
     		wz_select_window->value(main_group);
 
 }
-
-
-
-
-
-
-
 void SetD2PCmd(int enter_or_exit,int param_response_type,int param_pcu_no,int param_bcu_no)
 {///<发送D2P 命令
 	bcu_screen_param_t  touch_cmd_param = {0};
@@ -265,10 +258,6 @@ void ShowNoPCURequest()
 			wz_window_view->value(gp_static_show);
 			wz_select_window->value(main_group);
 		}
-
-
-
-
 
 }
 void disable_recv_refuse()

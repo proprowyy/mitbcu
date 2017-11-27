@@ -16,9 +16,6 @@
  */
 #include "touch_screen_function.h"
 
-Fl_Button *p_to_btn_first = NULL;//优先级较低按钮指针
-Fl_Button *p_to_btn_second = NULL;//优先级中等按钮指针
-Fl_Button *p_to_btn_third = NULL;//优先级较高按钮指针
 Fl_Group *gp_main_file_active_page;//当前主菜单界面
 Fl_Group *p_current_ann_group = NULL;//当前有效广播界面
 Fl_Group *p_current_intercomm_group = NULL;//当前有效的对讲界面
@@ -116,52 +113,17 @@ void RecovoryBtnState(int index)
 {///<恢复触摸屏下方功能选择按钮
 	switch(index)
 	{
-		case 2:///<手动广播有效
 
-			break;
 		case 3:///<紧急广播有效
 			btn_emerg_ann->activate();
 			btn_emerg_ann->color((Fl_Color)50);
 			btn_emerg_ann->redraw();
 
-			if( btn_emerg_ann == p_to_btn_first)
-			{
-				p_to_btn_second->activate();
-				p_to_btn_second->color((Fl_Color)50);
-				p_to_btn_second->redraw();
-
-				p_to_btn_third->activate();
-				p_to_btn_third->color((Fl_Color)50);
-				p_to_btn_third->redraw();
-			}
-			else if(btn_emerg_ann == p_to_btn_second)
-			{
-				p_to_btn_third->activate();
-				p_to_btn_third->color((Fl_Color)50);
-				p_to_btn_third->redraw();
-			}
 			break;
 		case 4:///<口播有效
 			btn_live->activate();
 			btn_live->color((Fl_Color)50);
 			btn_live->redraw();
-
-			if( btn_live == p_to_btn_first)
-			{
-				p_to_btn_second->activate();
-				p_to_btn_second->color((Fl_Color)50);
-				p_to_btn_second->redraw();
-
-				p_to_btn_third->activate();
-				p_to_btn_third->color((Fl_Color)50);
-				p_to_btn_third->redraw();
-			}
-			else if(btn_live == p_to_btn_second)
-			{
-				p_to_btn_third->activate();
-				p_to_btn_third->color((Fl_Color)50);
-				p_to_btn_third->redraw();
-			}
 			break;
 		case 6:
 
@@ -170,7 +132,8 @@ void RecovoryBtnState(int index)
 			break;
 		case 7:
 					int i;
-					for(i=0;i<11;i++){(gp_select_car_ann_page->child(i))->activate();}
+					for(i=0;i<11;i++)
+					{(gp_select_car_ann_page->child(i))->activate();}
 					break;
 
 		case 8:
@@ -215,22 +178,6 @@ void ChangeBtnState(int index)
 			btn_live->color((Fl_Color)71);
 			btn_live->redraw();
 			
-			if( btn_live == p_to_btn_first)
-			{
-				p_to_btn_second->deactivate();
-				p_to_btn_second->color((Fl_Color)38);
-				p_to_btn_second->redraw();
-				
-				p_to_btn_third->deactivate();
-				p_to_btn_third->color((Fl_Color)38);
-				p_to_btn_third->redraw();
-			}
-			else if(btn_live == p_to_btn_second)
-			{
-				p_to_btn_third->deactivate();
-				p_to_btn_third->color((Fl_Color)38);
-				p_to_btn_third->redraw();
-			}
 			break;
 		case 5://intercomm button
 			btn_main_file->color((Fl_Color)50);
@@ -262,48 +209,7 @@ void ChangeBtnState(int index)
 
 void ExchangeBtnPosition()
 {///<根据优先级改变按钮位置
-	int max = 0;
-	int min = 0;
 
-	bcu_state.event_priority.manual_event_priority = BcuGetAnnStatePriority(MANUAL_ANN_EVENT);
-	bcu_state.event_priority.emerg_event_priority = BcuGetAnnStatePriority(EMERG_ANN_EVENT);
-	bcu_state.event_priority.live_event_priority = BcuGetAnnStatePriority(LIVE_ANN_EVENT);
-		min = bcu_state.event_priority.manual_event_priority > bcu_state.event_priority.emerg_event_priority && bcu_state.event_priority.manual_event_priority > bcu_state.event_priority.live_event_priority ?
-			  bcu_state.event_priority.manual_event_priority :(bcu_state.event_priority.emerg_event_priority > bcu_state.event_priority.live_event_priority ? bcu_state.event_priority.emerg_event_priority : bcu_state.event_priority.live_event_priority);
-			  
-		max = bcu_state.event_priority.manual_event_priority < bcu_state.event_priority.emerg_event_priority && bcu_state.event_priority.manual_event_priority < bcu_state.event_priority.live_event_priority ?
-			  bcu_state.event_priority.manual_event_priority :(bcu_state.event_priority.emerg_event_priority < bcu_state.event_priority.live_event_priority ? bcu_state.event_priority.emerg_event_priority : bcu_state.event_priority.live_event_priority);
-		
-
-		if( bcu_state.event_priority.emerg_event_priority == max)
-		{
-			p_to_btn_first = btn_emerg_ann;
-		}
-		else if( bcu_state.event_priority.emerg_event_priority == min)
-		{
-			p_to_btn_third = btn_emerg_ann;
-		}
-		else
-		{
-			p_to_btn_second = btn_emerg_ann;
-		}
-		
-		if( bcu_state.event_priority.live_event_priority == max)
-		{
-			p_to_btn_first = btn_live;
-		}
-		else if( bcu_state.event_priority.live_event_priority == min)
-		{
-			p_to_btn_third = btn_live;
-		}
-		else
-		{
-			p_to_btn_second = btn_live;
-		}
-		
-		p_to_btn_first->position(492,397);
-		p_to_btn_second->position(332,397);
-		p_to_btn_third->position(172,397);
 }
 
 
@@ -428,7 +334,6 @@ void ForceExitLiveStateBeforeIntercomm()
 	temp_send_infomation.event_info_ann.live_announce.live_active = 0;
 	temp_send_infomation.event_info_ann.live_announce.live_begin_or_over = 0;
 	temp_send_infomation.event_info_ann.live_announce.live_response = 0;
-
 	bcu_state.bcu_active_ann_state->exit();
 	bcu_state.bcu_active_ann_state = &idle_ann_state;
 	bcu_state.bcu_active_ann_state->enter(&temp_send_infomation);

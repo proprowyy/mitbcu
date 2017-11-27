@@ -1506,14 +1506,12 @@ void GetOuterButtonState()
 				diag_printf(("enter live\n"));
 				ExchangeToLive();
 				ChangeBtnState(6);
-				ChangeBtnState(7);
 				ChangeBtnState(8);
 			}
 			else if(bcu_state.live_button_state == 1)///<exit live
 			{
 				diag_printf("exit live\n");
 				RecovoryBtnState(6);
-				RecovoryBtnState(7);
 				RecovoryBtnState(8);
 				ExitLive();
 
@@ -2129,8 +2127,8 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 			AlarmTSToChangeScreen(33);
 		break;
 	case 8:
-		if(bcu_state.bcu_active_intercom_state->state_id ==INTERCOM_IDLE&&
-		   bcu_state.bcu_active_intercom_state->state_id==ANN_IDLE)
+		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE&&
+		   bcu_state.bcu_active_ann_state->state_id == ANN_IDLE)
 		{
 			bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
 		}
