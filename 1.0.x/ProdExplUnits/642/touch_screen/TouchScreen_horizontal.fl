@@ -10,7 +10,7 @@ Function {touch_screen_main()} {open return_type int
     code0 {\#include "ts_head_file.h"} visible
   } {
     Fl_Wizard wz_window_view {open
-      xywh {-70 -124 1290 794} box UP_BOX color 246
+      xywh {-70 -124 873 508} box UP_BOX color 246
     } {
       Fl_Group gp_main_file {
         xywh {0 -4 800 384} color 246 hide resizable
@@ -45,8 +45,8 @@ current_is_on_static_page = 1;}
           xywh {650 270 140 95}
         }
       }
-      Fl_Group gp_intercomm {
-        xywh {0 0 800 385} color 246 align 129 hide
+      Fl_Group gp_intercomm {open
+        xywh {0 0 800 385} color 246 align 129
         code0 {gp_intercomm->hide();}
       } {
         Fl_Button btn_d2p_request_1 {
@@ -58,8 +58,7 @@ current_is_on_static_page = 1;}
 	sprintf(buf,"%s",btn_d2p_request_1->label());		
 	unsigned char vn=0;	
 	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
-	SetReceptPCUNo(d2p_reponse_sursor,vn);
-	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);	
 	currend_d2P_position = 1;
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
 }}
@@ -241,6 +240,7 @@ current_is_on_static_page = 1;}
           callback {RecvD2PRequest();
 BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t))}
           xywh {660 225 135 70}
+          code0 {btn_intercomm_accept->deactivate();}
         }
         Fl_Button btn_intercomm_refuse {
           label {挂断}
@@ -257,8 +257,9 @@ cyg_thread_delay(100);
 
 RefuseD2PRequest();
 
-BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));}
+BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));} selected
           xywh {660 305 135 70}
+          code0 {btn_intercomm_refuse->deactivate();}
         }
         Fl_Button btn_intercomm_back {
           label {一键清除请求}
@@ -996,7 +997,7 @@ enter1->redraw();}
           xywh {490 275 140 95} selection_color 2
         }
       }
-      Fl_Group gp_select_car_ann_page {open
+      Fl_Group gp_select_car_ann_page {
         xywh {0 -5 850 387} color 246 hide
         code0 {gp_select_car_ann_page->hide();}
       } {
@@ -1168,8 +1169,8 @@ RecovoryBtnState(4);///<恢复相关按钮}
           code0 {cancel_select->activate();}
         }
       }
-      Fl_Group AnnOrMonitorSelect {open
-        xywh {0 0 850 388} color 246
+      Fl_Group AnnOrMonitorSelect {
+        xywh {0 0 850 388} color 246 hide
         code0 {AnnOrMonitorSelect->hide();}
       } {
         Fl_Button btn_enter {
@@ -1282,7 +1283,7 @@ wz_select_window->activate();}
           xywh {650 280 140 95}
         }
       }
-      Fl_Group D2D_intercom_page {open
+      Fl_Group D2D_intercom_page {
         xywh {0 2 850 383} color 246 hide
         code0 {D2D_intercom_page->hide();}
       } {
@@ -1432,7 +1433,7 @@ current_is_on_static_page = 0;}
           label {车地对讲}
           callback {ChangeBtnState(3);
 gp_main_file_active_page=D2D_intercom_page;
-wz_window_view->value(gp_main_file_active_page);} selected
+wz_window_view->value(gp_main_file_active_page);}
           xywh {225 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
         }
         Fl_Button btn_live {
@@ -1517,6 +1518,11 @@ ChangeBtnState(4);}
 			else if(switchFlag == 10)//更新音量显示界面信息
 			{
 				UpdateVolumeInfo(whether_want_to_update_page);
+				switchFlag = 0;
+			}
+			else if(switchFlag == 11)
+			{
+				Disable_D2p_All_Btn();	
 				switchFlag = 0;
 			}
 			else if(switchFlag == 12)

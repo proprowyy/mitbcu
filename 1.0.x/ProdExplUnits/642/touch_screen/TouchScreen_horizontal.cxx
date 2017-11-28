@@ -51,8 +51,7 @@ static void cb_btn_d2p_request_1(Fl_Button*, void*) {
 	sprintf(buf,"%s",btn_d2p_request_1->label());		
 	unsigned char vn=0;	
 	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
-	SetReceptPCUNo(d2p_reponse_sursor,vn);
-	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);	
 	currend_d2P_position = 1;
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
 };
@@ -1421,7 +1420,7 @@ int touch_screen_main() {
     wd_touch_screen->box(FL_BORDER_BOX);
     wd_touch_screen->color(FL_FOREGROUND_COLOR);
     wd_touch_screen->selection_color(FL_FOREGROUND_COLOR);
-    { wz_window_view = new Fl_Wizard(-70, -124, 1290, 794);
+    { wz_window_view = new Fl_Wizard(-70, -124, 873, 508);
       wz_window_view->box(FL_UP_BOX);
       wz_window_view->color((Fl_Color)246);
       { gp_main_file = new Fl_Group(0, -4, 800, 384);
@@ -1441,7 +1440,6 @@ int touch_screen_main() {
       { gp_intercomm = new Fl_Group(0, 0, 800, 385);
         gp_intercomm->color((Fl_Color)246);
         gp_intercomm->align(Fl_Align(129));
-        gp_intercomm->hide();
         { btn_d2p_request_1 = new Fl_Button(10, 13, 140, 95);
           btn_d2p_request_1->callback((Fl_Callback*)cb_btn_d2p_request_1);
         } // Fl_Button* btn_d2p_request_1
@@ -1480,9 +1478,11 @@ int touch_screen_main() {
         } // Fl_Button* btn_d2p_request_12
         { btn_intercomm_accept = new Fl_Button(660, 225, 135, 70, "\346\216\245\351\200\232");
           btn_intercomm_accept->callback((Fl_Callback*)cb_btn_intercomm_accept);
+          btn_intercomm_accept->deactivate();
         } // Fl_Button* btn_intercomm_accept
         { btn_intercomm_refuse = new Fl_Button(660, 305, 135, 70, "\346\214\202\346\226\255");
           btn_intercomm_refuse->callback((Fl_Callback*)cb_btn_intercomm_refuse);
+          btn_intercomm_refuse->deactivate();
         } // Fl_Button* btn_intercomm_refuse
         { btn_intercomm_back = new Fl_Button(660, 305, 135, 70, "\344\270\200\351\224\256\346\270\205\351\231\244\350\257\267\346\261\202");
           btn_intercomm_back->callback((Fl_Callback*)cb_btn_intercomm_back);
@@ -1905,6 +1905,7 @@ int touch_screen_main() {
       } // Fl_Group* AnnOrMonitorSelect
       { D2D_intercom_page = new Fl_Group(0, 2, 850, 383);
         D2D_intercom_page->color((Fl_Color)246);
+        D2D_intercom_page->hide();
         { btn_d2d_1 = new Fl_Button(10, 12, 140, 95);
           btn_d2d_1->callback((Fl_Callback*)cb_btn_d2d_1);
           btn_d2d_1->hide();
@@ -2059,6 +2060,11 @@ int touch_screen_main() {
   			else if(switchFlag == 10)//更新音量显示界面信息
   			{
   				UpdateVolumeInfo(whether_want_to_update_page);
+  				switchFlag = 0;
+  			}
+  			else if(switchFlag == 11)
+  			{
+  				Disable_D2p_All_Btn();	
   				switchFlag = 0;
   			}
   			else if(switchFlag == 12)

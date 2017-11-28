@@ -1954,6 +1954,37 @@ static int IphRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 		ret = dispalys( PCURequsthead);//显示请求，返回请求数
 		return ret;
 }
+
+static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
+{
+	int ret=0;
+	Node *temp;
+	int vn=p_BigConmInfo_temp->common_big_data_u.car_no;
+	int iph=p_BigConmInfo_temp->common_big_data_u.iph_receive_no;
+	temp=update_list(PCURequsthead,vn,iph,1);
+	if( temp == NULL )
+	{
+		return ret=-1 ;
+	}
+
+	if(p_BigConmInfo_temp->common_big_data_u.seat_id!=bcu_state.bcu_info.devices_no)
+	{
+		PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
+
+	  ret= dispalys(PCURequsthead);//显示请求，返回请求数
+	}
+	 ret= dispalys(PCURequsthead);//显示请求，返回请求数
+		AlarmTSToChangeScreen(5);
+		if(	ret == 0)
+		{
+			AlarmTSToChangeScreen(12);
+		}
+
+		return ret;
+
+}
+
+
 static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 {
 	int ret;
@@ -2029,36 +2060,6 @@ static int BcuUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 	ret= dispalys(BCURequsthead);//显示请求，返回请求数
 	AlarmTSToChangeScreen(9);
 	return ret;
-
-}
-static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
-{
-	int ret=0;
-	Node *temp;
-	int vn=p_BigConmInfo_temp->common_big_data_u.car_no;
-	int iph=p_BigConmInfo_temp->common_big_data_u.iph_receive_no;
-	temp=update_list(PCURequsthead,vn,iph,1);
-	if( temp == NULL )
-	{
-		return ret=-1 ;
-	}
-
-	if(p_BigConmInfo_temp->common_big_data_u.seat_id!=bcu_state.bcu_info.devices_no)
-	{
-		PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
-
-	  ret= dispalys(PCURequsthead);//显示请求，返回请求数
-	}
-	 ret= dispalys(PCURequsthead);//显示请求，返回请求数
-
-		AlarmTSToChangeScreen(6);
-		AlarmTSToChangeScreen(5);
-		if(	ret == 0)
-		{
-			AlarmTSToChangeScreen(12);
-		}
-
-		return ret;
 
 }
 

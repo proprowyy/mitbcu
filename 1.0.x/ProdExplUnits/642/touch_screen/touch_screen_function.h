@@ -39,15 +39,6 @@ extern Fl_Group *p_current_ann_group;
 extern Fl_Group *p_current_intercomm_group ;
 extern unsigned char whether_intercomm_button_is_active;
 extern unsigned char select_car_recoed;
-typedef struct {
-
-	int carno;
-	int devno;
-
-
-}SetRecOrRef;
-
-extern SetRecOrRef Record[8];
 
 /** SetPassword function description
  *   输入用户密码
@@ -779,34 +770,32 @@ void SendConnectTwoCarsStateToOtherBCU(unsigned char state,unsigned char flag);
  */
 void ShowDeviceFailurePageButtonNameInfo(unsigned char flag);
 
+extern void Disable_D2p_All_Btn();
 
-
-
-/*设置按钮功能：
- * @param 1.当前车号 2.设置按钮所在界面，选择车标志数组
- *
- * @return 0 正确返回，否则错误;
- * */
-
-
-
-/*设置按钮功能：
- * @param 1.当前pcu 2.设置按钮所在界面
- *
- * @return 0 正确返回，否则错误;
- * */
 extern int G_SetAndClearPakage(int op,int pn,send_infomation_t *temp);
+
 extern int Select_car_count(unsigned int vn, int op,common_big_package_t  *parame,unsigned int *count);
+
 extern int SetMonitorBigPakage(int iph,unsigned int vn);
+
 extern int CannelMonitorBigPakage(int iph,unsigned int vn);
+
 extern int SetIntercomBigPackage(int vn,int iph,common_big_package_t  *parame);
+
 extern int sync_select_page(unsigned char *flag);
+
 extern int sum_select_car();
+
 extern void chack_slecet_car_sum_enable_btn();
+
 extern int parse_btn_lable_value(const char *src,unsigned char *dst,unsigned char *vn);
+
 extern int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn);
+
 extern void SetD2dCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation);
+
 extern void SetD2dRefuseCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation);
+
 extern void send_cannel_d2d_big_package(unsigned int vn,unsigned int bcu_no);
 
 

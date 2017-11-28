@@ -269,12 +269,15 @@ void ShowMainPage()
 	wz_window_view->value(gp_static_show);
 }
 
-
-
-void UpdatePCUInfo()
-{///<更新PCU信息-根据数据库信息初始化
-	//InitPCURequestTable();
-	bcu_state.pcu_request_info.recept_pcu_no = 0;
+void Disable_D2p_All_Btn()
+{
+	int i;
+	for( i = 0;i < 12 ;i ++ )
+	{
+		(gp_intercomm->child(i))->deactivate();
+	}
+	btn_intercomm_accept->activate();
+	btn_intercomm_refuse->activate();
 }
 
 void SystemInitBeforeRun()
@@ -285,17 +288,6 @@ void SystemInitBeforeRun()
 	p_current_intercomm_group = gp_main_file;
 	p_current_ann_group = gp_main_file;
 	ShowDeviceVolumeInfo(255);
-}
-
-
-void ShowTSSkipStationInfo()
-{
-	int i = 0;
-	for(i = 1; i <= bcu_state.region_station_info.current_region_station[0];i++)
-	{
-
-	}
-
 }
 
 
@@ -539,7 +531,6 @@ void ExitLive()
 
 	p_current_intercomm_group = gp_main_file;
 	p_current_ann_group = gp_main_file;
-
 	SetLiveCmd(2);///<设置退出紧急广播命令
 
 }
@@ -600,8 +591,6 @@ void ExchangeToLive()
 {///<切换到口播状态
 	if(bcu_state.mic_owner == NONE || bcu_state.mic_owner == ANNOUNCE )
 	{
-
-
 		if(bcu_state.bcu_active_ann_state->state_id != LIVE_ANN_EVENT)
 		{
 			SetLiveCmd(0);
@@ -620,7 +609,6 @@ void ShowD2Ppage()
 	ShowD2PRequest();//显示请求pcu
 	bcu_state.d2p_button_state = 1;
 	wz_window_view->value(gp_intercomm);
-	wz_select_window->value(main_group);
 }
 
 void RecvD2PRequest()
@@ -635,11 +623,9 @@ void RecvD2PRequest()
 	}
 	is_intercomming_with_pcu = 1;
 	btn_intercomm_accept->deactivate();
-
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)2);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-	bcu_state.pcu_request_info.current_conect_pcu_no = bcu_state.pcu_request_info.recept_pcu_no;
-	diag_printf("bcu_state.pcu_request_info.current_conect_pcu_no=%d\n",bcu_state.pcu_request_info.current_conect_pcu_no);
+	diag_printf("recept_pcu_no = %d\n",bcu_state.pcu_request_info.recept_pcu_no);
 	ts_package_sequence = 1;
 	SetD2PCmd(0,0,bcu_state.pcu_request_info.recept_pcu_no,1);//进入、运行、退出-响应类型-pcu_no-bcu_no
 	bcu_state.d2p_button_state = 2;
@@ -652,12 +638,9 @@ void RefuseD2PRequest()
 	{///<当前正在与PCU进行对讲
 		diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
 		is_intercomming_with_pcu = 0;
-		btn_intercomm_accept->activate();
 		ts_package_sequence = 2;
 		SetD2PCmd(1,0,bcu_state.pcu_request_info.recept_pcu_no,0);//进入、运行、退出-响应类型-pcu_no-bcu_no
 	}
-
-#if 1
 	else
 	{///<当前没有接通PCU，直接拒绝相关PCU请求
 		if(bcu_state.pcu_request_info.request_number > 0)
@@ -666,9 +649,8 @@ void RefuseD2PRequest()
 				SetD2PCmd(1,0,bcu_state.pcu_request_info.recept_pcu_no,0);
 		}
 	}
-#endif
 	ShowD2Ppage();//显示请求pcu
-	p_current_intercomm_group = gp_main_file;
+	btn_intercomm_refuse->deactivate();
 	wz_window_view->value(gp_static_show);
 	wz_select_window->value(main_group);
 	bcu_state.iph_monitor_cur_page=0;

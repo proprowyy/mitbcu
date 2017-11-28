@@ -340,6 +340,7 @@ void *SystemControl(void *arg)
 
 		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0){
 			diag_printf("recv a big common pakge !\n");
+
 			ProbeBigCommPackage(&recv_temp_big);
 
 			if(bcu_state.bcu_request_number !=0)

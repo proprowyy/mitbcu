@@ -28,8 +28,6 @@ unsigned char connecting_d2p_response_sursor = 1;//通过PCU的页码
 char current_recept_pcu_no_buffer_language[30] = "通话中:pcu";
 char current_recept_pcu_no_buffer[30] = "\0";//当前接受PCU缓存区
 int current_is_being_d2d = 0;//当前坐在司机对讲
-SetRecOrRef Record[8];
-
 void SetReceptPCUNo(unsigned char param_pcu_position,unsigned char vn)
 {///<设置当前接收的PCU号
 	diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
@@ -42,6 +40,7 @@ void SetReceptPCUNo(unsigned char param_pcu_position,unsigned char vn)
 	SetIntercomBigPackage(vn,param_pcu_position,iph_select_intercom);
 	int ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
 	bcu_state.pcu_request_info.recept_pcu_no =param_pcu_position;
+	AlarmTSToChangeScreen(11);
 
 }
 
@@ -50,9 +49,8 @@ void SetReceptPCUNo(unsigned char param_pcu_position,unsigned char vn)
 void ShowD2PRequest(){
 
 	int i=0;
-	static char buffer[8][20];
-	memset(Record,0,sizeof(Record));
-	diag_printf("pcu_request_number=%d\n",bcu_state.pcu_request_info.request_number);
+	static char buffer[12][20];
+	diag_printf("Pcu_request_number = %d\n",bcu_state.pcu_request_info.request_number);
 	Node *temp;
     temp=PCURequsthead->next;
     if(bcu_state.pcu_request_info.request_number>8){
@@ -71,14 +69,6 @@ void ShowD2PRequest(){
     			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
 				(gp_intercomm->child(i ))->show();
 				(gp_intercomm->child(i ))->label(buffer[i]);
-				 Record[i].carno=temp->vehicle_number;
-				 Record[i].devno=temp->devices_id;
-				 if(temp->current_state == 1) {
-					(gp_intercomm->child(i))->deactivate();
-				 }
-				 else{
-					(gp_intercomm->child(i))->activate();
-				 }
 				temp=temp->next;
 			}
 	      }
@@ -86,8 +76,6 @@ void ShowD2PRequest(){
 			(gp_intercomm->child(i))->hide();
 		  }
        }
-    	wz_window_view->value(gp_intercomm);
-		wz_select_window->value(main_group);
 }
 
 
@@ -95,7 +83,7 @@ void ShowD2DRequest(){
 
 	int i=0;
 	static char buffer[8][20];
-	memset(Record,0,sizeof(Record));
+
 	Node *temp;
     temp=BCURequsthead->next;
     if(bcu_state.bcu_request_number>8){
@@ -114,8 +102,6 @@ void ShowD2DRequest(){
     			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
 				(D2D_intercom_page->child(i ))->show();
 				(D2D_intercom_page->child(i ))->label(buffer[i]);
-				 Record[i].carno=temp->vehicle_number;
-				 Record[i].devno=temp->devices_id;
 				 if(temp->current_state == 1) {
 					(D2D_intercom_page->child(i))->deactivate();
 				 }
