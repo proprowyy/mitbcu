@@ -552,7 +552,7 @@ void SyncSelectCarInfo()
 				}
 				else
 				{
-					printf("i %d\n",i);
+					//printf("i %d\n",i);
 					(gp_select_car_ann_page->child(i))->color((Fl_Color)50);
 					(gp_select_car_ann_page->child(i))->redraw();
 					bcu_state.car_select_flag[i] = 0;
@@ -630,7 +630,6 @@ void RecvD2PRequest()
 	SetD2PCmd(0,0,bcu_state.pcu_request_info.recept_pcu_no,1);//进入、运行、退出-响应类型-pcu_no-bcu_no
 	bcu_state.d2p_button_state = 2;
 }
-
 void RefuseD2PRequest()
 {///<拒绝PCU请求
 	bcu_state.d2p_button_state = 0;
@@ -718,7 +717,6 @@ void BCUDisableAnnFunctionAccordingToTCMS()
 			SendCMDToEAMP(LIVE_ANN_EVENT);
 			break;
 		case EMERG_ANN_EVENT:
-
 			ShowMainPage();
 			BlockBufferClear(bcu_state.recv_cmd_from_touch);
 			bcu_state.bcu_active_ann_state->exit();

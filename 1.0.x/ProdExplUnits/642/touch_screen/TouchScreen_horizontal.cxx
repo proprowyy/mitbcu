@@ -1420,7 +1420,7 @@ int touch_screen_main() {
     wd_touch_screen->box(FL_BORDER_BOX);
     wd_touch_screen->color(FL_FOREGROUND_COLOR);
     wd_touch_screen->selection_color(FL_FOREGROUND_COLOR);
-    { wz_window_view = new Fl_Wizard(-70, -124, 873, 508);
+    { wz_window_view = new Fl_Wizard(-70, -124, 920, 512);
       wz_window_view->box(FL_UP_BOX);
       wz_window_view->color((Fl_Color)246);
       { gp_main_file = new Fl_Group(0, -4, 800, 384);
@@ -1476,11 +1476,11 @@ int touch_screen_main() {
         { btn_d2p_request_12 = new Fl_Button(490, 230, 140, 95);
           btn_d2p_request_12->callback((Fl_Callback*)cb_btn_d2p_request_12);
         } // Fl_Button* btn_d2p_request_12
-        { btn_intercomm_accept = new Fl_Button(660, 225, 135, 70, "\346\216\245\351\200\232");
+        { btn_intercomm_accept = new Fl_Button(645, 180, 150, 85, "\346\216\245\351\200\232");
           btn_intercomm_accept->callback((Fl_Callback*)cb_btn_intercomm_accept);
           btn_intercomm_accept->deactivate();
         } // Fl_Button* btn_intercomm_accept
-        { btn_intercomm_refuse = new Fl_Button(660, 305, 135, 70, "\346\214\202\346\226\255");
+        { btn_intercomm_refuse = new Fl_Button(645, 280, 150, 85, "\346\214\202\346\226\255");
           btn_intercomm_refuse->callback((Fl_Callback*)cb_btn_intercomm_refuse);
           btn_intercomm_refuse->deactivate();
         } // Fl_Button* btn_intercomm_refuse
@@ -2060,11 +2060,6 @@ int touch_screen_main() {
   			else if(switchFlag == 10)//更新音量显示界面信息
   			{
   				UpdateVolumeInfo(whether_want_to_update_page);
-  				switchFlag = 0;
-  			}
-  			else if(switchFlag == 11)
-  			{
-  				Disable_D2p_All_Btn();	
   				switchFlag = 0;
   			}
   			else if(switchFlag == 12)

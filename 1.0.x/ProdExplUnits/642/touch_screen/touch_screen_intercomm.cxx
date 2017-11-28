@@ -30,9 +30,9 @@ char current_recept_pcu_no_buffer[30] = "\0";//当前接受PCU缓存区
 int current_is_being_d2d = 0;//当前坐在司机对讲
 void SetReceptPCUNo(unsigned char param_pcu_position,unsigned char vn)
 {///<设置当前接收的PCU号
-	diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
-	diag_printf("param_pcu_position = %d\n",param_pcu_position);
-	diag_printf("vn = %d\n",vn);
+	//diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
+	//diag_printf("param_pcu_position = %d\n",param_pcu_position);
+	//diag_printf("vn = %d\n",vn);
 	if(param_pcu_position == 0)
 	{
 		return ;
@@ -40,11 +40,8 @@ void SetReceptPCUNo(unsigned char param_pcu_position,unsigned char vn)
 	SetIntercomBigPackage(vn,param_pcu_position,iph_select_intercom);
 	int ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
 	bcu_state.pcu_request_info.recept_pcu_no =param_pcu_position;
-	AlarmTSToChangeScreen(11);
-
+	Disable_D2p_All_Btn();
 }
-
-
 
 void ShowD2PRequest(){
 
@@ -83,7 +80,6 @@ void ShowD2DRequest(){
 
 	int i=0;
 	static char buffer[8][20];
-
 	Node *temp;
     temp=BCURequsthead->next;
     if(bcu_state.bcu_request_number>8){

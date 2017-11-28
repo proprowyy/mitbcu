@@ -37,7 +37,7 @@
 	#define ts_debug_print(s)  //diag_printf s
 	#define tms_debug_print(s) //diag_printf s
     #define fs_debug_print(s)  //diag_printf s
-	#define sd_debug_print(s)  diag_printf s
+	#define sd_debug_print(s)  //diag_printf s
     #define intercomm_debug_print(s) //diag_printf s
     #define thread_debug_print(s) //diag_printf s
 	#define debug_test_print(s)     //diag_printf s

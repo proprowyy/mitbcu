@@ -10,7 +10,7 @@ Function {touch_screen_main()} {open return_type int
     code0 {\#include "ts_head_file.h"} visible
   } {
     Fl_Wizard wz_window_view {open
-      xywh {-70 -124 873 508} box UP_BOX color 246
+      xywh {-70 -124 920 512} box UP_BOX color 246
     } {
       Fl_Group gp_main_file {
         xywh {0 -4 800 384} color 246 hide resizable
@@ -238,8 +238,8 @@ current_is_on_static_page = 1;}
         Fl_Button btn_intercomm_accept {
           label {接通}
           callback {RecvD2PRequest();
-BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t))}
-          xywh {660 225 135 70}
+BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t))} selected
+          xywh {645 180 150 85}
           code0 {btn_intercomm_accept->deactivate();}
         }
         Fl_Button btn_intercomm_refuse {
@@ -257,8 +257,8 @@ cyg_thread_delay(100);
 
 RefuseD2PRequest();
 
-BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));} selected
-          xywh {660 305 135 70}
+BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));}
+          xywh {645 280 150 85}
           code0 {btn_intercomm_refuse->deactivate();}
         }
         Fl_Button btn_intercomm_back {
@@ -1518,11 +1518,6 @@ ChangeBtnState(4);}
 			else if(switchFlag == 10)//更新音量显示界面信息
 			{
 				UpdateVolumeInfo(whether_want_to_update_page);
-				switchFlag = 0;
-			}
-			else if(switchFlag == 11)
-			{
-				Disable_D2p_All_Btn();	
 				switchFlag = 0;
 			}
 			else if(switchFlag == 12)
