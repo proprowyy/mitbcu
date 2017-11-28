@@ -31,22 +31,6 @@
 #include "ts_type.h"
 #include "ts_simulate.h"
 #include "bcu_get_data_from_ccu_type.h"
-typedef struct{
 
-	unsigned char t1;
-	unsigned char t2;
-	unsigned char t3;
-	unsigned char t4;
-	unsigned char t5;
-	unsigned char t6;
-	unsigned char t7;
-	unsigned char t8;
-	unsigned char t9;
-	unsigned char t10;
-	unsigned char t11;
-}RecordCarCol;
-
-extern unsigned char CarNumberSelectAndRecordBtn[11];
 extern unsigned int gw_RecordPcuMonBtnPass;
-extern unsigned int ReferCarNo(unsigned char t_CarNumberSelectAndRecordBtn[],RecordCarCol *a);
 #endif

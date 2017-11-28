@@ -127,30 +127,21 @@ void IdleIntercomEnter(send_infomation_t *send_information_intercomm_idle)
 	StartOrBrokeBroadcastPcuRequestAlarmAudioData();
 #ifndef CONFIG_TEST_SND_IN_MULTI_THREAD
 	diag_printf("I am idle intercom enter\n");
-
-	debug_print(("send_information_intercomm_idle->event_type_intercom = %d\n",send_information_intercomm_idle->event_type_intercom));
-	debug_print(("D2D_INTERCOMM_EVENT = %d,D2P_INTERCOMM_EVENT = %d\n",D2D_INTERCOMM_EVENT,D2P_INTERCOMM_EVENT));
-	debug_print(("bcu_state.active_pcu_no = %d\n",bcu_state.pcu_request_info.recept_pcu_no));
-	if(send_information_intercomm_idle->event_type_intercom == 7)
+	if(send_information_intercomm_idle->event_type_intercom == D2D_INTERCOMM_EVENT)
 	{
 		diag_printf("send refuse bcu cmd\n");
 		SendCmd(&send_information_intercomm_idle,"OCS",230);
-
 	}
 	if(send_information_intercomm_idle->event_type_intercom == D2P_INTERCOMM_EVENT)
 	{
-		send_infomation_t a,b,*p,*p1;
-		p = &a;
-		p1 = &b;
-		memcpy((void *)p,(void *)send_information_intercomm_idle,sizeof(*send_information_intercomm_idle));
-		memcpy((void *)p1,(void *)send_information_intercomm_idle,sizeof(*send_information_intercomm_idle));
-		///<发送相关命令给PCU
+
 		SendCmd(&send_information_intercomm_idle,"PCU",bcu_state.pcu_request_info.recept_pcu_no);
 
 	}
-	if(send_information_intercomm_idle->event_type_intercom==22)
-	SendCmd(&send_information_intercomm_idle,"PCU",send_information_intercomm_idle->event_info_intercom.d2p_intercomm.d2p_intercomm_pcu_device_no);
-
+	if(send_information_intercomm_idle->event_type_intercom==D2P_MONITOR_EVENT)
+	{
+		SendCmd(&send_information_intercomm_idle,"PCU",send_information_intercomm_idle->event_info_intercom.d2p_intercomm.d2p_intercomm_pcu_device_no);
+	}
 	ClearAllAudioDataBuffer();
 #endif
 }
@@ -209,40 +200,22 @@ void IdleIntercomProcess(send_infomation_t *send_information_intercomm_idle)
 void D2DIntercomEnter(send_infomation_t *send_information_intercomm_d2d)
 {
 	bcu_6d5w_ctrl_wilson(bcu_state.device_volume.d2d_volume);
-
 	debug_print(("I am d2d intercom enter\n"));
-	//bcu_audio_in_ctrl(0);
-	///<设置当前CC按键状态
 	bcu_state.d2d_button_state = 1;
-
 	whether_eant_to_delay_finished_d2d = 0;
-	///<关闭监听扬声器
-
-
-	///<强制清除缓存区数据
 	ForceBUfferData_wilson();
-
 	bcu_test_for_ts = 0;
-
 	bcu_state.mic_owner = INTERCOM;
-
 	ClearAllAudioDataBuffer();
-
 	play_audio = 0;
 	CharBufferClear(bcu_state.pending_buffer_id);
 	CharBufferClear(bcu_state.audio_data_recv_buffer_id);
-
-
 	MicAdPcmWavheader(bcu_state.audio_data_recv_buffer_id);
-
-
 	begin_to_broadcast_d2d = 1;
 	StartAudioSampleTimer();///<2013-10-24
 	debug_print(("0108-d2d-enter: timer \n"));
-
 	bcu_state.other_bcu_ptt_state = 0;
 	SendCmd(&send_information_intercomm_d2d,"BCU",bcu_state.opposite_bcu_no);
-
 	BCU_LED_BUTTON3_ON ;///<点亮CC按钮的灯
 	AdjustVolumeAfterCODEC();///<调节BCU的音量
 }

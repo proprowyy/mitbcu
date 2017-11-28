@@ -56,8 +56,4 @@ extern char title_please_input_key_name[20];
  */
 void ShowButtonName(unsigned char param_languang,unsigned char param_line_no);
 
-
-extern unsigned char  return_curr_select_ann_carno(unsigned char a[]);
-
-
 #endif /* TOUCH_SCREEN_LANGUAGE_H_ */

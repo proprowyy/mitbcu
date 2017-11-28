@@ -151,6 +151,8 @@ typedef struct
 	unsigned char car_occupy_state[11];
     unsigned char car_select_flag[11];
     unsigned char car_select_finish;
+
+
     unsigned char car_select_count_for_monitor;
     unsigned char iph_monitor_cur_page;
     int bcu_request_number;
@@ -160,18 +162,17 @@ typedef struct
 	int recv_cmd_sequence;//包的序列号
 	unsigned char system_language;
 	unsigned char this_bcu_is_active;
+
+	//button state
 	unsigned char live_button_state;
 	unsigned char d2d_button_state;
 	unsigned char d2p_button_state;
+
 	unsigned char this_bcu_request;
-	unsigned char this_bcu_outer_3d5_button_state;
 	unsigned char this_bcu_is_d2p_intercomming;
 	unsigned char other_bcu_intercomm_state;
-	unsigned char cur_car_state[11];
 	int udp_common_recv_dev_colueme;
 	int all_dev_state_buffer_id;
-
-
 	int local_audio_data_recv_buffer_id;
 	int software_version_buffer_id;
 	pa_software_version_t pa_software_version;

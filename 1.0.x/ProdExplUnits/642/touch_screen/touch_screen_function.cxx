@@ -282,12 +282,8 @@ void SystemInitBeforeRun()
 	BcuSimulateStateInit();
 	TouchScreenInit();///<触摸屏界面初始化
 	ShowButtonName(bcu_state.system_language,3);
-
 	p_current_intercomm_group = gp_main_file;
 	p_current_ann_group = gp_main_file;
-
-	memset(CarNumberSelectAndRecordBtn,0,sizeof(CarNumberSelectAndRecordBtn));
-
 	ShowDeviceVolumeInfo(255);
 }
 

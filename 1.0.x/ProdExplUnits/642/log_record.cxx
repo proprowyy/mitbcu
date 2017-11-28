@@ -64,6 +64,7 @@ void SetSoftwareVersion(char *Version,char *Date)
 		strncpy(bcu_state.pa_software_version.db_version_config,"NULL",30);
 
 		diag_printf("Just for test\n");
+		diag_printf("compile--->%d\n",__DATE__);
 		diag_printf("%s\n",bcu_state.pa_software_version.software_version);
 		diag_printf("%s\n",bcu_state.pa_software_version.software_date);
 		diag_printf("ann:%s\n",bcu_state.pa_software_version.db_version_audio);

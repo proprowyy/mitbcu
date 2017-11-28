@@ -16,9 +16,6 @@
  */
 #include "touch_screen_language.h"
 
-unsigned char CarNumberSelectAndRecordBtn[11];
-
-
 unsigned int gw_RecordPcuMonBtnPass=0;
 ///<触摸屏使用的中文显示目前支持中英文
 char btn_line_no_name[2][15] = {{"3号线"},
@@ -84,54 +81,3 @@ void ShowButtonName(unsigned char param_languang,unsigned char param_line_no)
 
 }
 
-unsigned char return_curr_select_ann_carno(unsigned char a[]){
-
-	for(int i=0;i<11;i++)
-	{
-
-		if(a[i]!=0)
-		return a[i];
-		else
-		break;
-	}
-	return 0;
-}
-unsigned int ReferCarNo(unsigned char t_CarNumberSelectAndRecordBtn[],RecordCarCol *a){
-
-	//根据642项目需求，总车辆数为11列;
-		unsigned int Ret=0;
-
-		int ColumNum=11;
-		int i=0,j=0;
-		for(;i<ColumNum;i++)
-		{
-			if(t_CarNumberSelectAndRecordBtn[i]==1){
-
-				diag_printf("Ann_car_Colum_no=%d\n",i);
-				j++;
-				switch(i)
-				{
-
-				case 0:a->t1=1;break;
-				case 1:a->t2=1;break;
-				case 2:a->t3=1;break;
-				case 3:a->t4=1;break;
-				case 4:a->t5=1;break;
-				case 5:a->t6=1;break;
-				case 6:a->t7=1;break;
-				case 7:a->t8=1;break;
-				case 8:a->t9=1;break;
-				case 9:a->t10=1;break;
-				case 10:a->t11=1;break;
-
-				}
-
-			}
-
-
-		}
-
-
-		return Ret=j;
-
-}
