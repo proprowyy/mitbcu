@@ -155,62 +155,6 @@ void UpdateGlobalInfo(send_infomation_t receive_package)
 			}
 			break;
 
-		case TYPE_OF_PECU:
-#if 0
-			if(source_device_number<=8){
-				if(	receive_package.event_info_intercom.d2p_intercomm.d2p_intercomm_active == 1
-				   &&receive_package.event_info_intercom.d2p_intercomm.d2p_intercomm_request_or_over == 1
-				   &&receive_package.event_info_intercom.d2p_intercomm.d2p_intercomm_response == 0
-				   &&receive_package.event_info_intercom.d2p_intercomm.monitor==0
-				   &&receive_package.event_info_intercom.d2p_intercomm.d2p_intercomm_whether_is_connecting ==0){
-					      diag_printf("Request the intercom .\n");
-
-										Node * tempnode = create_node();
-
-										strcpy( tempnode->devices_name, receive_package.src_devices_name);
-
-										tempnode->devices_id = receive_package.src_devices_no;
-
-										tempnode->current_state = 0;
-
-										tempnode->next = NULL;
-
-										PCURequsthead = insert_list( PCURequsthead, tempnode);
-
-										bcu_state.pcu_request_info.request_number = dispalys( PCURequsthead);//显示请求，返回请求数
-
-				}
-
-					else if(receive_package.event_info_intercom.d2p_intercomm.d2p_intercomm_active == 0){
-
-										diag_printf("Over the intercom .\n");
-
-										PCURequsthead = deletes_list( PCURequsthead, receive_package.src_devices_no, 0);
-
-										//bcu_state.pcu_request_info.request_number = dispalys(PCURequsthead);//显示请求，返回请求数
-
-										if(	bcu_state.pcu_request_info.request_number == 0)
-										{
-											AlarmTSToChangeScreen(12);
-										}
-
-				}
-
-				if(receive_package.event_info_intercom.d2p_intercomm.d2p_intercomm_whether_is_connecting ==1
-				  &&receive_package.event_info_intercom.d2p_intercomm.d2p_intercomm_bcu_device_no == bcu_state.bcu_info.devices_no){
-						if(update_list(PCURequsthead,0,receive_package.src_devices_no,1)==NULL){return ;}
-						bcu_state.this_bcu_intercomm_state=D2P_INTERCOMM_EVENT;
-						AlarmTSToChangeScreen(6);
-						AlarmTSToChangeScreen(5);
-
-				}
-
-
-			}
-
-#endif
-
-			break;
 		default:
 			break;
 	}
@@ -250,18 +194,6 @@ void ClearGlobalDeviceInfo()
 	pthread_mutex_unlock(&mutex_of_global_device_info);
 }
 
-/*Show pcu request*/
-void ShowPCURequest()
-{
-	int i = 1;
-	for(i = 1; i < 6; i ++)
-	{
-		debug_print(("PCU%d = %d,request_sequence = %d\n",i,global_device_info_state.device_pcu[i].event_infomation_intercom.d2p_intercomm.d2p_intercomm_active,
-														   global_device_info_state.device_pcu[i].request_sequence));
-		ts_debug_print(("PCU%d = %d,request_sequence = %d\n",i,global_device_info_state.device_pcu[i].event_infomation_intercom.d2p_intercomm.d2p_intercomm_active,
-																   global_device_info_state.device_pcu[i].request_sequence));
-	}
-}
 
 /*Copy global struct*/
 void ScreenCopyGlobalDeviceInfo(global_device_info_state_t *global_device_info_state_backup)

@@ -22,7 +22,6 @@ network_shell_package_t recv_shell_from_network;
 
 static void Init_ocs_select_car_struct(void)
 {
-
 	    iph_select = (common_big_package_t *)malloc( sizeof(common_big_package_t));
 	    iph_select_intercom=(common_big_package_t *)malloc( sizeof(common_big_package_t));
 		memset(iph_select,0,sizeof(common_big_package_t));
@@ -30,7 +29,6 @@ static void Init_ocs_select_car_struct(void)
 		memset(&g_MonPcuCmdPakage,0,sizeof(g_MonPcuCmdPakage));
 		memset(&g_iph_pcu,0,sizeof(g_MonPcuCmdPakage));
 		memset(&bcu_send_infomation,0,sizeof(bcu_send_infomation));
-
 
 }
 
@@ -54,30 +52,22 @@ int main(int argc, char **argv)
 	pthread_attr_t attr_of_gd_sync;/*the attribution of global device sync thread*/
 	pthread_attr_t attr_of_demao_thread;
 	//****************************//
-
 	/*设备软件版本号登记*/
 	SetSoftwareVersion("642-PA-BCU-app-1-20171109","2017-11-09");
 	//*********************//
-
-
 	//初始化选车结构全局变量
 	Init_ocs_select_car_struct();
 	//*********************//
-
 	//初始化IP所有内容以及其他信息
     InitGlobalArray();
     //*********************//
-
    /*Initialize the bcu_state*/
     InitBcuAndState();
     //*********************//
-
 	/*Acquire this device number*/
 	InitAllDeviceInfo();
-
 	/*Update current device information*/
 	UpdateCurrentDeviceInformation();
-
 	/*Acquire this device number*/
 	GetOtherDeviceNo();
     /*创建pcu请求链表*/
@@ -97,12 +87,8 @@ int main(int argc, char **argv)
 	InitSemaphore(&sem_wakeup_bcu_mic_sample);
 	InitSemaphore(&sem_demao);
 
-
 	/*initialize the share variable,which is used to identify the audio data's destination*/
 	InitAudioDataDestination();
-
-
-	/*系统上电之后将音频输入切换为PTT  0：PTT   1：外接3D5接口*/
 	bcu_audio_in_ctrl(0);
 
 	/*设置系统默认音量*/
@@ -113,22 +99,15 @@ int main(int argc, char **argv)
 	if( LookupSndCard( &bcu_audio_handle ) < 0 )
 	{
 		diag_printf("LookupSndCard faill !\n");
-
 	}
-
 	/*Open the sound card,the open mode is CYG_SND_PLAYBACK_MODE*/
 	OpenSndCard(&bcu_audio_handle,"codec",&current_sounder_mode);
-
 	/*声卡打开之后才能调节声卡的线性音量*/
 	AdjustVolumeAfterCODEC();
-
 	/*Initial all device information*/
 	InitAllDeviceInfo();
-
 	/*Set the package of PTT state*/
 	SetPTTStateInfoPackage();
-
-
 	Enable6d5();
 
 	/*空白数据，口播按钮松开之后补发，从而及时将采集的口播数据发送给EAMP并且播放出来*/

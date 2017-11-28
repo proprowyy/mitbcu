@@ -199,12 +199,11 @@ void IdleIntercomProcess(send_infomation_t *send_information_intercomm_idle)
 /*The enter of D2D intercom*/
 void D2DIntercomEnter(send_infomation_t *send_information_intercomm_d2d)
 {
-	bcu_6d5w_ctrl_wilson(bcu_state.device_volume.d2d_volume);
 	debug_print(("I am d2d intercom enter\n"));
+	bcu_6d5w_ctrl_wilson(bcu_state.device_volume.d2d_volume);
 	bcu_state.d2d_button_state = 1;
 	whether_eant_to_delay_finished_d2d = 0;
 	ForceBUfferData_wilson();
-	bcu_test_for_ts = 0;
 	bcu_state.mic_owner = INTERCOM;
 	ClearAllAudioDataBuffer();
 	play_audio = 0;
@@ -224,39 +223,14 @@ void D2DIntercomEnter(send_infomation_t *send_information_intercomm_d2d)
 void D2DIntercomExit()
 {
 	debug_print(("I am d2d intercom exit\n"));
-
 	bcu_state.d2d_button_state = 0;
-
 	whether_eant_to_delay_finished_d2d= 0;
-
-	///<打开监听扬声器
-
-	bcu_test_for_ts = 0;
-
-
 	CloseAudioSampleTimer();
 	begin_to_broadcast_d2d = 0;
-
 	ClearAudioDataDestination();
-
 	bcu_state.mic_owner = NONE;
-
 	bcu_state.other_bcu_ptt_state = 0;
-
 	ClearAllAudioDataBuffer();
-
-
-
-	if(bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT ||
-			bcu_state.bcu_active_ann_state->state_id == OCC_EVENT ||
-			bcu_state.bcu_active_ann_state->state_id == MIC_3D5_OUTER_EVENT)
-	{
-		bcu_state.mic_owner = ANNOUNCE;
-		SetAudioDataDestination("EAMP",LIVE_DST_NO);
-		StartAudioSampleTimer();
-		debug_print(("0108-d2d-exit: timer \n"));		
-	}
-
 	bcu_state.this_bcu_request = 0;
 	BCU_LED_BUTTON3_DIS;
 }
@@ -338,31 +312,19 @@ void D2PIntercomEnter(send_infomation_t *send_information_intercomm_d2p)
 /*The exit of D2P intercom*/
 void D2PIntercomExit()
 {
-
 	diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
 	begin_to_broadcast_audio_data = 0;
-
-
-
 	ClearAudioDataDestination();
-
 	bcu_state.mic_owner = NONE;
-
 	CloseAudioSampleTimer();
-
 	ClearAllAudioDataBuffer();
-
 	BcuInitPlayAlarmAudioWhenD2pReq();
-
 	BCU_LED_BUTTON2_DIS;
-
-
 }
 
 /*The process of D2P intercom*/
 void D2PIntercomProcess(send_infomation_t *send_information_intercomm_d2p)
 {
-
 	SendCmd(&send_information_intercomm_d2p,"PCU",bcu_state.pcu_request_info.recept_pcu_no);
 }
 

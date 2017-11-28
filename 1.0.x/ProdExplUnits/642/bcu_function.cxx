@@ -72,8 +72,6 @@ cyg_alarm alarm_object_key_info;
 cyg_handle_t  counter_handle_get_out3d5_button_state;
 cyg_handle_t alarm_handle_get_out3d5_button_state;
 cyg_alarm alarm_object_get_out3d5_button_state;
-
-int bcu_test_for_ts = 0;
 bcu_state_t bcu_state =
 {
 	BCURuleInit,

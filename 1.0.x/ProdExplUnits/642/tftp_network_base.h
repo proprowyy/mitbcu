@@ -49,22 +49,6 @@ typedef enum
 	end_device_state
 }device_state;				//现在不使用
 
-//typedef struct
-//{
-//	char device_state;//当前设备，关于tftp跟新的状态。1（客服端发送），请求。
-//						//2（服务器端发送），busy（##现在不用了####）
-//						// 3（服务器端发送），同意更新。4（客服端发送），确认更新包。5（客服端发送），结束跟新包。
-//						//6（服务器端发送），更新结束。
-//	char device_num;	//暂时现不用。
-//
-//	unsigned int device_ip;
-//}tftp_network_cmd_t;
-
-//#ifndef TFTP_SERVER_RECV_PORT
-//	#define TFTP_SERVER_RECV_PORT 33337
-//#else
-//	#error TFTP_SERVER_RECV_PORT defined
-//#endif
 
 //#define TFTP_PRINT
 #ifndef TFTP_PRINT
@@ -75,15 +59,6 @@ typedef enum
 #endif
 
 
-//int SocketSet(int socket_fd);
-
-//tcp 接收数据
-//int TCPrecv(int sockfd,void *buf,int len,int flags);
-////tcp发送数据。
-//int TCPsend(int sockfd, void *buf, int len, int flags);
-//将端口号和IP地址填充到套接字地址中。
-//struct addrinfo * SocketAddressFill(char *tftp_server_ip, int port, int socket_type);
-//申请空间
 void *LocalTftpMalloc( unsigned int wantedSize );
 //释放空间
 void LocalTftpFree( void *pv );

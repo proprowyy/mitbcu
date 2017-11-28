@@ -63,7 +63,7 @@ typedef union
 typedef struct
 {
 	  char devices_name[DEVICE_NAME_LENGTH];					///<设备名称
-	  int devices_no;												///<设备编号
+	  int devices_no;											///<设备编号
 	  unsigned char current_state_ann;	
 	  unsigned char  request_sequence;						///<设备广播当前状态
 	  event_infomation_ann_t event_infomation_ann;				///<设备广播信息
