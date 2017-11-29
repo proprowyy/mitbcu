@@ -1511,7 +1511,7 @@ void GetOuterButtonState()
 				RecovoryBtnState(8);
 				ExitLive();
 				gp_main_file_active_page=gp_select_car_ann_page;
-				wz_window_views->value(gp_main_file_active_page);
+				wz_window_view->value(gp_main_file_active_page);
 				wz_select_window->activate();
 
 			}
