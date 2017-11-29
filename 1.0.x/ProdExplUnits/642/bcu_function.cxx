@@ -1509,6 +1509,7 @@ void GetOuterButtonState()
 			else if(bcu_state.live_button_state == 1)///<exit live
 			{
 				diag_printf("exit live\n");
+				CannelSelectCar();
 				RecovoryBtnState(6);
 				RecovoryBtnState(8);
 				ExitLive();
@@ -2067,13 +2068,14 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 	int ret=0;
 	int i=0,j=0;
 	int common_type_package=p_BigConmInfo->pkg_type;
+	diag_printf("big package.pkg_type=%d\n",common_type_package);
 	switch(common_type_package)
 	{
 	case 4:
-			diag_printf("ocs ann\n");
+
 			if(p_BigConmInfo->common_big_data_u.ann_event_flag ==1)
 			{
-				diag_printf("this is a ann cmd1 ,ocs \n");
+				diag_printf("iscs enter control ann to car.\n");
 				if(bcu_state.mic_owner == NONE || bcu_state.mic_owner == ANNOUNCE )
 				{
 					if(bcu_state.bcu_active_ann_state->state_id != LIVE_ANN_EVENT)
@@ -2084,17 +2086,16 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 			}
 			if(p_BigConmInfo->common_big_data_u.ann_event_flag==0)
 			{
-				diag_printf("this is a ann cmd 2,ocs \n");
+				diag_printf("iscs cannel control ann to car.\n");
 			    SetLiveCmd(2);
 			}
 			ret=4;
 			break;
 	case 5:
-			diag_printf("slect car\n");
+		diag_printf("iscs enter control iph monitor to car.\n");
 			for(i=0; i<8; i++)
 			{
-				diag_printf("enable=%d:no=%d :iph=0x%02x\n",
-				   p_BigConmInfo->common_big_data_u.monitor_event_flag,i,p_BigConmInfo->common_big_data_u.iph_select_flag[i]);
+		diag_printf("enable=%d:no=%d :iph=02x%02x\n", p_BigConmInfo->common_big_data_u.monitor_event_flag,i,p_BigConmInfo->common_big_data_u.iph_select_flag[i]);
 				if(p_BigConmInfo->common_big_data_u.iph_select_flag[i]==1&&
 				   p_BigConmInfo->common_big_data_u.monitor_event_flag==1)
 				{
@@ -2114,7 +2115,7 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 			ret =5;
 			break;
 	case 7:
-			diag_printf("recv select sync comm big form ocs!!\n");
+			diag_printf("recv select sync comm big form ocs .\n");
 			for(j = 0 ; j < 11 ; ++j)
 			{
 				if(p_BigConmInfo->common_big_data_u.car_occupy_state[j] == 1)
@@ -2125,6 +2126,7 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 			AlarmTSToChangeScreen(33);
 		break;
 	case 8:
+		diag_printf("recv iph intercom request.\n");
 		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE&&
 		   bcu_state.bcu_active_ann_state->state_id == ANN_IDLE)
 		{
@@ -2132,20 +2134,23 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 		}
 		break;
 	case 9:
-		diag_printf("this recv \n");
+		diag_printf("recv iph intercom connecting update.\n");
 		bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
 		break;
 	case 10:
-		diag_printf("this refuse \n");
+		diag_printf("recv iph intercom refuse.\n");
 		bcu_state.pcu_request_info.request_number=IphDeleteLink(p_BigConmInfo);
 		break;
 	case 11:
+		diag_printf("recv car bcu intercom request.\n");
 		bcu_state.bcu_request_number=BcuRequestInsertLink(p_BigConmInfo);
 		break;
 	case 12:
+		diag_printf("recv car bcu intercom connecting update.\n");
 		BcuUpdateLink(p_BigConmInfo);
 		break;
 	case 13:
+		diag_printf("recv car bcu intercom refuse.\n");
 		bcu_state.bcu_request_number=BcuDeleteLink(p_BigConmInfo);
 	default:
 		diag_printf("no package type\n");

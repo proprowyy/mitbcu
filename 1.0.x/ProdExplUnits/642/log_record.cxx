@@ -62,13 +62,11 @@ void SetSoftwareVersion(char *Version,char *Date)
 		strncpy(bcu_state.pa_software_version.software_date,Date,30);
 		strncpy(bcu_state.pa_software_version.db_version_audio,"NULL",30);
 		strncpy(bcu_state.pa_software_version.db_version_config,"NULL",30);
-
-		diag_printf("Just for test\n");
-		diag_printf("compile--->%d\n",__DATE__);
-		diag_printf("%s\n",bcu_state.pa_software_version.software_version);
-		diag_printf("%s\n",bcu_state.pa_software_version.software_date);
-		diag_printf("ann:%s\n",bcu_state.pa_software_version.db_version_audio);
-		diag_printf("config:%s\n",bcu_state.pa_software_version.db_version_config);
+		diag_printf("Compile date:%s\n",__DATE__);
+		diag_printf("Version:%s\n",bcu_state.pa_software_version.software_version);
+		diag_printf("Debug date:%s\n",bcu_state.pa_software_version.software_date);
+		diag_printf("Ann:%s\n",bcu_state.pa_software_version.db_version_audio);
+		diag_printf("Config:%s\n",bcu_state.pa_software_version.db_version_config);
 
 }
 
@@ -87,13 +85,13 @@ int DisplaySendCmd(send_infomation_t  param_cmd_info)
 	}
 	if(param_cmd_info.event_type_intercom==D2P_INTERCOMM_EVENT){
 					diag_printf("---D2P_INTERCOMM_EVENT-DisPlay----\n");
-					diag_printf("src_name = %s\nsrc_id = %d\ndts_id = %d\nevent = %d\nactive = %d\n",
+					diag_printf("SrcName = %s\nSrcId = %d\nDtsId = %d\nEvent = %d\nActive = %d\n",
 							param_cmd_info.src_devices_name,
 							param_cmd_info.src_devices_no,
 							param_cmd_info.event_info_intercom.d2p_intercomm.d2p_intercomm_bcu_device_no,
 							param_cmd_info.event_type_intercom,
 							param_cmd_info.event_info_intercom.d2p_intercomm.d2p_intercomm_active);
-					diag_printf("ppt = %d\npending = %d\nreq_or_over = %d\ntresponse = %d\n",
+					diag_printf("Ppt = %d\nPending = %d\nReqOver = %d\ntResponse = %d\n",
 							param_cmd_info.event_ptt_state,
 							param_cmd_info.event_info_intercom.d2p_intercomm.d2p_intercomm_pending,
 							param_cmd_info.event_info_intercom.d2p_intercomm.d2p_intercomm_request_or_over,

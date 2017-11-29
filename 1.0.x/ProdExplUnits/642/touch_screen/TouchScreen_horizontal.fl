@@ -795,7 +795,7 @@ gp_main_file_active_page->show();}
           xywh {30 345 105 25} align 16
         } {}
       }
-      Fl_Group gp_window_black_screen {
+      Fl_Group gp_window_black_screen {open
         xywh {0 0 800 384} color 0 hide
         code0 {gp_window_black_screen->hide();}
       } {}
@@ -967,8 +967,8 @@ enter1->redraw();}
           xywh {490 275 140 95} selection_color 2
         }
       }
-      Fl_Group gp_select_car_ann_page {
-        xywh {0 -5 850 387} color 246 hide
+      Fl_Group gp_select_car_ann_page {open
+        xywh {0 -5 850 387} color 246
         code0 {gp_select_car_ann_page->hide();}
       } {
         Fl_Button btn_ann_t1 {
@@ -1056,90 +1056,18 @@ RecovoryBtnState(4);///<恢复相关按钮}
         }
         Fl_Button enter_select {
           label {确认选车}
-          callback {int i ;int ret;
-	int car_select_num = 0;
-	common_big_package_t common_big_send_package;
-	for(i = 0; i < 11; ++i)
-	{
-		if(bcu_state.car_select_flag[i] == 1)
-		{
-			common_big_send_package.common_big_data_u.car_select_flag[i] = 1;
-			car_select_num += 1;
-			printf("i %d car_select_num %d\\n",i,car_select_num);
-		}
-	}
-
-	if(car_select_num > 0)
-	{
-		next_page->activate();
-		enter_select->deactivate();
-		bcu_state.car_select_count_for_monitor=car_select_num;
-		common_big_send_package.pkg_type=1;
-		common_big_send_package.common_big_data_u.select_enable_flag=1;
-		common_big_send_package.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
-		
-		ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
-		if (ret <0){
-			diag_printf("BlockBufferWrite faill. \\n");
-			BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
-
-		}
-		
-	}
-	else
-	{
-		return;
-	}
-	
-	bcu_state.car_select_finish = 1;}
+          callback {EnterSelectCar();} selected
           xywh {170 260 140 95}
           code0 {enter_select->deactivate();}
         }
         Fl_Button cancel_select {
           label {取消选车}
-          callback {int i ;int ret;
-	int car_select_num = 0;
-	common_big_package_t common_big_send_package;
-	for(i = 0; i < 11; ++i)
-	{
-		if(bcu_state.car_select_flag[i] == 1)
-		{
-		diag_printf("debug cancel_select12\\n");
-
-			bcu_state.car_select_flag[i] = 0;
-			common_big_send_package.common_big_data_u.car_select_flag[i] = 1;
-			car_select_num += 1;
-		}
-	}
-
-	if(car_select_num > 0)
-	{
-		for(i = 0; i < 11; i++)
-		{
-			(gp_select_car_ann_page->child(i))->color((Fl_Color)50);
-			(gp_select_car_ann_page->child(i))->activate();
-			bcu_state.car_occupy_state[i] = 0;
-		}
-		diag_printf("debug cancel_select \\n");
-		bcu_state.car_select_count_for_monitor=0;
-		common_big_send_package.pkg_type=1;
-		common_big_send_package.common_big_data_u.select_enable_flag=0;
-		common_big_send_package.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
-		ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
-		if (ret <0){
-			diag_printf("BlockBufferWrite faill. \\n");
-			BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
-
-		}
-	}
-	
-	bcu_state.car_select_finish = 0;
-	next_page->deactivate();}
+          callback {CannelSelectCar();}
           xywh {330 260 140 95}
           code0 {cancel_select->activate();}
         }
       }
-      Fl_Group AnnOrMonitorSelect {
+      Fl_Group AnnOrMonitorSelect {open
         xywh {0 0 850 388} color 246 hide
         code0 {AnnOrMonitorSelect->hide();}
       } {
@@ -1164,51 +1092,7 @@ if(flag==0)
 else
 {
 	flag=0;
-	
-	if(1)
-	{
-	
-	int i ;int ret;
-	int car_select_num = 0;
-	common_big_package_t common_big_send_package;
-	for(i = 0; i < 11; ++i)
-	{
-		if(bcu_state.car_select_flag[i] == 1)
-		{
-		diag_printf("debug cancel_select12\\n");
-
-			bcu_state.car_select_flag[i] = 0;
-			common_big_send_package.common_big_data_u.car_select_flag[i] = 1;
-			car_select_num += 1;
-		}
-	}
-
-	if(car_select_num > 0)
-	{
-		for(i = 0; i < 11; i++)
-		{
-			(gp_select_car_ann_page->child(i))->color((Fl_Color)50);
-			(gp_select_car_ann_page->child(i))->activate();
-			bcu_state.car_occupy_state[i] = 0;
-		}
-		diag_printf("debug cancel_select \\n");
-		bcu_state.car_select_count_for_monitor=0;
-		common_big_send_package.pkg_type=1;
-		common_big_send_package.common_big_data_u.select_enable_flag=0;
-		common_big_send_package.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
-		ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
-		if (ret <0){
-			diag_printf("BlockBufferWrite faill. \\n");
-			BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
-
-		}
-	}
-	
-	bcu_state.car_select_finish = 0;
-	next_page->deactivate();
-	
-	}
-
+	CannelSelectCar();
 	ExitLive();
 	if(bcu_state.car_select_count_for_monitor==1)
 	{
@@ -1253,8 +1137,8 @@ wz_select_window->activate();}
           xywh {650 280 140 95}
         }
       }
-      Fl_Group D2D_intercom_page {open
-        xywh {0 2 850 383} color 246
+      Fl_Group D2D_intercom_page {
+        xywh {0 2 850 383} color 246 hide
         code0 {D2D_intercom_page->hide();}
       } {
         Fl_Button btn_d2d_1 {
@@ -1375,7 +1259,7 @@ StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_RELEASE_AND_
 send_cannel_d2d_big_package(gwCurD2dCarNo,gwCurrBcuNo);
 canenl_d2d->deactivate();
 return_D2D->activate();
-Enable_D2d_All_Btn();} selected
+Enable_D2d_All_Btn();}
           xywh {495 275 140 95}
           code0 {canenl_d2d->deactivate();}
         }

@@ -236,20 +236,17 @@ void NetWorkMain(network_buffer_t network_buffer)
 			//数据接收
 			if(FD_ISSET(udp_cmd_socket,&frd))//检测udp的cmd套接字是否有数据可以接受
 			{
-				DEBUG("There have cmd to receive\n");
-
+				DEBUG("receiving cmd.\n");
 				UdpRecvFun(udp_cmd_socket,1,&CachePoint,network_buffer.udp_cmd_socket_buffer.udp_cmd_socket_recv_buffer);
 
 			} //end of FD_ISSET
 			if(FD_ISSET(udp_data_socket,&frd))//检测udp的data套接字是否有数据接收
 			{
-				//diag_printf("There have  audio data to receive\n");
-
 				UdpRecvFun(udp_data_socket,2,&CachePoint,network_buffer.udp_data_socket_buffer.udp_data_socket_recv_buffer);
 			}
 			if(FD_ISSET(udp_common_socket,&frd))//检测udp的common套接字是否有数据接收
 			{
-				net_debug_printf(("There have common cmd to receive\n"));
+				DEBUG("receiving common cmd.\n");
 				int ret = 0;
 				struct sockaddr_in recv_add = {0};
 				int len_num = sizeof(common_package_buffer);
@@ -272,7 +269,7 @@ void NetWorkMain(network_buffer_t network_buffer)
 
 			if(FD_ISSET(udp_common_big_socket,&frd))//检测udp的big common套接字是否有数据接收
 			{
-				net_debug_printf2(("There have big common cmd to receive\n"));
+				DEBUG("receiving common big cmd.\n");
 				int ret = 0;
 				struct sockaddr_in recv_add = {0};
 				int len_num = sizeof(common_big_package_buffer);
@@ -280,7 +277,6 @@ void NetWorkMain(network_buffer_t network_buffer)
 				ret = recvfrom(udp_common_big_socket, (void *)&common_big_package_buffer, len_num, 0, (struct sockaddr *)&recv_add, (socklen_t*)pToPackLen);
 				if ( ret > 0)
                 {
-					DEBUG("recv bigcom to ocs\n");
             	  ret = BlockBufferWrite(network_buffer.server_udp_socket_buffer.udp_server_socket_recv_buffer, (void *)&common_big_package_buffer, sizeof(common_big_package_buffer));
             	  if ( ret < 0 )
             	  {
@@ -317,7 +313,7 @@ void NetWorkMain(network_buffer_t network_buffer)
 			{
 
 				memset(shell_recv_buffer,0,sizeof(shell_recv_buffer));
-				net_debug_printf(("There shell socket have data to receive\n"));
+				DEBUG("receiving shell cmd.\n");
 				if(recvfrom(udp_shell_socket, (void *)shell_recv_buffer,sizeof(shell_recv_buffer),0,(struct sockaddr *)&udp_shell_client_addr,&len) < 0)
 				{
 					net_debug_printf(("udp_shell_socket receive data is err!!!\n"));
@@ -353,7 +349,7 @@ void NetWorkMain(network_buffer_t network_buffer)
 				if(BlockBufferRead(network_buffer.udp_cmd_socket_buffer.udp_cmd_socket_send_buffer,(void *)&network_send_cmd_buf,sizeof(network_send_cmd_buf))>0)
 				{
 
-					DEBUG("send cmd to ocs sizeof %d!\n",sizeof(network_send_cmd_buf));
+					DEBUG("send cmd to ocs len = %d!\n",sizeof(network_send_cmd_buf));
 #if 0
 						unsigned char buf[320];
 						memcpy(buf,&network_send_cmd_buf,320);
@@ -374,7 +370,7 @@ void NetWorkMain(network_buffer_t network_buffer)
 						if(UdpSendFunCMD(udp_cmd_socket,&network_send_cmd_buf,sizeof(network_send_cmd_buf),OCS_IP,UDP_CMD_PORT)< 0)//发送控制数据
 						{
 
-							DEBUG("send cmd to ocs  fail\n");
+							DEBUG("send cmd to ocs  fail.\n");
 
 						}
 				}
@@ -386,11 +382,7 @@ void NetWorkMain(network_buffer_t network_buffer)
 				read_data_long = CharBufferRead(network_buffer.udp_data_socket_buffer.udp_data_socket_send_buffer,(void *)data_buffer_send,sizeof(data_buffer_send));
 				if( read_data_long > 0)
 				{
-					//diag_printf("send audio data to ocs !\n");
-
 					UdpSendFunDATA(udp_data_socket,data_buffer_send,read_data_long,OCS_IP,UDP_DATA_PORT);//发送音频数据给EAMP
-					//UdpSendFunDATA(udp_data_socket,data_buffer_send,read_data_long,"230.10.10.56",UDP_DATA_PORT);//发送音频数据给EAMP
-
 				}
 			}
 
@@ -410,7 +402,7 @@ void NetWorkMain(network_buffer_t network_buffer)
 				memset(shell_send_buffer,0,sizeof(shell_send_buffer));
 				if(BlockBufferRead(network_buffer.udp_shell_socket_buffer.udp_shell_socket_send_buffer,(void *)&shell_send_buffer,sizeof(shell_send_buffer))>0)
 				{
-					DEBUG("There shell socket have data to send-2016\n");
+					DEBUG("There shell socket have data to send.\n");
 					int ret = sendto(udp_shell_socket, (void *)shell_send_buffer,
 													sizeof(network_shell_package_t),0,
 													(struct sockaddr *)&udp_shell_client_addr, len);
@@ -426,10 +418,10 @@ void NetWorkMain(network_buffer_t network_buffer)
 				//发送big common 数据
 				if(BlockBufferRead(network_buffer.server_udp_socket_buffer.udp_server_socket_send_buffer,(void *)&common_big_package_buffer,sizeof(common_big_package_buffer))>0)
 				{
-					DEBUG("send bigcom to ocs--------- %d!\n",sizeof(common_big_package_buffer));;
+					DEBUG("send big common cmd to ocs ,len=%d\n",sizeof(common_big_package_buffer));;
 					if(common_big_package_buffer.pkg_type==1)
 					{
-						diag_printf("select car big pkg\n");
+						diag_printf("select car big common cmd.\n");
 #if 0
 						int i=0;
 						for(;i<11;i++)

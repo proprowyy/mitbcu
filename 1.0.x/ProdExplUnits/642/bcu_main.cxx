@@ -314,10 +314,8 @@ void *SystemControl(void *arg)
 
 		/*D2D hangup D2P timeout handle*/
 		D2DHangUpD2PTimeOutHandle();
-
 		//司机对讲请求与挂断处理
 		///D2DReqAndResponseHandle();
-       
 
 			bcu_state.this_bcu_is_active=1;
 
@@ -330,17 +328,13 @@ void *SystemControl(void *arg)
 			}
 			if(GetD2PExternButtonState() == 1)///<D2P外部按钮按下
 			{
-
 				AlarmTSToChangeScreen(17);
 			}
-
-
 		///<PCU请求时，改变相关按钮的颜色
 		ChangeIntercommButtonColor(&whether_ts_is_running);
 
 		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0){
-			diag_printf("recv a big common pakge !\n");
-
+			diag_printf("recv a big package.\n");
 			ProbeBigCommPackage(&recv_temp_big);
 
 			if(bcu_state.bcu_request_number !=0)

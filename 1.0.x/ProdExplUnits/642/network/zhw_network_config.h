@@ -24,7 +24,7 @@
 #define SOCKFD_PCU_DATA_PORT 19996
 #define SOCKFD_HEART_PORT 20000
 #if 1
-#define net_debug_printf(s) diag_printf s
+#define net_debug_printf(s) //diag_printf s
 #define net_debug_printf2(s) //diag_printf s
 #define DEBUG diag_printf
 //#define net_debug_printf(s)  //diag_printf s       ///<debug for wilson,on the platform of Beta1.0

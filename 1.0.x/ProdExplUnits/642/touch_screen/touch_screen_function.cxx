@@ -968,7 +968,7 @@ void AlarmTSToChangeScreen(int param)
 	while(switchFlag == param)
 	{
 		cyg_thread_delay(10);
-		diag_printf("switchFlag=%d\n",param);
+		diag_printf("AlarmTSToChangeScreen = %d\n",param);
 	}
 }
 
@@ -1267,5 +1267,94 @@ void send_cannel_d2d_big_package(unsigned int vn,unsigned int bcu_no)
 		    int ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));
 		    ret= BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,&parame,sizeof(common_big_package_t));
 
+
+}
+
+
+void EnterSelectCar()
+{
+	int i ;int ret;
+		int car_select_num = 0;
+		common_big_package_t common_big_send_package;
+		for(i = 0; i < 11; ++i)
+		{
+			if(bcu_state.car_select_flag[i] == 1)
+			{
+				common_big_send_package.common_big_data_u.car_select_flag[i] = 1;
+				car_select_num += 1;
+				//printf("i %d car_select_num %d\n",i,car_select_num);
+			}
+		}
+
+		if(car_select_num > 0)
+		{
+			next_page->activate();
+			enter_select->deactivate();
+			bcu_state.car_select_count_for_monitor=car_select_num;
+			common_big_send_package.pkg_type=1;
+			common_big_send_package.common_big_data_u.select_enable_flag=1;
+			common_big_send_package.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
+
+			ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+			if (ret <0){
+				diag_printf("BlockBufferWrite faill. \n");
+				BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+
+			}
+
+		}
+		else
+		{
+			return;
+		}
+
+		bcu_state.car_select_finish = 1;
+
+}
+
+void CannelSelectCar()
+{
+	if(1)
+	{
+	int i ;int ret;
+	int car_select_num = 0;
+	common_big_package_t common_big_send_package;
+	for(i = 0; i < 11; ++i)
+	{
+		if(bcu_state.car_select_flag[i] == 1)
+		{
+		//diag_printf("debug cancel_select12\n");
+
+			bcu_state.car_select_flag[i] = 0;
+			common_big_send_package.common_big_data_u.car_select_flag[i] = 1;
+			car_select_num += 1;
+		}
+	}
+
+	if(car_select_num > 0)
+	{
+		for(i = 0; i < 11; i++)
+		{
+			(gp_select_car_ann_page->child(i))->color((Fl_Color)50);
+			(gp_select_car_ann_page->child(i))->activate();
+			bcu_state.car_occupy_state[i] = 0;
+		}
+		//diag_printf("debug cancel_select \n");
+		bcu_state.car_select_count_for_monitor=0;
+		common_big_send_package.pkg_type=1;
+		common_big_send_package.common_big_data_u.select_enable_flag=0;
+		common_big_send_package.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
+		ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+		if (ret <0){
+			diag_printf("BlockBufferWrite faill. \n");
+			BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
+
+		}
+	}
+
+	bcu_state.car_select_finish = 0;
+	next_page->deactivate();
+
+	}
 
 }

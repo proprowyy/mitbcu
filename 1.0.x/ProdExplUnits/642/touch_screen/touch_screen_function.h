@@ -800,5 +800,7 @@ extern void SetD2dRefuseCmdPackage(unsigned int vn,unsigned int bcu_no,send_info
 
 extern void send_cannel_d2d_big_package(unsigned int vn,unsigned int bcu_no);
 
+extern void CannelSelectCar();
 
+extern void EnterSelectCar();
 #endif

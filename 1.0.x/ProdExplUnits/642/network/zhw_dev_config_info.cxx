@@ -41,188 +41,11 @@ static long network_malloc_size = 0;///wilson add
 char network_temp_ip_info_buff[100];///wilson add
 
 
-#if 0
-/*
-int ZhwUpdateBCUIpArray(ip_mac_table_row_t *pip_mac_table_row)
-{
-	char *save_point_start = NULL ;
-	char *save_point_middle = NULL ;
-	char *save_point_end = NULL ;
-	char a = 0;
-	char b = 0;
-	int length = 0 ;
-	int i ;
-
-#ifdef BCU_DEV
-	pthread_mutex_lock(&mutex_update_ip_array);
-#endif
-	global_array_ptr = global_array_ptr_head;
-
-	while(global_array_ptr != NULL)
-	{
-		if((global_array_ptr->global_config_info.dev_type == pip_mac_table_row->current_row_info.device_type)
-				&&(global_array_ptr->global_config_info.dev_number == pip_mac_table_row->current_row_info.device_no))
-		{
-			global_array_ptr->global_config_info.is_server = pip_mac_table_row->current_row_info.server_whether;
-			strcpy((char *)global_array_ptr->global_config_info.dev_name,(char *)pip_mac_table_row->current_row_info.device_name);
-			strcpy((char *)global_array_ptr->global_config_info.dev_ip,(char *)pip_mac_table_row->current_row_info.ip_address);
-//			strcpy((char *)global_array_ptr->global_config_info.dev_mac,(char *)pip_mac_table_row->current_row_info.mac_address);
-
-			{
-#if 1 ///wilson add
-			    save_point_start = &network_temp_ip_info_buff[0];
-#else
-				save_point_start = (char *)malloc(sizeof(pip_mac_table_row->current_row_info.mac_address));				bzero(save_point_start,sizeof(pip_mac_table_row->current_row_info.mac_address));
-#endif
-				memcpy(save_point_start,pip_mac_table_row->current_row_info.mac_address,sizeof(pip_mac_table_row->current_row_info.mac_address));
-				save_point_middle = save_point_start;
-				save_point_end = save_point_start;
-				while(save_point_end != NULL)
-				{
-					save_point_end = strstr(save_point_middle,",");
-
-					length = (int)(strlen(save_point_middle) - strlen(save_point_end));
-
-					if( i < 6 )
-					{
-						if(length  == 2)
-						{
-							a = *(save_point_middle);
-							save_point_middle++;
-							b = *(save_point_middle);
-							global_array_ptr->global_config_info.dev_mac[i] = (16 * (a-48)) + (b-48) ;
-						}
-						else if ( (length > 0) && (length < 2) )
-						{
-							memcpy(&b,save_point_middle,sizeof(b));
-							global_array_ptr->global_config_info.dev_mac[i] = atoi(&b) ;
-						}
-
-						i++ ;
-					}
-					save_point_middle = (save_point_end + 1) ;
-				}
-				#if 1/// wilson add
-				save_point_start = NULL ;
-				#else
-//				diag_printf("zhw-11111111-info:%s\n",save_point_start);
-				free(save_point_start); // add by zhw-2014-12-29
-				save_point_start = NULL ;
-//				diag_printf("zhw-33333333\n");
-				#endif
-			}
-
-			global_array_ptr = global_array_ptr_head;
-#ifdef BCU_DEV
-			pthread_mutex_unlock(&mutex_update_ip_array);
-#endif
-			return 1;
-		}
-		else
-		{
-			if(global_array_ptr->next != NULL)
-			{
-				global_array_ptr = global_array_ptr->next;
-			}
-			else
-			{
-				break;
-			}
-		}
-	}
-	row += 1;
-	global_array_ptr->next = (global_array_t *)malloc(sizeof(global_array_t));
-	global_array_ptr = global_array_ptr->next;
-	if(global_array_ptr != NULL)
-	{
-		bzero(global_array_ptr,sizeof(global_array_t));
-		global_array_ptr->global_config_info.dev_number = pip_mac_table_row->current_row_info.device_no;
-		global_array_ptr->global_config_info.dev_type = pip_mac_table_row->current_row_info.device_type;
-		global_array_ptr->global_config_info.is_server = pip_mac_table_row->current_row_info.server_whether;
-
-		global_array_ptr->global_config_info.dev_name = (char *)malloc(sizeof(pip_mac_table_row->current_row_info.device_name));
-		network_malloc_size += sizeof(pip_mac_table_row->current_row_info.device_name);
-		diag_printf("3:network_malloc_size = %ld\n",network_malloc_size);
-		bzero(global_array_ptr->global_config_info.dev_name,sizeof(pip_mac_table_row->current_row_info.device_name));
-		strcpy((char *)global_array_ptr->global_config_info.dev_name,(char *)pip_mac_table_row->current_row_info.device_name);
-
-		global_array_ptr->global_config_info.dev_ip = (char *)malloc(sizeof(pip_mac_table_row->current_row_info.ip_address));
-		network_malloc_size += sizeof(pip_mac_table_row->current_row_info.ip_address);
-		diag_printf("4:network_malloc_size = %ld\n",network_malloc_size);
-		bzero(global_array_ptr->global_config_info.dev_ip,sizeof(pip_mac_table_row->current_row_info.ip_address));
-		strcpy((char *)global_array_ptr->global_config_info.dev_ip,(char *)pip_mac_table_row->current_row_info.ip_address);
-
-//		strcpy((char *)global_array_ptr->global_config_info.dev_mac,(char *)pip_mac_table_row->current_row_info.mac_address);
-		{
-#if 1///wilson add
-			save_point_start = &network_temp_ip_info_buff[0];
-#else
-			save_point_start = (char *)malloc(sizeof(pip_mac_table_row->current_row_info.mac_address));
-#endif
-			bzero(save_point_start,sizeof(pip_mac_table_row->current_row_info.mac_address));
-			memcpy(save_point_start,pip_mac_table_row->current_row_info.mac_address,sizeof(pip_mac_table_row->current_row_info.mac_address));
-			save_point_end = save_point_start;
-			save_point_middle = save_point_start;
-			while(save_point_end != NULL)
-			{
-				save_point_end = strstr(save_point_middle,",");
-
-				length = (int)(strlen(save_point_middle) - strlen(save_point_end));
-
-				if( i < 6 )
-				{
-					if(length  == 2)
-					{
-						a = *(save_point_middle);
-						save_point_middle++;
-						b = *(save_point_middle);
-						global_array_ptr->global_config_info.dev_mac[i] = (16 * (a-48)) + (b-48) ;
-					}
-					else if ( (length > 0) && (length < 2) )
-					{
-						memcpy(&b,save_point_middle,sizeof(b));
-						global_array_ptr->global_config_info.dev_mac[i] = atoi(&b) ;
-					}
-
-					i++ ;
-				}
-				save_point_middle = (save_point_end + 1) ;
-			}
-#if 0///wilson add
-//			diag_printf("zhw-11111111-info:%s\n",save_point_start);
-			free(save_point_start); // add by zhw-2014-12-29
-#endif
-			save_point_start = NULL ;
-//			diag_printf("zhw-33333333\n");
-		}
-
-		global_array_ptr->next = NULL;
-		global_array_ptr = global_array_ptr_head;
-#ifdef BCU_DEV
-		pthread_mutex_unlock(&mutex_update_ip_array);
-#endif
-		return 2;
-	}
-	else
-	{
-		net_debug_printf(("malloc filed for the new device\n"));
-	}
-#ifdef BCU_DEV
-	pthread_mutex_unlock(&mutex_update_ip_array);
-#endif
-	return 0;
-}
-*/
-#endif
-
-
-
 int ReadType(void)
 {
 	int type = 3; ///< 1:PCU; 5:CCU; 3:BCU; 7:EAMP
 	return type;
 }
-
 int ReadNum(void)
 {
 	int number = BCU_DEV_NO;
@@ -303,7 +126,7 @@ void InitGlobalArray(void)
 	int read_db_ret = 1;
 	global_array_ptr = (global_array_t *)malloc(sizeof(global_array_t));
 	network_malloc_size = network_malloc_size + sizeof(global_array_t);
-	diag_printf("6-network_malloc_size = %ld\n",network_malloc_size);
+	////////diag_printf("6-network_malloc_size = %ld\n",network_malloc_size);
 	bzero(global_array_ptr,sizeof(global_array_t));
 	global_array_ptr_head = global_array_ptr;
 
@@ -343,7 +166,7 @@ void InitGlobalArray(void)
 
 		global_array_ptr->global_config_info.dev_name = (char *)malloc(sizeof(point->device_name));
 		network_malloc_size = network_malloc_size + sizeof(point->device_name);
-		diag_printf("7-network_malloc_size = %ld\n",network_malloc_size);
+		////////diag_printf("7-network_malloc_size = %ld\n",network_malloc_size);
 		bzero(global_array_ptr->global_config_info.dev_name,sizeof(point->device_name));
 		memcpy(global_array_ptr->global_config_info.dev_name,point->device_name,sizeof(point->device_name));
 		net_debug_printf(("device name  = %s--",point->device_name));
@@ -353,7 +176,7 @@ void InitGlobalArray(void)
 
 		global_array_ptr->global_config_info.dev_ip = (char *)malloc(sizeof(point->ip_address));
 		network_malloc_size = network_malloc_size + sizeof(point->ip_address);
-		diag_printf("8-network_malloc_size = %ld\n",network_malloc_size);
+		//////diag_printf("8-network_malloc_size = %ld\n",network_malloc_size);
 		bzero(global_array_ptr->global_config_info.dev_ip,sizeof(point->ip_address));
 		memcpy(global_array_ptr->global_config_info.dev_ip,point->ip_address,sizeof(point->ip_address));
 
