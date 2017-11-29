@@ -113,7 +113,6 @@ void RecovoryBtnState(int index)
 {///<恢复触摸屏下方功能选择按钮
 	switch(index)
 	{
-
 		case 3:///<紧急广播有效
 			btn_emerg_ann->activate();
 			btn_emerg_ann->color((Fl_Color)50);
@@ -139,8 +138,8 @@ void RecovoryBtnState(int index)
 		case 8:
 					 lable_state->hide();
 					 lable_state->label("提示:请规范操作,谢谢!");
-						lable_state->redraw();
-						lable_state->show();
+					 lable_state->redraw();
+					 lable_state->show();
 						break;
 		default:break;
 	}
@@ -279,6 +278,41 @@ void Disable_D2p_All_Btn()
 	btn_intercomm_accept->activate();
 	btn_intercomm_refuse->activate();
 }
+
+void Enable_D2p_All_Btn()
+{
+	int i;
+	for( i = 0;i < 12 ;i ++ )
+	{
+		(gp_intercomm->child(i))->activate();
+	}
+	btn_intercomm_accept->deactivate();
+	btn_intercomm_refuse->deactivate();
+}
+void Enable_D2d_All_Btn()
+{
+	int i;
+	for( i = 0;i < 8 ;i ++ )
+	{
+		(D2D_intercom_page->child(i))->activate();
+	}
+	enter_d2d->deactivate();
+	canenl_d2d->deactivate();
+}
+
+void Disable_D2D_All_Btn()
+{
+	int i;
+	for( i = 0;i < 8 ;i ++ )
+	{
+		(D2D_intercom_page->child(i))->deactivate();
+	}
+	enter_d2d->activate();
+	canenl_d2d->activate();
+
+}
+
+
 
 void SystemInitBeforeRun()
 {///<触摸屏在获取数据库信息之前初始化相关界面信息
@@ -1202,7 +1236,7 @@ void SetD2dCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *par
 			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_response = 0;
 			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_intercomm_bcu_device_no =bcu_no;
 			param_send_infomation->event_info_intercom.d2d_intercomm.d2d_ppt_state = 1;
-
+			Disable_D2D_All_Btn();
 }
 void SetD2dRefuseCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation)
 {

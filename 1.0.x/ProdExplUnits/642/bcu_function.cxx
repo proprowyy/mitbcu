@@ -2014,7 +2014,6 @@ static int BcuRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 		tempnode->next = NULL;
 		BCURequsthead = insert_list( BCURequsthead, tempnode);
 		ret = dispalys( BCURequsthead);//显示请求，返回请求数
-		enter_d2d->activate();
 		diag_printf("BCU Request \n");
 		return ret;
 }
@@ -2027,13 +2026,12 @@ static int BcuDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 	if(	ret == 0)
 	{
 		bcu_state.bcu_request_number=ret;
-		enter_d2d->deactivate();
+
 		AlarmTSToChangeScreen(9);
 		AlarmTSToChangeScreen(12);
 	}
 	if(ret >0)
 	{
-		enter_d2d->activate();
 		AlarmTSToChangeScreen(9);
 	}
 	return ret;

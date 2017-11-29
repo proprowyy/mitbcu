@@ -346,6 +346,11 @@ void *SystemControl(void *arg)
 			if(bcu_state.bcu_request_number !=0)
 			{
 				AlarmTSToChangeScreen(9);
+				btn_emerg_ann->activate();
+			}
+			else{
+
+				btn_emerg_ann->deactivate();
 			}
 			if(bcu_state.pcu_request_info.request_number != 0)
 			{

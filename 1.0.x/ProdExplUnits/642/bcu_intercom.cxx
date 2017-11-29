@@ -354,7 +354,6 @@ void IntercomHangUpEnter(send_infomation_t *send_information_intercomm_hangup)
 	bcu_6d5w_ctrl_wilson(bcu_state.device_volume.d2d_volume);
 	debug_print(("I am intercom hang up enter\n"));
 
-//	CloseMonitorSpeaker();
 	ClearAllAudioDataBuffer();
 
 	bcu_state.d2d_button_state = 1;

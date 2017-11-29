@@ -274,44 +274,14 @@ cyg_thread_delay(100);
 RefuseD2PRequest();
 
 BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
+Enable_D2p_All_Btn();
 }
 
 Fl_Button *btn_intercomm_back=(Fl_Button *)0;
 
 static void cb_btn_intercomm_back(Fl_Button*, void*) {
-  (gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
-(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-
-
-if(is_intercomming_with_pcu == 1)
-{
-	is_intercomming_with_pcu  = 0;
-	btn_intercomm->activate();
-		btn_intercomm->color((Fl_Color)71);
-	whether_intercomm_button_is_active = 0;
-}
-
-//ClearAllPCURequest();
-
-d2p_reponse_sursor = 1;
-currend_d2P_position = 1;
-
-
-btn_intercomm->deactivate();
-whether_intercomm_button_is_active = 0;
-btn_intercomm->color((Fl_Color)50);
-btn_intercomm->redraw();
-
-btn_main_file->color((Fl_Color)71);
-btn_main_file->redraw();
-
-//btn_intercomm->deactivate();
-
-//send PCU request cmd package
-
-SetD2PCmd(1,0,255,0);//进入、运行、退出-响应类型-pcu_no-bcu_no
-
-wz_window_view->value(gp_main_file);
+  gp_main_file_active_page=gp_static_show;
+wz_window_view->value(gp_main_file_active_page);
 }
 
 Fl_Group *gp_static_show=(Fl_Group *)0;
@@ -1351,6 +1321,7 @@ Fl_Button *enter_d2d=(Fl_Button *)0;
 static void cb_enter_d2d(Fl_Button*, void*) {
   StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_OR_DRIVER_CALL,&bcu_send_infomation);
 canenl_d2d->activate();
+return_D2D->deactivate();
 }
 
 Fl_Return_Button *return_D2D=(Fl_Return_Button *)0;
@@ -1368,6 +1339,8 @@ static void cb_canenl_d2d(Fl_Button*, void*) {
 StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_RELEASE_AND_DRIVER_RELEASE,&bcu_send_infomation);
 send_cannel_d2d_big_package(gwCurD2dCarNo,gwCurrBcuNo);
 canenl_d2d->deactivate();
+return_D2D->activate();
+Enable_D2d_All_Btn();
 }
 
 Fl_Wizard *wz_select_window=(Fl_Wizard *)0;
@@ -1390,7 +1363,11 @@ current_is_on_static_page = 0;
 Fl_Button *btn_emerg_ann=(Fl_Button *)0;
 
 static void cb_btn_emerg_ann(Fl_Button*, void*) {
-  ChangeBtnState(3);
+  if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
+{
+	return ;
+}
+ChangeBtnState(3);
 gp_main_file_active_page=D2D_intercom_page;
 wz_window_view->value(gp_main_file_active_page);
 }
@@ -1398,7 +1375,7 @@ wz_window_view->value(gp_main_file_active_page);
 Fl_Button *btn_live=(Fl_Button *)0;
 
 static void cb_btn_live(Fl_Button*, void*) {
-  if(bcu_state.iph_monitor_cur_page==1)
+  if(bcu_state.iph_monitor_cur_page==1 ||bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT)
 {
 	return ;
 }
@@ -1440,6 +1417,7 @@ int touch_screen_main() {
       { gp_intercomm = new Fl_Group(0, 0, 800, 385);
         gp_intercomm->color((Fl_Color)246);
         gp_intercomm->align(Fl_Align(129));
+        gp_intercomm->hide();
         { btn_d2p_request_1 = new Fl_Button(10, 13, 140, 95);
           btn_d2p_request_1->callback((Fl_Callback*)cb_btn_d2p_request_1);
         } // Fl_Button* btn_d2p_request_1
@@ -1476,17 +1454,16 @@ int touch_screen_main() {
         { btn_d2p_request_12 = new Fl_Button(490, 230, 140, 95);
           btn_d2p_request_12->callback((Fl_Callback*)cb_btn_d2p_request_12);
         } // Fl_Button* btn_d2p_request_12
-        { btn_intercomm_accept = new Fl_Button(645, 180, 150, 85, "\346\216\245\351\200\232");
+        { btn_intercomm_accept = new Fl_Button(645, 80, 150, 85, "\346\216\245\351\200\232");
           btn_intercomm_accept->callback((Fl_Callback*)cb_btn_intercomm_accept);
           btn_intercomm_accept->deactivate();
         } // Fl_Button* btn_intercomm_accept
-        { btn_intercomm_refuse = new Fl_Button(645, 280, 150, 85, "\346\214\202\346\226\255");
+        { btn_intercomm_refuse = new Fl_Button(645, 185, 150, 85, "\346\214\202\346\226\255");
           btn_intercomm_refuse->callback((Fl_Callback*)cb_btn_intercomm_refuse);
           btn_intercomm_refuse->deactivate();
         } // Fl_Button* btn_intercomm_refuse
-        { btn_intercomm_back = new Fl_Button(660, 305, 135, 70, "\344\270\200\351\224\256\346\270\205\351\231\244\350\257\267\346\261\202");
+        { btn_intercomm_back = new Fl_Button(645, 290, 150, 85, "\344\270\200\351\224\256\346\270\205\351\231\244\350\257\267\346\261\202");
           btn_intercomm_back->callback((Fl_Callback*)cb_btn_intercomm_back);
-          btn_intercomm_back->hide();
         } // Fl_Button* btn_intercomm_back
         gp_intercomm->hide();
         gp_intercomm->end();
@@ -1905,7 +1882,6 @@ int touch_screen_main() {
       } // Fl_Group* AnnOrMonitorSelect
       { D2D_intercom_page = new Fl_Group(0, 2, 850, 383);
         D2D_intercom_page->color((Fl_Color)246);
-        D2D_intercom_page->hide();
         { btn_d2d_1 = new Fl_Button(10, 12, 140, 95);
           btn_d2d_1->callback((Fl_Callback*)cb_btn_d2d_1);
           btn_d2d_1->hide();
@@ -1973,6 +1949,7 @@ int touch_screen_main() {
           btn_emerg_ann->down_box(FL_ROUNDED_BOX);
           btn_emerg_ann->callback((Fl_Callback*)cb_btn_emerg_ann);
           btn_emerg_ann->align(Fl_Align(FL_ALIGN_WRAP));
+          btn_emerg_ann->deactivate();
         } // Fl_Button* btn_emerg_ann
         { btn_live = new Fl_Button(445, 395, 150, 70, "\351\200\211\350\275\246\347\225\214\351\235\242");
           btn_live->box(FL_ROUNDED_BOX);

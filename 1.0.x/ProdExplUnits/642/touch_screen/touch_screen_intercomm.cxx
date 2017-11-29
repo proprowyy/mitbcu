@@ -77,7 +77,6 @@ void ShowD2PRequest(){
 
 
 void ShowD2DRequest(){
-
 	int i=0;
 	static char buffer[8][20];
 	Node *temp;
@@ -98,12 +97,6 @@ void ShowD2DRequest(){
     			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
 				(D2D_intercom_page->child(i ))->show();
 				(D2D_intercom_page->child(i ))->label(buffer[i]);
-				 if(temp->current_state == 1) {
-					(D2D_intercom_page->child(i))->deactivate();
-				 }
-				 else{
-					(D2D_intercom_page->child(i))->activate();
-				 }
 				temp=temp->next;
 			}
 	      }
@@ -112,8 +105,6 @@ void ShowD2DRequest(){
 		  }
        }
     		wz_window_view->value(D2D_intercom_page);
-    		wz_select_window->value(main_group);
-
 }
 void SetD2PCmd(int enter_or_exit,int param_response_type,int param_pcu_no,int param_bcu_no)
 {///<发送D2P 命令

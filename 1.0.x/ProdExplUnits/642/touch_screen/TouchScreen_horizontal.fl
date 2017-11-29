@@ -45,8 +45,8 @@ current_is_on_static_page = 1;}
           xywh {650 270 140 95}
         }
       }
-      Fl_Group gp_intercomm {open
-        xywh {0 0 800 385} color 246 align 129
+      Fl_Group gp_intercomm {
+        xywh {0 0 800 385} color 246 align 129 hide
         code0 {gp_intercomm->hide();}
       } {
         Fl_Button btn_d2p_request_1 {
@@ -238,8 +238,8 @@ current_is_on_static_page = 1;}
         Fl_Button btn_intercomm_accept {
           label {接通}
           callback {RecvD2PRequest();
-BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t))} selected
-          xywh {645 180 150 85}
+BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t))}
+          xywh {645 80 150 85}
           code0 {btn_intercomm_accept->deactivate();}
         }
         Fl_Button btn_intercomm_refuse {
@@ -257,46 +257,16 @@ cyg_thread_delay(100);
 
 RefuseD2PRequest();
 
-BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));}
-          xywh {645 280 150 85}
+BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
+Enable_D2p_All_Btn();}
+          xywh {645 185 150 85}
           code0 {btn_intercomm_refuse->deactivate();}
         }
         Fl_Button btn_intercomm_back {
           label {一键清除请求}
-          callback {(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
-(gp_intercomm->child(currend_d2P_position - 1))->redraw();
-
-
-if(is_intercomming_with_pcu == 1)
-{
-	is_intercomming_with_pcu  = 0;
-	btn_intercomm->activate();
-		btn_intercomm->color((Fl_Color)71);
-	whether_intercomm_button_is_active = 0;
-}
-
-//ClearAllPCURequest();
-
-d2p_reponse_sursor = 1;
-currend_d2P_position = 1;
-
-
-btn_intercomm->deactivate();
-whether_intercomm_button_is_active = 0;
-btn_intercomm->color((Fl_Color)50);
-btn_intercomm->redraw();
-
-btn_main_file->color((Fl_Color)71);
-btn_main_file->redraw();
-
-//btn_intercomm->deactivate();
-
-//send PCU request cmd package
-
-SetD2PCmd(1,0,255,0);//进入、运行、退出-响应类型-pcu_no-bcu_no
-
-wz_window_view->value(gp_main_file);}
-          xywh {660 305 135 70} hide
+          callback {gp_main_file_active_page=gp_static_show;
+wz_window_view->value(gp_main_file_active_page);}
+          xywh {645 290 150 85}
         }
       }
       Fl_Group gp_static_show {
@@ -1283,8 +1253,8 @@ wz_select_window->activate();}
           xywh {650 280 140 95}
         }
       }
-      Fl_Group D2D_intercom_page {
-        xywh {0 2 850 383} color 246 hide
+      Fl_Group D2D_intercom_page {open
+        xywh {0 2 850 383} color 246
         code0 {D2D_intercom_page->hide();}
       } {
         Fl_Button btn_d2d_1 {
@@ -1386,7 +1356,8 @@ btn_d2d_8->color((Fl_Color)2);}
         Fl_Button enter_d2d {
           label {接通}
           callback {StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_OR_DRIVER_CALL,&bcu_send_infomation);
-canenl_d2d->activate();}
+canenl_d2d->activate();
+return_D2D->deactivate();}
           xywh {335 275 140 95}
           code0 {enter_d2d->deactivate();}
         }
@@ -1402,7 +1373,9 @@ RecovoryBtnState(3);///<恢复相关按钮}
           callback {SetD2dRefuseCmdPackage(gwCurD2dCarNo,gwCurrBcuNo,&bcu_send_infomation);
 StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_RELEASE_AND_DRIVER_RELEASE,&bcu_send_infomation);
 send_cannel_d2d_big_package(gwCurD2dCarNo,gwCurrBcuNo);
-canenl_d2d->deactivate();}
+canenl_d2d->deactivate();
+return_D2D->activate();
+Enable_D2d_All_Btn();} selected
           xywh {495 275 140 95}
           code0 {canenl_d2d->deactivate();}
         }
@@ -1431,14 +1404,19 @@ current_is_on_static_page = 0;}
         }
         Fl_Button btn_emerg_ann {
           label {车地对讲}
-          callback {ChangeBtnState(3);
+          callback {if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
+{
+	return ;
+}
+ChangeBtnState(3);
 gp_main_file_active_page=D2D_intercom_page;
 wz_window_view->value(gp_main_file_active_page);}
           xywh {225 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
+          code0 {btn_emerg_ann->deactivate();}
         }
         Fl_Button btn_live {
           label {选车界面}
-          callback {if(bcu_state.iph_monitor_cur_page==1)
+          callback {if(bcu_state.iph_monitor_cur_page==1 ||bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT)
 {
 	return ;
 }

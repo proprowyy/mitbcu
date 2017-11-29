@@ -772,6 +772,12 @@ void ShowDeviceFailurePageButtonNameInfo(unsigned char flag);
 
 extern void Disable_D2p_All_Btn();
 
+extern void Disable_D2D_All_Btn();
+
+extern void Enable_D2d_All_Btn();
+
+extern void Enable_D2p_All_Btn();
+
 extern int G_SetAndClearPakage(int op,int pn,send_infomation_t *temp);
 
 extern int Select_car_count(unsigned int vn, int op,common_big_package_t  *parame,unsigned int *count);
@@ -783,10 +789,6 @@ extern int CannelMonitorBigPakage(int iph,unsigned int vn);
 extern int SetIntercomBigPackage(int vn,int iph,common_big_package_t  *parame);
 
 extern int sync_select_page(unsigned char *flag);
-
-extern int sum_select_car();
-
-extern void chack_slecet_car_sum_enable_btn();
 
 extern int parse_btn_lable_value(const char *src,unsigned char *dst,unsigned char *vn);
 
