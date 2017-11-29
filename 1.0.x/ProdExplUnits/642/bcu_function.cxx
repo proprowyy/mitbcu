@@ -1326,8 +1326,6 @@ void SendCmd(send_infomation_t **send_cmd_info,char *dst_device_name,int dst_dev
 
 	    if(strcmp(dst_device_name,"PCU")==0)
 	   	    {
-	   			diag_printf("send pcu cmd\n");
-	   			diag_printf("dst_device_no=%d\n",dst_device_no);
 	   			TransformSendPackage(&temp_send_pcu_network_package,&network_send_information);
 	   	do
 	   	   {
@@ -1337,7 +1335,7 @@ void SendCmd(send_infomation_t **send_cmd_info,char *dst_device_name,int dst_dev
 	   		{
 	   			cyg_thread_delay(10);
 	   		}
-	   		diag_printf("SendCmd:%s_%d\n",network_send_information.dst_devices_name,network_send_information.dst_devices_no);
+	   		diag_printf("SendCmd:Dst devices name=%s,Dst devices no=%d\n",network_send_information.dst_devices_name,network_send_information.dst_devices_no);
 	   	   }while(ret <= 0 && write_counts < 2);
 
 	   	}
@@ -1350,9 +1348,8 @@ void SendCmd(send_infomation_t **send_cmd_info,char *dst_device_name,int dst_dev
 		  		{
 		  			cyg_thread_delay(10);
 		  		}
-		  		diag_printf("SendCmd:%s_%d\n",network_send_information.dst_devices_name,network_send_information.send_information.event_type_ann);
 		  	   }while(ret <= 0 && write_counts < 2);
-
+		 diag_printf("SendCmd:Dst devices name=%s,Dst devices no=%d\n",network_send_information.dst_devices_name,network_send_information.dst_devices_no);
 		(*send_cmd_info)->src_devices_no = 0;
 		strcpy((char *)&(*send_cmd_info)->src_devices_name,"");
 		(*send_cmd_info)->event_type_ann = ANN_IDLE;
@@ -1513,6 +1510,9 @@ void GetOuterButtonState()
 				RecovoryBtnState(6);
 				RecovoryBtnState(8);
 				ExitLive();
+				gp_main_file_active_page=gp_select_car_ann_page;
+				wz_window_views->value(gp_main_file_active_page);
+				wz_select_window->activate();
 
 			}
 }

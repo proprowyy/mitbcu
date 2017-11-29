@@ -299,7 +299,7 @@ void *SystemControl(void *arg)
 	bcu_state.other_bcu_intercomm_state = INTERCOM_IDLE;
 
 	///<创建同步定时器
-	CreateSYNCTimer();
+	//CreateSYNCTimer();
 
 	for(;;)
 	{
@@ -307,7 +307,7 @@ void *SystemControl(void *arg)
 		///获取所有外部按钮当前状态
 		GetPAAllOuterButtonState();
 		//发送PA设备同步信号
-		DevSyncHandle();
+		//DevSyncHandle();
 
 		///<获取对端PPT状态
 		ReadOtherBCUPttState();

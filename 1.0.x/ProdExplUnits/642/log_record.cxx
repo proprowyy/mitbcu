@@ -62,12 +62,13 @@ void SetSoftwareVersion(char *Version,char *Date)
 		strncpy(bcu_state.pa_software_version.software_date,Date,30);
 		strncpy(bcu_state.pa_software_version.db_version_audio,"NULL",30);
 		strncpy(bcu_state.pa_software_version.db_version_config,"NULL",30);
-		diag_printf("Compile date:%s\n",__DATE__);
-		diag_printf("Version:%s\n",bcu_state.pa_software_version.software_version);
-		diag_printf("Debug date:%s\n",bcu_state.pa_software_version.software_date);
-		diag_printf("Ann:%s\n",bcu_state.pa_software_version.db_version_audio);
-		diag_printf("Config:%s\n",bcu_state.pa_software_version.db_version_config);
-
+		diag_printf("************************************\n");
+		diag_printf("*Compile date:%s          *\n",__DATE__);
+		diag_printf("*Version:%s *\n",bcu_state.pa_software_version.software_version);
+		diag_printf("*Debug date:%s             *\n",bcu_state.pa_software_version.software_date);
+		diag_printf("*Ann:%s           	     *\n",bcu_state.pa_software_version.db_version_audio);
+		diag_printf("*Config:%s                       *\n",bcu_state.pa_software_version.db_version_config);
+		diag_printf("************************************\n");
 }
 
 int DisplaySendCmd(send_infomation_t  param_cmd_info)

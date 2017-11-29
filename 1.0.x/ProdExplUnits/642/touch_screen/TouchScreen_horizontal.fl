@@ -967,8 +967,8 @@ enter1->redraw();}
           xywh {490 275 140 95} selection_color 2
         }
       }
-      Fl_Group gp_select_car_ann_page {open
-        xywh {0 -5 850 387} color 246
+      Fl_Group gp_select_car_ann_page {
+        xywh {0 -5 850 387} color 246 hide
         code0 {gp_select_car_ann_page->hide();}
       } {
         Fl_Button btn_ann_t1 {
@@ -1056,7 +1056,7 @@ RecovoryBtnState(4);///<恢复相关按钮}
         }
         Fl_Button enter_select {
           label {确认选车}
-          callback {EnterSelectCar();} selected
+          callback {EnterSelectCar();}
           xywh {170 260 140 95}
           code0 {enter_select->deactivate();}
         }
@@ -1068,16 +1068,25 @@ RecovoryBtnState(4);///<恢复相关按钮}
         }
       }
       Fl_Group AnnOrMonitorSelect {open
-        xywh {0 0 850 388} color 246 hide
+        xywh {0 0 850 388} color 246
         code0 {AnnOrMonitorSelect->hide();}
       } {
         Fl_Button btn_enter {
           label {广播}
           callback {static int flag;
 int         i;
+if(bcu_state.live_button_state==0)
+{
+	flag=0;
+}
+if(bcu_state.live_button_state==1)
+{
+	flag=1;
+}
 if(flag==0)
 {	
 	flag=1;
+		
 	btn_monitor->deactivate();
 	ExchangeToLive();
 	btn_enter->color((Fl_Color)2);
@@ -1089,7 +1098,7 @@ if(flag==0)
 
 	
 }
-else
+else if(flag==1)
 {
 	flag=0;
 	CannelSelectCar();
@@ -1113,7 +1122,7 @@ wz_window_view->value(gp_main_file_active_page);
 wz_select_window->activate();
 	
 		
-}}
+}} selected
           xywh {205 140 140 95} selection_color 2
           code0 {btn_enter->deactivate();btn_enter->color((Fl_Color)50);}
         }

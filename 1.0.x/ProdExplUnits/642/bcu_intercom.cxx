@@ -436,7 +436,7 @@ int BcuInitPlayAlarmAudioWhenD2pReq(void)
 		intercomm_debug_print(("Init, D2pReq, enter: %d, %d, %d--%d \n", GetSndCurrentMode(), bcu_state.pcu_request_info.open_snd_playback,bcu_state.pcu_request_info.pcu_alarm_playing, bcu_state.pcu_request_info.request_number ));
          if( (bcu_state.pcu_request_info.open_snd_playback==0 && 2==GetSndCurrentMode()) || (bcu_state.pcu_request_info.pcu_alarm_playing==0 && 1==GetSndCurrentMode()) )
          {
-        	 diag_printf("Init, D2pReq, ready: %d, %d, %d \n", GetSndCurrentMode(), bcu_state.pcu_request_info.open_snd_playback,bcu_state.pcu_request_info.pcu_alarm_playing);
+        	 //diag_printf("Init, D2pReq, ready: %d, %d, %d \n", GetSndCurrentMode(), bcu_state.pcu_request_info.open_snd_playback,bcu_state.pcu_request_info.pcu_alarm_playing);
                 CharBufferClear(bcu_state.alarm_audio_data_buffer_id);
                 CharBufferClear(bcu_state.pending_buffer_id);
                 SetAudioSampleTimeInterval(20+2); ///< timer = 200ms for Mp3_Thread
@@ -446,7 +446,7 @@ int BcuInitPlayAlarmAudioWhenD2pReq(void)
          }
 	 else if(bcu_state.pcu_request_info.pcu_alarm_playing==1 && 1==GetSndCurrentMode())
 	 {
-		diag_printf("Init, D2pReq, reset: %d \n", bcu_state.pcu_request_info.request_number);
+		//diag_printf("Init, D2pReq, reset: %d \n", bcu_state.pcu_request_info.request_number);
 		 if( bcu_state.pcu_request_info.request_number ==0 ) {
 					 BcuResetPlayAlarmAudioWhenD2pReq();
                  }

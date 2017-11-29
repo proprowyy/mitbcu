@@ -174,8 +174,6 @@ void LiveAnnEnter(send_infomation_t *send_information_live)
 	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );
 	hal_gpio_pin_set( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) ); ///< PTB20 = audio_ctrl0
 #endif	
-
-	ShowCurrentTime(3);
 	BCU_LED_BUTTON1_ON;
 
 
@@ -185,32 +183,19 @@ void LiveAnnExit()
 {
 	bcu_state.live_button_state = 0;
 	diag_printf("I am live ann exit\n");
-
 	bcu_state.mic_owner = NONE;
-
-
-
 	CloseAudioSampleTimer();
-
 	ClearAllAudioDataBuffer();//清空发送音频buf
-
 	ClearAudioDataDestination();
-
 	///<BCU 音频输出到扬声器
 	bcu_audio_talk_pa_choose(SET_TALK_AUDIO);
-
-
 	whether_have_begin_broadcast_alarm_audio_data = 0;
-
-
-
 	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );
 	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );
 	hal_gpio_pin_clear( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) ); ///< for d2p
 	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );
 	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );
 	hal_gpio_pin_clear( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) ); ///< PTB20 = audio_ctrl0
-
 	BCU_LED_BUTTON1_DIS;
 }
 
@@ -313,7 +298,6 @@ void SendSYNCPackageToEamp()
 	strcpy((char *)sync_info.send_information.src_devices_name,bcu_state.bcu_info.devices_name);
 	sync_info.send_information.event_type_ann = AUTO_EAMP_SYNC_SIGNAL;
 	sync_info.send_information.event_type_intercom = INTERCOM_IDLE;
-//	last_control_flag = control_flag;control_flag = 192;
 	do
 	{
 		ret = BlockBufferWrite(bcu_state.cmd_send_buffer_id,&sync_info,sizeof(sync_info));

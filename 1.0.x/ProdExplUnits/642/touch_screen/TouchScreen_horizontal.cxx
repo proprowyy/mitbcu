@@ -1035,9 +1035,18 @@ Fl_Button *btn_enter=(Fl_Button *)0;
 static void cb_btn_enter(Fl_Button*, void*) {
   static int flag;
 int         i;
+if(bcu_state.live_button_state==0)
+{
+	flag=0;
+}
+if(bcu_state.live_button_state==1)
+{
+	flag=1;
+}
 if(flag==0)
 {	
 	flag=1;
+		
 	btn_monitor->deactivate();
 	ExchangeToLive();
 	btn_enter->color((Fl_Color)2);
@@ -1049,7 +1058,7 @@ if(flag==0)
 
 	
 }
-else
+else if(flag==1)
 {
 	flag=0;
 	CannelSelectCar();
@@ -1688,6 +1697,7 @@ int touch_screen_main() {
       } // Fl_Group* controlpage
       { gp_select_car_ann_page = new Fl_Group(0, -5, 850, 387);
         gp_select_car_ann_page->color((Fl_Color)246);
+        gp_select_car_ann_page->hide();
         { btn_ann_t1 = new Fl_Button(10, 30, 140, 95, "ANN-T1");
           btn_ann_t1->callback((Fl_Callback*)cb_btn_ann_t1);
         } // Fl_Button* btn_ann_t1
@@ -1741,7 +1751,6 @@ int touch_screen_main() {
       } // Fl_Group* gp_select_car_ann_page
       { AnnOrMonitorSelect = new Fl_Group(0, 0, 850, 388);
         AnnOrMonitorSelect->color((Fl_Color)246);
-        AnnOrMonitorSelect->hide();
         { btn_enter = new Fl_Button(205, 140, 140, 95, "\345\271\277\346\222\255");
           btn_enter->selection_color((Fl_Color)2);
           btn_enter->callback((Fl_Callback*)cb_btn_enter);

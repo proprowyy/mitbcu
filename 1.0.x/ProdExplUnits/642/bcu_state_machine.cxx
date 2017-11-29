@@ -541,8 +541,8 @@ int BcuDynamicStateExchange(state_process_t **ppcurrent_state, send_infomation_t
 						debug_print(("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"));
 						debug_print(("BcuDynamicStateExchange:  old,state-id=%d\n", (*ppcurrent_state)->state_id));
 						(*ppcurrent_state)->exit();
-						diag_printf("!!!-   %d\n",new_state_node->this_state_process->state_id);
-						diag_printf("!!!-   %d\n",new_state_node->this_state_process);
+						diag_printf("State_id = %d\n",new_state_node->this_state_process->state_id);
+						diag_printf("Curr State = %d\n",new_state_node->this_state_process);
 						*ppcurrent_state = new_state_node->this_state_process;
 						(*ppcurrent_state)->enter(pnew_command);
 						debug_print(("BcuDynamicStateExchange:  new,state-id=%d\n", (*ppcurrent_state)->state_id));
