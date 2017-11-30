@@ -125,24 +125,33 @@ typedef struct
 
 	int comm_server_send_big_buffer_id;
 	int comm_server_recv_big_buffer_id;
-	//×××××××××××××××××××××××××//
 
-
+	int all_dev_state_buffer_id;
+	int local_audio_data_recv_buffer_id;
+	int software_version_buffer_id;
 	int recv_cmd_from_touch;
 	int pending_buffer_id;
 	int local_audio_data_buffer_id;
 	int alarm_audio_data_buffer_id;
-
 	int ppt_state_recv_buffer_id;
 	int dev_vol_info_buffer_id;
+
+	//×××××××××××××××××××××××××//
+	//button state
+		unsigned char live_button_state;
+		unsigned char d2d_button_state;
+		unsigned char d2p_button_state;
+	//×××××××××××××××××××××××××//
 
 	device_bcu_state_t  bcu_info;
 	unsigned char dev_type;
 
+	int other_bcu_ptt_state;
+	int this_bcu_ptt_state;
+	int opposite_bcu_no;
+
 	/*add wilson,which is used on touch screen*/
 	device_volume_t device_volume;
-	region_station_info_t region_station_info;
-
 	event_priority_t event_priority;
 	pcu_request_info_t pcu_request_info;
 	global_region_info_t bcu_region_info[2];
@@ -156,27 +165,16 @@ typedef struct
     unsigned char car_select_count_for_monitor;
     unsigned char iph_monitor_cur_page;
     int bcu_request_number;
-	int opposite_bcu_no;
-	int other_bcu_ptt_state;
-	int this_bcu_ptt_state;
+    unsigned char this_bcu_request;
+
 	int recv_cmd_sequence;//包的序列号
 	unsigned char system_language;
 	unsigned char this_bcu_is_active;
 
-	//button state
-	unsigned char live_button_state;
-	unsigned char d2d_button_state;
-	unsigned char d2p_button_state;
-
-	unsigned char this_bcu_request;
 	unsigned char this_bcu_is_d2p_intercomming;
 	unsigned char other_bcu_intercomm_state;
 	int udp_common_recv_dev_colueme;
-	int all_dev_state_buffer_id;
-	int local_audio_data_recv_buffer_id;
-	int software_version_buffer_id;
 	pa_software_version_t pa_software_version;
-
 	unsigned char ts_current_state;
 	unsigned char this_bcu_intercomm_state;
 }bcu_state_t;

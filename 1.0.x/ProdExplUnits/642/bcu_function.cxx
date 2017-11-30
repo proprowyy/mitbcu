@@ -1686,33 +1686,6 @@ void ForceBreakD2DToD2P()
 }
 
 
-void SendThisBCUAnnStateToEAMP()
-{///<发送当前BCU的广播状态给EAMP
-	network_send_package_t bcu_ann_state_info_network_package;
-
-	strcpy(bcu_ann_state_info_network_package.dst_devices_name,"EAMP");
-	bcu_ann_state_info_network_package.dst_devices_no = MUL_DST_NO;
-	strcpy(bcu_ann_state_info_network_package.send_information.src_devices_name,"BCU");
-	bcu_ann_state_info_network_package.send_information.src_devices_no = bcu_state.bcu_info.devices_no;
-	bcu_ann_state_info_network_package.send_information.event_type_ann = bcu_state.bcu_active_ann_state->state_id;
-	bcu_ann_state_info_network_package.send_information.event_type_intercom = INTERCOM_IDLE;
-	switch(bcu_state.bcu_active_ann_state->state_id)
-	{
-
-		case LIVE_ANN_EVENT:
-			bcu_ann_state_info_network_package.send_information.event_info_ann.live_announce.live_active = 1;
-			bcu_ann_state_info_network_package.send_information.event_info_ann.live_announce.live_begin_or_over = 0;
-			break;
-		case ANN_IDLE:
-			bcu_ann_state_info_network_package.send_information.event_type_ann = BCU_ANN_IDLE_TO_EAMP;
-			break;
-
-		default:break;
-	}
-	BlockBufferWrite(bcu_state.cmd_send_buffer_id, &bcu_ann_state_info_network_package, sizeof(bcu_ann_state_info_network_package));
-}
-
-
 
 
 void alarm_func_handle_key_info(cyg_handle_t counter_handle, cyg_addrword_t data)
@@ -1743,130 +1716,6 @@ int ReadNumWilson()
 {///<获取设备号
 	return bcu_state.bcu_info.devices_no;
 }
-
-void SendNoPCUToCCU()
-{///<发送当前没有PCU请求信息给CCU
-	network_send_package_t bcu_no_pcu_to_ccu;
-	int ret = 0,write_counts = 0;
-	strcpy(bcu_no_pcu_to_ccu.dst_devices_name,"CCU");
-	bcu_no_pcu_to_ccu.dst_devices_no = 230;
-	strcpy(bcu_no_pcu_to_ccu.send_information.src_devices_name,"BCU");
-	bcu_no_pcu_to_ccu.send_information.src_devices_no = bcu_state.bcu_info.devices_no;
-	bcu_no_pcu_to_ccu.send_information.event_type_ann = ANN_IDLE;
-	bcu_no_pcu_to_ccu.send_information.event_type_intercom = EVENT_NO_PCU_REQUEST;
-	do
-	{
-		ret = BlockBufferWrite(bcu_state.cmd_send_buffer_id, &bcu_no_pcu_to_ccu, sizeof(bcu_no_pcu_to_ccu));
-		write_counts ++;
-		if(ret <= 0)
-		{
-			cyg_thread_delay(10);
-		}
-	}while(ret <= 0 && write_counts < 2);
-	cyg_thread_delay(100);
-	bcu_no_pcu_to_ccu.dst_devices_no = 2;
-	do
-	{
-		ret = BlockBufferWrite(bcu_state.cmd_send_buffer_id, &bcu_no_pcu_to_ccu, sizeof(bcu_no_pcu_to_ccu));
-		write_counts ++;
-		if(ret <= 0)
-		{
-			cyg_thread_delay(10);
-		}
-	}while(ret <= 0 && write_counts < 2);
-}
-
-
-void BCUSendDevVolumeInfoToD2DOtherDev()
-{///<确保将BCU的的音量信息发送给相关设备，CCU和BCU
-	unsigned char write_cmd_buffer_ret = 0;
-	do
-	{
-		write_cmd_buffer_ret = BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id, &dev_vol_to_ccu, sizeof(dev_vol_to_ccu));
-		if(write_cmd_buffer_ret <= 0)
-		{
-			cyg_thread_delay(10);
-		}
-	}while(write_cmd_buffer_ret <= 0);
-	do
-	{
-		write_cmd_buffer_ret = BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id, &dev_vol_to_bcu, sizeof(dev_vol_to_bcu));
-		if(write_cmd_buffer_ret <= 0)
-		{
-			cyg_thread_delay(10);
-		}
-	}while(write_cmd_buffer_ret <= 0);
-
-}
-void BCUSendDevVolumeInfoToD2POtherDev()
-{///<确保将PCU的的音量信息发送给相关设备，PCU、CCU和BCU
-	diag_printf("zhw run into BCUSendDevVolumeInfoToD2POtherDev function !!!\n");
-	unsigned char write_cmd_buffer_ret = 0;
-	do
-	{
-		write_cmd_buffer_ret = BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id, &dev_vol_to_pcu, sizeof(dev_vol_to_pcu));
-		if(write_cmd_buffer_ret <= 0)
-		{
-			cyg_thread_delay(10);
-		}
-	}while(write_cmd_buffer_ret <= 0);
-	do
-	{
-		write_cmd_buffer_ret = BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id, &dev_vol_to_ccu, sizeof(dev_vol_to_ccu));
-		if(write_cmd_buffer_ret <= 0)
-		{
-			cyg_thread_delay(10);
-		}
-	}while(write_cmd_buffer_ret <= 0);
-	do
-	{
-		write_cmd_buffer_ret = BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id, &dev_vol_to_bcu, sizeof(dev_vol_to_bcu));
-		if(write_cmd_buffer_ret <= 0)
-		{
-			cyg_thread_delay(10);
-		}
-	}while(write_cmd_buffer_ret <= 0);
-}
-void BCUSendDevVolumeInfoToPAOtherDev()
-{///<确保将EAMP的的音量信息发送给相关设备，EAMP、CCU和BCU
-	unsigned char write_cmd_buffer_ret = 0,count_times = 0;
-	do
-	{
-
-		write_cmd_buffer_ret = BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id, &dev_vol_to_eamp, sizeof(dev_vol_to_eamp));
-		count_times ++;
-		if(write_cmd_buffer_ret <= 0)
-		{
-			cyg_thread_delay(10);
-		}
-	}while(write_cmd_buffer_ret <= 0 && count_times <= 2);
-
-	count_times = 0;
-	do
-	{
-		write_cmd_buffer_ret = BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id, &dev_vol_to_ccu, sizeof(dev_vol_to_ccu));
-		count_times ++;
-		if(write_cmd_buffer_ret <= 0)
-		{
-			cyg_thread_delay(10);
-		}
-	}while(write_cmd_buffer_ret <= 0 && count_times <= 2);
-
-	count_times = 0;
-	do
-	{
-		write_cmd_buffer_ret = BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id, &dev_vol_to_bcu, sizeof(dev_vol_to_bcu));
-		count_times ++;
-		if(write_cmd_buffer_ret <= 0)
-		{
-			cyg_thread_delay(10);
-		}
-	}while(write_cmd_buffer_ret <= 0 && count_times <= 2);
-
-}
-
-
-
 
 //add for simulation TCMS test
 /*******auto ann sim 2015-12-25*******/
@@ -1965,7 +1814,7 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 	temp=update_list(PCURequsthead,vn,iph,1);
 	if( temp == NULL )
 	{
-		return ret=-1 ;
+		return ret=0 ;
 	}
 
 	if(p_BigConmInfo_temp->common_big_data_u.seat_id!=bcu_state.bcu_info.devices_no)
@@ -1980,7 +1829,6 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 		{
 			AlarmTSToChangeScreen(12);
 		}
-
 		return ret;
 
 }
@@ -2068,7 +1916,7 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 	int ret=0;
 	int i=0,j=0;
 	int common_type_package=p_BigConmInfo->pkg_type;
-	diag_printf("big package.pkg_type=%d\n",common_type_package);
+	diag_printf("Probe big package type = %d\n",common_type_package);
 	switch(common_type_package)
 	{
 	case 4:
@@ -2126,32 +1974,53 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 			AlarmTSToChangeScreen(33);
 		break;
 	case 8:
-		diag_printf("recv iph intercom request.\n");
+
 		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE&&
 		   bcu_state.bcu_active_ann_state->state_id == ANN_IDLE)
 		{
+			diag_printf("recv iph intercom request.\n");
 			bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
 		}
 		break;
 	case 9:
-		diag_printf("recv iph intercom connecting update.\n");
-		bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
+			if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE||
+			   bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT)
+			{
+				diag_printf("recv iph intercom connecting update.\n");
+				bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
+			}
 		break;
 	case 10:
-		diag_printf("recv iph intercom refuse.\n");
-		bcu_state.pcu_request_info.request_number=IphDeleteLink(p_BigConmInfo);
+		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE||
+		bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT)
+		{
+			diag_printf("recv iph intercom refuse.\n");
+			bcu_state.pcu_request_info.request_number=IphDeleteLink(p_BigConmInfo);
+		}
 		break;
 	case 11:
-		diag_printf("recv car bcu intercom request.\n");
-		bcu_state.bcu_request_number=BcuRequestInsertLink(p_BigConmInfo);
+		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE&&
+				   bcu_state.bcu_active_ann_state->state_id == ANN_IDLE)
+		{
+			diag_printf("recv car bcu intercom request.\n");
+			bcu_state.bcu_request_number=BcuRequestInsertLink(p_BigConmInfo);
+		}
 		break;
 	case 12:
-		diag_printf("recv car bcu intercom connecting update.\n");
-		BcuUpdateLink(p_BigConmInfo);
+		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE||
+				bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
+		{
+			diag_printf("recv car bcu intercom connecting update.\n");
+			BcuUpdateLink(p_BigConmInfo);
+		}
 		break;
 	case 13:
-		diag_printf("recv car bcu intercom refuse.\n");
-		bcu_state.bcu_request_number=BcuDeleteLink(p_BigConmInfo);
+		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE||
+		bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
+		{
+			diag_printf("recv car bcu intercom refuse.\n");
+			bcu_state.bcu_request_number=BcuDeleteLink(p_BigConmInfo);
+		}
 	default:
 		diag_printf("no package type\n");
 		break;

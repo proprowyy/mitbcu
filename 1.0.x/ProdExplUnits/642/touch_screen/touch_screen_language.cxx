@@ -17,23 +17,8 @@
 #include "touch_screen_language.h"
 
 unsigned int gw_RecordPcuMonBtnPass=0;
-///<触摸屏使用的中文显示目前支持中英文
-char btn_line_no_name[2][15] = {{"3号线"},
-								   {"4号线"}
-								   };
+
 char btn_back_name[13] = {"返回"};
-
-char btn_trigger_pre_arrive_station_name[20] = {"预到站"};
-char btn_trigger_arrive_station_name[15] = {"到站"};
-char btn_trigger_arrive_terminal_station_name[25] = {"终点站到站"};
-char region_name[10] = {"区间"};
-
-char terminal_station_name[20] = {"终点站"};
-char current_station_name[20] = {"当前站"};
-char next_station_name[15] = {"下一站"};
-
-
-char btn_change_to_d2p_name[30] = {"切换回  司机乘客对讲"};
 
 char confirm_name[10] = {"确定"};
 char cancle_name[10] = {"取消"};
@@ -60,12 +45,8 @@ char down_name[15] = {"下行"};
 
 char title_skip_tip_info_name[15] = {"越站提示"};
 
-char left_side_name[10] = {"左侧"};
-char right_side_name[10] = {"右侧"};
-char open_door_side_name[15] = {"开门侧"};
-char title_please_input_key_name[20] = {"请 插 入 钥 匙"};
-char title_wait_for_get_data_name[30] = {"数据获取中,请稍候"};
 
+char title_please_input_key_name[20] = {"请 插 入 钥 匙"};
 void ShowButtonName(unsigned char param_languang,unsigned char param_line_no)
 {///<显示按钮中文
 	btn_main_file_back->label((char *)btn_back_name);

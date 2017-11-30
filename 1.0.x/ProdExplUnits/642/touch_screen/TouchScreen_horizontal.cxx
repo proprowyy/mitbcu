@@ -878,11 +878,10 @@ for(int i=0;i<8;i++){
 Fl_Return_Button *btn_return=(Fl_Return_Button *)0;
 
 static void cb_btn_return(Fl_Return_Button*, void*) {
-  gp_main_file_active_page=AnnOrMonitorSelect;
+  CannelSelectCar();
+gp_main_file_active_page=gp_select_car_ann_page;
 wz_window_view->value(gp_main_file_active_page);
-//gp_main_file_active_page=gp_select_car_ann_page;
 wz_select_window->activate();
-bcu_state.iph_monitor_cur_page=0;
 }
 
 Fl_Tile *title=(Fl_Tile *)0;
@@ -1268,11 +1267,7 @@ wz_window_view->value(gp_main_file_active_page);
 Fl_Button *btn_live=(Fl_Button *)0;
 
 static void cb_btn_live(Fl_Button*, void*) {
-  if(bcu_state.iph_monitor_cur_page==1 ||bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT)
-{
-	return ;
-}
-gp_main_file_active_page=gp_select_car_ann_page;
+  gp_main_file_active_page=gp_select_car_ann_page;
 wz_window_view->value(gp_main_file_active_page);
 ChangeBtnState(4);
 }
@@ -1310,7 +1305,6 @@ int touch_screen_main() {
       { gp_intercomm = new Fl_Group(0, 0, 800, 385);
         gp_intercomm->color((Fl_Color)246);
         gp_intercomm->align(Fl_Align(129));
-        gp_intercomm->hide();
         { btn_d2p_request_1 = new Fl_Button(10, 13, 140, 95);
           btn_d2p_request_1->callback((Fl_Callback*)cb_btn_d2p_request_1);
         } // Fl_Button* btn_d2p_request_1
@@ -1355,7 +1349,7 @@ int touch_screen_main() {
           btn_intercomm_refuse->callback((Fl_Callback*)cb_btn_intercomm_refuse);
           btn_intercomm_refuse->deactivate();
         } // Fl_Button* btn_intercomm_refuse
-        { btn_intercomm_back = new Fl_Button(645, 290, 150, 85, "\344\270\200\351\224\256\346\270\205\351\231\244\350\257\267\346\261\202");
+        { btn_intercomm_back = new Fl_Button(645, 290, 150, 85);
           btn_intercomm_back->callback((Fl_Callback*)cb_btn_intercomm_back);
         } // Fl_Button* btn_intercomm_back
         gp_intercomm->hide();
@@ -1751,6 +1745,7 @@ int touch_screen_main() {
       } // Fl_Group* gp_select_car_ann_page
       { AnnOrMonitorSelect = new Fl_Group(0, 0, 850, 388);
         AnnOrMonitorSelect->color((Fl_Color)246);
+        AnnOrMonitorSelect->hide();
         { btn_enter = new Fl_Button(205, 140, 140, 95, "\345\271\277\346\222\255");
           btn_enter->selection_color((Fl_Color)2);
           btn_enter->callback((Fl_Callback*)cb_btn_enter);

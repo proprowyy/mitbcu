@@ -310,7 +310,7 @@ void *SystemControl(void *arg)
 		//DevSyncHandle();
 
 		///<获取对端PPT状态
-		ReadOtherBCUPttState();
+		//ReadOtherBCUPttState();
 
 		/*D2D hangup D2P timeout handle*/
 		D2DHangUpD2PTimeOutHandle();
@@ -334,7 +334,7 @@ void *SystemControl(void *arg)
 		ChangeIntercommButtonColor(&whether_ts_is_running);
 
 		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0){
-			diag_printf("recv a big package.\n");
+			diag_printf("Control recv a big package.\n");
 			ProbeBigCommPackage(&recv_temp_big);
 
 			if(bcu_state.bcu_request_number !=0)

@@ -31,7 +31,7 @@ unsigned char alarm_audio_data[] = {
 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 };
-#if 1
+#if 0
 unsigned char mic_blank_audio_data[3 * 1024] = {
 
 		//blank audio data
@@ -130,16 +130,6 @@ int CalculateLength()
 {
 	return(sizeof(alarm_audio_data));
 }
-
-void ReadAlarmAudioDataToBuffer(int buffer_id)
-{
-	CharBufferWrite(buffer_id, alarm_audio_data, sizeof(alarm_audio_data));
-	debug_print(("AlarmDataToBuffer:  total=%d \n", sizeof(alarm_audio_data))); ///< debug, 0107
-//	CharBufferWrite(buffer_id, alarm_audio_data, 4861);
-//	CharBufferWrite(buffer_id, alarm_audio_data, 4861);
-//	CharBufferWrite(buffer_id, alarm_audio_data, sizeof(alarm_audio_data));
-}
-
 int MicAdPcmWavheader_pcm(int buffer_id)
 {
       int ret = -1;

@@ -32,6 +32,7 @@ unsigned int gwCurrCarNo=0;
 unsigned int gwCurrIphNO=0;
 unsigned int gwCurrBcuNo=0;
 unsigned int gwCurD2dCarNo=0;
+
 void SetPassword(const int password_number,char param_password_buffer[])
 {///<接收用户输入的密码
 	int length = (int)strlen(param_password_buffer);
@@ -241,7 +242,6 @@ void BCUActivejudge()
 					ExitLive();///<change touch screen
 					ShowMainPage();
 				BlockBufferClear(bcu_state.recv_cmd_from_touch);
-
 				bcu_state.bcu_active_ann_state->exit();
 				bcu_state.bcu_active_ann_state = &idle_ann_state;
 				bcu_state.bcu_active_ann_state->enter(NULL);
@@ -534,8 +534,6 @@ int WhetherThisPCUHaveBeingRequest(int param_source_device_number)
 /*-------------------在触摸屏控制线程中使用------------*/
 void ChangeIntercommButtonColor(int *param_whether_ts_is_running)
 {///<PCU有请求时，改变相关按钮颜色与使能
-
-
 	if(bcu_state.pcu_request_info.request_number > 0 && whether_intercomm_button_is_active == 0)
 	{
 
@@ -638,7 +636,6 @@ void ShowD2Ppage()
 {///<显示PCU请求界面
 	ChangeBtnState(5);
 	current_is_on_static_page = 0;
-	//当前没有对讲
 	p_current_intercomm_group = gp_intercomm;//当前是在对讲页面
 	ShowD2PRequest();//显示请求pcu
 	bcu_state.d2p_button_state = 1;
@@ -736,52 +733,6 @@ void EnableThisBCUD2PFunction()
 
 	btn_intercomm_refuse->activate();
 }
-
-void BCUDisableAnnFunctionAccordingToTCMS()
-{///<TCMS有效，退出非自动报站状态，目前没有使用
-	switch(bcu_state.bcu_active_ann_state->state_id)
-	{
-		case LIVE_ANN_EVENT:
-			ExitLive();///<change touch screen
-			ShowMainPage();
-			BlockBufferClear(bcu_state.recv_cmd_from_touch);
-			bcu_state.bcu_active_ann_state->exit();
-			bcu_state.bcu_active_ann_state = &idle_ann_state;
-			bcu_state.bcu_active_ann_state->enter(NULL);
-			SendCMDToEAMP(LIVE_ANN_EVENT);
-			break;
-		case EMERG_ANN_EVENT:
-			ShowMainPage();
-			BlockBufferClear(bcu_state.recv_cmd_from_touch);
-			bcu_state.bcu_active_ann_state->exit();
-			bcu_state.bcu_active_ann_state = &idle_ann_state;
-			bcu_state.bcu_active_ann_state->enter(NULL);
-			SendCMDToEAMP(EMERG_ANN_EVENT);
-			break;
-
-		case MIC_3D5_OUTER_EVENT:
-			ShowMainPage();
-			BlockBufferClear(bcu_state.recv_cmd_from_touch);
-			bcu_state.bcu_active_ann_state->exit();
-			bcu_state.bcu_active_ann_state = &idle_ann_state;
-			bcu_state.bcu_active_ann_state->enter(NULL);
-			SendCMDToEAMP(MIC_3D5_OUTER_EVENT);
-			break;
-		case OCC_EVENT:
-			ShowMainPage();
-			BlockBufferClear(bcu_state.recv_cmd_from_touch);
-			bcu_state.bcu_active_ann_state->exit();
-			bcu_state.bcu_active_ann_state = &idle_ann_state;
-			bcu_state.bcu_active_ann_state->enter(NULL);
-			break;
-	}
-}
-
-
-
-
-
-
 void UpdateVolumeInfo(int param_update_flag)
 {///<更新设备音量信息
 	if(gp_main_file_active_page == gp_setting || current_is_on_static_page == 1)
@@ -969,6 +920,7 @@ void AlarmTSToChangeScreen(int param)
 	{
 		cyg_thread_delay(10);
 		diag_printf("AlarmTSToChangeScreen = %d\n",param);
+		diag_printf("-----------------------------------\n");
 	}
 }
 
@@ -1276,10 +1228,12 @@ void EnterSelectCar()
 	int i ;int ret;
 		int car_select_num = 0;
 		common_big_package_t common_big_send_package;
+		memset(&common_big_send_package,0,sizeof(common_big_package_t));
 		for(i = 0; i < 11; ++i)
 		{
 			if(bcu_state.car_select_flag[i] == 1)
 			{
+				printf("Enter car number = %d\n",i+1);
 				common_big_send_package.common_big_data_u.car_select_flag[i] = 1;
 				car_select_num += 1;
 				//printf("i %d car_select_num %d\n",i,car_select_num);
@@ -1319,12 +1273,12 @@ void CannelSelectCar()
 	int i ;int ret;
 	int car_select_num = 0;
 	common_big_package_t common_big_send_package;
+	memset(&common_big_send_package,0,sizeof(common_big_package_t));
 	for(i = 0; i < 11; ++i)
 	{
 		if(bcu_state.car_select_flag[i] == 1)
 		{
-		//diag_printf("debug cancel_select12\n");
-
+			printf("Cannel car number = %d\n",i+1);
 			bcu_state.car_select_flag[i] = 0;
 			common_big_send_package.common_big_data_u.car_select_flag[i] = 1;
 			car_select_num += 1;

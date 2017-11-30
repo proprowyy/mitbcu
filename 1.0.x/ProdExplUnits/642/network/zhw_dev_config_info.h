@@ -26,13 +26,8 @@
 #include <semaphore.h>
 #include <unistd.h>
 #include <fcntl.h>
-
-//#include "sqlite_middle_layer.h"
-//#include "sqlite_api_fun.h"
-
 #include "zhw_read_from_db_test.h"
 #include "network_include_extern_head.h"
-
 #define BCU_DEV
 #ifndef LOW_TEST
 #define LOW_TEST 1

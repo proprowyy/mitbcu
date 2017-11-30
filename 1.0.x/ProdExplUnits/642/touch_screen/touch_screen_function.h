@@ -560,23 +560,7 @@ void RefuseD2PRequest();
  */
 unsigned char GetIntercommButtonState();
 
-/** ExitEmerg function description
- *   退出紧急广播
- *
- *  @param   null
- *  @return  null
- */
-void ExitEmerg();
-
-/** ExitManual function description
- *   退出手动报站
- *
- *  @param   null
- *  @return  null
- */
-void ExitManual();
-
-/** RecoverIdleButtonState function description
+/** RcoverIdleButtonState function description
  *   系统返回到空闲状态，恢复相关按钮显示状态
  *
  *  @param   null
@@ -599,103 +583,6 @@ void DisableThisBCUD2PFunction();
  *  @return  null
  */
 void EnableThisBCUD2PFunction();
-
-/** BCUDisableAnnFunctionAccordingToTCMS function description
- *   TCMS有效，退出非自动报站状态
- *
- *  @param   null
- *  @return  null
- */
-void BCUDisableAnnFunctionAccordingToTCMS();
-
-/** UpdateTSDevFailureInfo function description
- *   更新触摸屏设备故障界面信息
- *
- *  @param  设备故障状态
- *  @return  null
- */
-void UpdateTSDevFailureInfo();
-void UpdateTSDevFailureInfoForce();
-
-/** ChangeFailureStatisticsButtonColor function description
- *   改变故作统计按钮颜色
- *
- *  @param  设备故障状态
- *  @return  null
- */
-void ChangeFailureStatisticsButtonColor(unsigned char param_current_state);
-
-/** ShowSDUFailure function description
- *   显示SDU故障信息
- *
- *  @param   null
- *  @return  null
- */
-void ShowSDUFailure();
-
-/** ShowFDUFailure function description
- *   显示FDU故障信息
- *
- *  @param   null
- *  @return  null
- */
-void ShowFDUFailure();
-
-/** ShowIDUFailure function description
- *   显示IDU故障信息
- *
- *  @param   null
- *  @return  null
- */
-void ShowIDUFailure();
-
-/** ShowNDFailure function description
- *   显示噪检故障信息
- *
- *  @param   null
- *  @return  null
- */
-void ShowNDFailure();
-
-/** ShowDMFailure function description
- *   显示动态地图故障信息
- *
- *  @param   null
- *  @return  null
- */
-void ShowDMFailure();
-
-/** ShowBCUFailure function description
- *   显示BCU故障信息
- *
- *  @param   null
- *  @return  null
- */
-void ShowBCUFailure();
-
-/** ShowPCUFailure function description
- *   显示PCU故障信息
- *
- *  @param   null
- *  @return  null
- */
-void ShowPCUFailure();
-
-/** ShowCCUFailure function description
- *   显示CCU故障信息
- *
- *  @param   null
- *  @return  null
- */
-void ShowCCUFailure();
-
-/** ShowEAMPFailure function description
- *   显示EAMP故障信息
- *
- *  @param   null
- *  @return  null
- */
-void ShowEAMPFailure();
 
 /** UpdateVolumeInfo function description
  *   更新音量信息
@@ -721,13 +608,6 @@ void AlarmTSToChangeScreen(int param);
  */
 void SetD2PTipButtonState(unsigned char param);
 
-/** ChangeLineButtonLabel function description
- *   改变线路号切换按钮文字--根据当前线路号信息
- *
- *  @param   null
- *  @return  null
- */
-void ChangeLineButtonLabel();
 
 /** EnableTS function description
  *   触摸屏操作有效
@@ -745,13 +625,7 @@ void EnableTS();
  */
 void DisableTS();
 
-/** UpdateConcereteDevFailueInfo function description
- *  更新详细的设备故障
- *
- *  @param   设备代码
- *  @return  null
- */
-void UpdateConcereteDevFailueInfo(int flag);
+
 
 /** SendConnectTwoCarsStateToOtherBCU function description
  *  告知对端BCU 当前BCU 联挂状态

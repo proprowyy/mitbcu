@@ -292,6 +292,7 @@ void D2PIntercomEnter(send_infomation_t *send_information_intercomm_d2p)
     bcu_6d5w_ctrl_wilson(bcu_state.device_volume.d2d_volume);
 	bcu_6d5w_ctrl_wilson(4);
 	play_audio = 0;
+	bcu_state.this_bcu_intercomm_state=8;
 	begin_to_broadcast_d2d = 1;
 	bcu_state.mic_owner = INTERCOM;
 	CharBufferClear(bcu_state.cmd_recv_buffer_id);
@@ -320,6 +321,7 @@ void D2PIntercomExit()
 	ClearAllAudioDataBuffer();
 	BcuInitPlayAlarmAudioWhenD2pReq();
 	BCU_LED_BUTTON2_DIS;
+	bcu_state.this_bcu_intercomm_state=0;
 }
 
 /*The process of D2P intercom*/
@@ -349,33 +351,23 @@ void IntercomHangUpEnter(send_infomation_t *send_information_intercomm_hangup)
 
 		SendCmd(&p_d2d_bk_d2p,"PCU",bcu_state.pcu_request_info.recept_pcu_no);
 	}
-
 	play_audio = 0;
 	bcu_6d5w_ctrl_wilson(bcu_state.device_volume.d2d_volume);
 	debug_print(("I am intercom hang up enter\n"));
-
 	ClearAllAudioDataBuffer();
-
 	bcu_state.d2d_button_state = 1;
 	bcu_state.other_bcu_ptt_state = 0;
 	ChangeD2DBreakUpD2PBtnState();
-
 	///<强制清除缓存区数据
 	ForceBUfferData_wilson();
-
 	bcu_state.mic_owner = INTERCOM;
-
 	//SetAudioDataDestination("BCU",bcu_state.opposite_bcu_no);
 	SetAudioDataDestination("CC",230);
-
 	ClearAllAudioDataBuffer();
-
 	play_audio = 0;
 	CharBufferClear(bcu_state.pending_buffer_id);
 	CharBufferClear(bcu_state.audio_data_recv_buffer_id);
 	CharBufferClear(bcu_state.audio_data_send_buffer_id);
-
-
 	begin_to_broadcast_d2d = 1;
 	CharBufferClear(bcu_state.audio_data_recv_buffer_id);
 

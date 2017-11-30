@@ -6,8 +6,8 @@ Function {touch_screen_main()} {open return_type int
 } {
   Fl_Window wd_touch_screen {
     label {Touch Screen} open
-    xywh {5 78 800 480} type Double box BORDER_BOX color 0 selection_color 0 resizable
-    code0 {\#include "ts_head_file.h"} visible
+    xywh {5 78 800 480} type Double box BORDER_BOX color 0 selection_color 0 hide resizable
+    code0 {\#include "ts_head_file.h"}
   } {
     Fl_Wizard wz_window_view {open
       xywh {-70 -124 920 512} box UP_BOX color 246
@@ -45,8 +45,8 @@ current_is_on_static_page = 1;}
           xywh {650 270 140 95}
         }
       }
-      Fl_Group gp_intercomm {
-        xywh {0 0 800 385} color 246 align 129 hide
+      Fl_Group gp_intercomm {open
+        xywh {0 0 800 385} color 246 align 129
         code0 {gp_intercomm->hide();}
       } {
         Fl_Button btn_d2p_request_1 {
@@ -263,9 +263,8 @@ Enable_D2p_All_Btn();}
           code0 {btn_intercomm_refuse->deactivate();}
         }
         Fl_Button btn_intercomm_back {
-          label {一键清除请求}
           callback {gp_main_file_active_page=gp_static_show;
-wz_window_view->value(gp_main_file_active_page);}
+wz_window_view->value(gp_main_file_active_page);} selected
           xywh {645 290 150 85}
         }
       }
@@ -795,7 +794,7 @@ gp_main_file_active_page->show();}
           xywh {30 345 105 25} align 16
         } {}
       }
-      Fl_Group gp_window_black_screen {open
+      Fl_Group gp_window_black_screen {
         xywh {0 0 800 384} color 0 hide
         code0 {gp_window_black_screen->hide();}
       } {}
@@ -925,11 +924,10 @@ for(int i=0;i<8;i++){
         }
         Fl_Return_Button btn_return {
           label {返回}
-          callback {gp_main_file_active_page=AnnOrMonitorSelect;
+          callback {CannelSelectCar();
+gp_main_file_active_page=gp_select_car_ann_page;
 wz_window_view->value(gp_main_file_active_page);
-//gp_main_file_active_page=gp_select_car_ann_page;
-wz_select_window->activate();
-bcu_state.iph_monitor_cur_page=0;}
+wz_select_window->activate();}
           xywh {645 275 140 95}
         }
         Fl_Tile title {
@@ -1068,7 +1066,7 @@ RecovoryBtnState(4);///<恢复相关按钮}
         }
       }
       Fl_Group AnnOrMonitorSelect {open
-        xywh {0 0 850 388} color 246
+        xywh {0 0 850 388} color 246 hide
         code0 {AnnOrMonitorSelect->hide();}
       } {
         Fl_Button btn_enter {
@@ -1122,7 +1120,7 @@ wz_window_view->value(gp_main_file_active_page);
 wz_select_window->activate();
 	
 		
-}} selected
+}}
           xywh {205 140 140 95} selection_color 2
           code0 {btn_enter->deactivate();btn_enter->color((Fl_Color)50);}
         }
@@ -1309,11 +1307,7 @@ wz_window_view->value(gp_main_file_active_page);}
         }
         Fl_Button btn_live {
           label {选车界面}
-          callback {if(bcu_state.iph_monitor_cur_page==1 ||bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT)
-{
-	return ;
-}
-gp_main_file_active_page=gp_select_car_ann_page;
+          callback {gp_main_file_active_page=gp_select_car_ann_page;
 wz_window_view->value(gp_main_file_active_page);
 ChangeBtnState(4);}
           xywh {445 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
