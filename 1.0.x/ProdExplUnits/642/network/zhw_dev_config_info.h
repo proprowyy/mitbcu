@@ -32,14 +32,12 @@
 #ifndef LOW_TEST
 #define LOW_TEST 1
 #endif
-#define BCU_DEV_NO 1
+#define BCU_DEV_NO 2
 struct dev_type_and_no
 {
 	int dev_type;
 	int dev_number;
 };
-
-
 struct global_info
 {
 	char *dev_name;

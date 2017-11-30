@@ -1837,7 +1837,7 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 {
 	int ret;
-	diag_printf("Over the intercom .\n");
+	diag_printf("Over the d2p intercom .\n");
 
 	PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
 
@@ -1916,6 +1916,9 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 	int ret=0;
 	int i=0,j=0;
 	int common_type_package=p_BigConmInfo->pkg_type;
+	diag_printf("Probe big package iph_requset_no=%d\n",p_BigConmInfo->common_big_data_u.iph_requset_no);
+	diag_printf("Probe big package iph_receive_no=%d\n",p_BigConmInfo->common_big_data_u.iph_receive_no);
+	diag_printf("Probe big package iph_refuse_no=%d\n",p_BigConmInfo->common_big_data_u.iph_refuse_no);
 	diag_printf("Probe big package type = %d\n",common_type_package);
 	switch(common_type_package)
 	{
