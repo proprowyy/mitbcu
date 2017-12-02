@@ -425,6 +425,6 @@ void bcu_6d5w_ctrl_io(unsigned char dia)
 void bcu_6d5w_ctrl_wilson(unsigned char dia)
 {///<设置6d5w扬声器控制器
 	bcu_6d5w_ctrl_io(dia);
-	diag_printf("bcu 6.5 vol is :-%d\n",dia);
+	diag_printf("bcu 6.5 vol is = %d\n",dia);
 	current_dia = dia;
 }

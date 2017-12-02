@@ -423,9 +423,7 @@ int BcuResetPlayAlarmAudioWhenD2pReq(void)
 }
 int BcuInitPlayAlarmAudioWhenD2pReq(void)
 {///<PCU请求时，初始化播放信息
-
-
-		intercomm_debug_print(("Init, D2pReq, enter: %d, %d, %d--%d \n", GetSndCurrentMode(), bcu_state.pcu_request_info.open_snd_playback,bcu_state.pcu_request_info.pcu_alarm_playing, bcu_state.pcu_request_info.request_number ));
+		//intercomm_debug_print(("Init, D2pReq, enter: %d, %d, %d--%d \n", GetSndCurrentMode(), bcu_state.pcu_request_info.open_snd_playback,bcu_state.pcu_request_info.pcu_alarm_playing, bcu_state.pcu_request_info.request_number ));
          if( (bcu_state.pcu_request_info.open_snd_playback==0 && 2==GetSndCurrentMode()) || (bcu_state.pcu_request_info.pcu_alarm_playing==0 && 1==GetSndCurrentMode()) )
          {
         	 //diag_printf("Init, D2pReq, ready: %d, %d, %d \n", GetSndCurrentMode(), bcu_state.pcu_request_info.open_snd_playback,bcu_state.pcu_request_info.pcu_alarm_playing);
@@ -451,7 +449,6 @@ int BcuInitPlayAlarmAudioWhenD2pReq(void)
 void  StartOrBrokeBroadcastPcuRequestAlarmAudioData()
 {///<打开或关闭PCU请求提示音的播放
 	if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE
-	   && bcu_state.other_bcu_intercomm_state != D2P_INTERCOMM_EVENT
 	   && bcu_state.bcu_active_ann_state->state_id == ANN_IDLE ){
 			bcu_6d5w_ctrl_wilson(2);
 			BcuInitPlayAlarmAudioWhenD2pReq(); ///< add, 0107

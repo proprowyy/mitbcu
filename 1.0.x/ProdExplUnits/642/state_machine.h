@@ -163,7 +163,15 @@ typedef struct
 
 
     unsigned char car_select_count_for_monitor;
+
     unsigned char iph_monitor_cur_page;
+    unsigned char select_monitor_or_ann_page;
+    unsigned char d2p_intercom_page;
+    unsigned char d2d_intercom_page;
+    unsigned char elsect_car_page;
+    unsigned char static_page;
+
+
     int bcu_request_number;
     unsigned char this_bcu_request;
 
@@ -171,7 +179,7 @@ typedef struct
 	unsigned char system_language;
 	unsigned char this_bcu_is_active;
 
-	unsigned char this_bcu_is_d2p_intercomming;
+	unsigned char bcu_curr_state;
 	unsigned char other_bcu_intercomm_state;
 	int udp_common_recv_dev_colueme;
 	pa_software_version_t pa_software_version;

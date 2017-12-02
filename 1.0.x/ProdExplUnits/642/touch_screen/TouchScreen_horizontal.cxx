@@ -280,8 +280,17 @@ Enable_D2p_All_Btn();
 Fl_Button *btn_intercomm_back=(Fl_Button *)0;
 
 static void cb_btn_intercomm_back(Fl_Button*, void*) {
-  gp_main_file_active_page=gp_static_show;
+  if(bcu_state.d2p_intercom_page==1&&bcu_state.static_page==0)
+{
+ bcu_state.iph_monitor_cur_page =0;
+ bcu_state.select_monitor_or_ann_page = 0;
+ bcu_state.d2p_intercom_page = 0;
+ bcu_state.d2d_intercom_page = 0;
+ bcu_state.elsect_car_page=0;
+ bcu_state.static_page=1;
+gp_main_file_active_page=gp_static_show;
 wz_window_view->value(gp_main_file_active_page);
+};
 }
 
 Fl_Group *gp_static_show=(Fl_Group *)0;
@@ -878,10 +887,23 @@ for(int i=0;i<8;i++){
 Fl_Return_Button *btn_return=(Fl_Return_Button *)0;
 
 static void cb_btn_return(Fl_Return_Button*, void*) {
-  CannelSelectCar();
+  if( bcu_state.iph_monitor_cur_page==1&&bcu_state.elsect_car_page==0)
+{
+CannelSelectCar();
+ bcu_state.iph_monitor_cur_page =0;
+ bcu_state.select_monitor_or_ann_page = 0;
+ bcu_state.d2p_intercom_page = 0;
+ bcu_state.d2d_intercom_page = 0;
+ bcu_state.elsect_car_page=1;
+ bcu_state.static_page=0;
+ int i=0;
+ for(i=0;i<8;i++){
+ 	(controlpage->child(i))->show();
+ }
 gp_main_file_active_page=gp_select_car_ann_page;
 wz_window_view->value(gp_main_file_active_page);
 wz_select_window->activate();
+};
 }
 
 Fl_Tile *title=(Fl_Tile *)0;
@@ -989,9 +1011,17 @@ static void cb_btn_ann_t11(Fl_Button*, void*) {
 Fl_Button *next_page=(Fl_Button *)0;
 
 static void cb_next_page(Fl_Button*, void*) {
-  gp_main_file_active_page = AnnOrMonitorSelect;
-
+  if( bcu_state.elsect_car_page==1&&bcu_state.select_monitor_or_ann_page==0)
+{
+gp_main_file_active_page = AnnOrMonitorSelect;
 wz_window_view->value(gp_main_file_active_page);
+
+ bcu_state.iph_monitor_cur_page =0;
+ bcu_state.select_monitor_or_ann_page = 1;
+ bcu_state.d2p_intercom_page = 0;
+ bcu_state.d2d_intercom_page = 0;
+ bcu_state.elsect_car_page=0;
+ bcu_state.static_page=0;
 if(bcu_state.car_select_count_for_monitor==1)
 {
 	
@@ -1004,15 +1034,25 @@ else{
 	btn_enter->activate();
 
 
+}
 };
 }
 
 Fl_Return_Button *btn_return1=(Fl_Return_Button *)0;
 
 static void cb_btn_return1(Fl_Return_Button*, void*) {
-  gp_main_file_active_page=gp_static_show;
+  if(bcu_state.static_page==0&& bcu_state.elsect_car_page==1)
+{
+gp_main_file_active_page=gp_static_show;
 wz_window_view->value(gp_main_file_active_page);
-RecovoryBtnState(4);///<恢复相关按钮;
+RecovoryBtnState(4);///<恢复相关按钮
+ bcu_state.iph_monitor_cur_page =0;
+ bcu_state.select_monitor_or_ann_page = 0;
+ bcu_state.d2p_intercom_page = 0;
+ bcu_state.d2d_intercom_page = 0;
+ bcu_state.elsect_car_page=0;
+ bcu_state.static_page=1;
+ };
 }
 
 Fl_Button *enter_select=(Fl_Button *)0;
@@ -1075,21 +1115,36 @@ else if(flag==1)
 	btn_enter->redraw();
 	btn_enter->show();
 	btn_return0->activate();
-	
-gp_main_file_active_page=gp_select_car_ann_page;
-wz_window_view->value(gp_main_file_active_page);
-wz_select_window->activate();
-	
-		
+	if(bcu_state.elsect_car_page==0&&bcu_state.select_monitor_or_ann_page==1)
+	{
+	gp_main_file_active_page=gp_select_car_ann_page;
+	wz_window_view->value(gp_main_file_active_page);
+	wz_select_window->activate();
+	 bcu_state.iph_monitor_cur_page =0;
+	  bcu_state.select_monitor_or_ann_page = 0;
+	  bcu_state.d2p_intercom_page = 0;
+	  bcu_state.d2d_intercom_page = 0;
+	  bcu_state.elsect_car_page=1;
+	  bcu_state.static_page=0;
+	  }		
 };
 }
 
 Fl_Button *btn_monitor=(Fl_Button *)0;
 
 static void cb_btn_monitor(Fl_Button*, void*) {
-  gp_main_file_active_page = controlpage;
+  if(bcu_state.iph_monitor_cur_page ==0&&bcu_state.select_monitor_or_ann_page==1)
+{
+gp_main_file_active_page = controlpage;
 wz_window_view->value(gp_main_file_active_page);
-bcu_state.iph_monitor_cur_page=1;
+ bcu_state.iph_monitor_cur_page =1;
+ bcu_state.select_monitor_or_ann_page = 0;
+ bcu_state.d2p_intercom_page = 0;
+ bcu_state.d2d_intercom_page = 0;
+ bcu_state.elsect_car_page=0;
+ bcu_state.static_page=0;
+ iphRequestMonitorIphBtnDisable();
+};
 }
 
 Fl_Tile *lable_state=(Fl_Tile *)0;
@@ -1097,9 +1152,18 @@ Fl_Tile *lable_state=(Fl_Tile *)0;
 Fl_Return_Button *btn_return0=(Fl_Return_Button *)0;
 
 static void cb_btn_return0(Fl_Return_Button*, void*) {
-  gp_main_file_active_page=gp_select_car_ann_page;
+  if(bcu_state.elsect_car_page==0&&bcu_state.select_monitor_or_ann_page==1)
+{
+CannelSelectCar();
+gp_main_file_active_page=gp_select_car_ann_page;
 wz_window_view->value(gp_main_file_active_page);
-wz_select_window->activate();
+ bcu_state.iph_monitor_cur_page =0;
+ bcu_state.select_monitor_or_ann_page = 0;
+ bcu_state.d2p_intercom_page = 0;
+ bcu_state.d2d_intercom_page = 0;
+ bcu_state.elsect_car_page=1;
+ bcu_state.static_page=0;
+ };
 }
 
 Fl_Group *D2D_intercom_page=(Fl_Group *)0;
@@ -1242,14 +1306,13 @@ Fl_Group *main_group=(Fl_Group *)0;
 Fl_Button *btn_main_file=(Fl_Button *)0;
 
 static void cb_btn_main_file(Fl_Button*, void*) {
-  btn_main_file->color((Fl_Color)70);
+  return ;
+btn_main_file->color((Fl_Color)70);
 btn_main_file->redraw();
 gp_input_password->hide();
 
 gp_main_file_active_page = gp_main_file;
 wz_window_view->value(gp_main_file_active_page);
-
-current_is_on_static_page = 0;
 }
 
 Fl_Button *btn_emerg_ann=(Fl_Button *)0;
@@ -1262,20 +1325,45 @@ static void cb_btn_emerg_ann(Fl_Button*, void*) {
 ChangeBtnState(3);
 gp_main_file_active_page=D2D_intercom_page;
 wz_window_view->value(gp_main_file_active_page);
+ bcu_state.iph_monitor_cur_page =0;
+ bcu_state.select_monitor_or_ann_page = 0;
+ bcu_state.d2p_intercom_page = 0;
+ bcu_state.d2d_intercom_page = 1;
+ bcu_state.elsect_car_page=0;
+ bcu_state.static_page=0;
 }
 
 Fl_Button *btn_live=(Fl_Button *)0;
 
 static void cb_btn_live(Fl_Button*, void*) {
-  gp_main_file_active_page=gp_select_car_ann_page;
+  if(bcu_state.static_page==1&&bcu_state.elsect_car_page==0)
+{
+
+gp_main_file_active_page=gp_select_car_ann_page;
 wz_window_view->value(gp_main_file_active_page);
 ChangeBtnState(4);
+ bcu_state.iph_monitor_cur_page =0;
+ bcu_state.select_monitor_or_ann_page = 0;
+ bcu_state.d2p_intercom_page = 0;
+ bcu_state.d2d_intercom_page = 0;
+ bcu_state.elsect_car_page=1;
+ bcu_state.static_page=0;
+ };
 }
 
 Fl_Button *btn_intercomm=(Fl_Button *)0;
 
 static void cb_btn_intercomm(Fl_Button*, void*) {
-  ShowD2Ppage();
+  if(bcu_state.static_page==1&&bcu_state.d2p_intercom_page ==0)
+{
+ShowD2Ppage();
+ bcu_state.iph_monitor_cur_page =0;
+ bcu_state.select_monitor_or_ann_page = 0;
+ bcu_state.d2p_intercom_page = 1;
+ bcu_state.d2d_intercom_page = 0;
+ bcu_state.elsect_car_page=0;
+ bcu_state.static_page=0;
+};
 }
 
 Fl_Group *gp_select_black=(Fl_Group *)0;
@@ -1305,6 +1393,7 @@ int touch_screen_main() {
       { gp_intercomm = new Fl_Group(0, 0, 800, 385);
         gp_intercomm->color((Fl_Color)246);
         gp_intercomm->align(Fl_Align(129));
+        gp_intercomm->hide();
         { btn_d2p_request_1 = new Fl_Button(10, 13, 140, 95);
           btn_d2p_request_1->callback((Fl_Callback*)cb_btn_d2p_request_1);
         } // Fl_Button* btn_d2p_request_1
@@ -1349,7 +1438,7 @@ int touch_screen_main() {
           btn_intercomm_refuse->callback((Fl_Callback*)cb_btn_intercomm_refuse);
           btn_intercomm_refuse->deactivate();
         } // Fl_Button* btn_intercomm_refuse
-        { btn_intercomm_back = new Fl_Button(645, 290, 150, 85);
+        { btn_intercomm_back = new Fl_Button(645, 290, 150, 85, "\350\277\224\345\233\236\344\270\273\351\241\265");
           btn_intercomm_back->callback((Fl_Callback*)cb_btn_intercomm_back);
         } // Fl_Button* btn_intercomm_back
         gp_intercomm->hide();
@@ -1645,7 +1734,6 @@ int touch_screen_main() {
       } // Fl_Group* gp_window_black_screen
       { controlpage = new Fl_Group(0, -5, 805, 390);
         controlpage->color((Fl_Color)246);
-        controlpage->hide();
         { pcu_1 = new Fl_Button(10, 50, 140, 95, "PCU-1");
           pcu_1->callback((Fl_Callback*)cb_pcu_1);
         } // Fl_Button* pcu_1
@@ -1822,6 +1910,7 @@ int touch_screen_main() {
       wz_select_window->box(FL_UP_BOX);
       { main_group = new Fl_Group(0, 384, 800, 96);
         main_group->color((Fl_Color)191);
+        main_group->hide();
         { btn_main_file = new Fl_Button(15, 396, 150, 70, "\344\270\273\350\217\234\345\215\225");
           btn_main_file->box(FL_ROUNDED_BOX);
           btn_main_file->down_box(FL_ROUNDED_BOX);
@@ -1857,7 +1946,6 @@ int touch_screen_main() {
       } // Fl_Group* main_group
       { gp_select_black = new Fl_Group(0, 384, 800, 96);
         gp_select_black->color(FL_FOREGROUND_COLOR);
-        gp_select_black->hide();
         gp_select_black->end();
       } // Fl_Group* gp_select_black
       //select_window->hide();

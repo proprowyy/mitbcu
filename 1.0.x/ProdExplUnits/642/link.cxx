@@ -169,7 +169,7 @@ int dispalys(Node*head)
 }
 
 
-int dispalys_no_recv(Node*head)
+int dispalys_no_recv(Node * head)
 {
 	diag_printf("The %s !\n",__FUNCTION__);
 
@@ -247,3 +247,5 @@ int dispalys_no_recv(Node*head)
 
 
 }
+
+

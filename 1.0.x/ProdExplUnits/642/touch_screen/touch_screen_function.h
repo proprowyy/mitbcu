@@ -677,4 +677,6 @@ extern void send_cannel_d2d_big_package(unsigned int vn,unsigned int bcu_no);
 extern void CannelSelectCar();
 
 extern void EnterSelectCar();
+
+extern void iphRequestMonitorIphBtnDisable();
 #endif

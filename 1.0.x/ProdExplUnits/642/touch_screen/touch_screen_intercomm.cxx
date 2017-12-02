@@ -19,8 +19,6 @@
 #include "intercomm_info.h"
 #include "../link.h"
 
-
-
 char d2p_request_buffer[32][20] = {"\0"};//PCU请求缓存表
 unsigned char currend_d2P_position = 1;//当前PCU位置
 unsigned char is_intercomming_with_pcu  = 0;//当前是否与PCU通话
@@ -50,7 +48,7 @@ void ShowD2PRequest(){
 	diag_printf("Pcu_request_number = %d\n",bcu_state.pcu_request_info.request_number);
 	Node *temp;
     temp=PCURequsthead->next;
-    if(bcu_state.pcu_request_info.request_number>8){
+    if(bcu_state.pcu_request_info.request_number>12){
     	for(i = 0;i < 12;i ++){
 		if(temp != NULL){
 			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
@@ -69,10 +67,11 @@ void ShowD2PRequest(){
 				temp=temp->next;
 			}
 	      }
-		for(i = bcu_state.pcu_request_info.request_number; i < 12;i ++){
-			(gp_intercomm->child(i))->hide();
-		  }
        }
+for(i = bcu_state.pcu_request_info.request_number; i < 12;i ++)
+{
+	(gp_intercomm->child(i))->hide();
+}
 }
 
 

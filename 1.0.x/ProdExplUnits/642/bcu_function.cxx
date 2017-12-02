@@ -117,6 +117,13 @@ void InitBcuAndState()
 	  bcu_state.d2p_button_state = 0;
 	  bcu_state.ts_current_state = 1;
 
+
+	  bcu_state.iph_monitor_cur_page =0;
+	  bcu_state.select_monitor_or_ann_page = 0;
+	  bcu_state.d2p_intercom_page = 0;
+	  bcu_state.d2d_intercom_page = 0;
+	  bcu_state.elsect_car_page=0;
+	  bcu_state.static_page=1;
 }
 
 int BcuGetNetTxCmdBuffId(void)
@@ -1823,13 +1830,9 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 
 	  ret= dispalys(PCURequsthead);//显示请求，返回请求数
 	}
-	 ret= dispalys(PCURequsthead);//显示请求，返回请求数
-		AlarmTSToChangeScreen(5);
-		if(	ret == 0)
-		{
-			AlarmTSToChangeScreen(12);
-		}
-		return ret;
+	 ret= dispalys(PCURequsthead);//显示请求，返回请求
+
+	 return ret;
 
 }
 
@@ -1846,7 +1849,6 @@ static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 	if(	ret == 0)
 	{
 		BcuResetPlayAlarmAudioWhenD2pReq();
-		AlarmTSToChangeScreen(12);
 	}
 	return ret;
 
@@ -1977,25 +1979,15 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 			AlarmTSToChangeScreen(33);
 		break;
 	case 8:
-
-		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE&&
-		   bcu_state.bcu_active_ann_state->state_id == ANN_IDLE)
-		{
 			diag_printf("recv iph intercom request.\n");
 			bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
-		}
 		break;
 	case 9:
-			if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE||
-			   bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT)
-			{
 				diag_printf("recv iph intercom connecting update.\n");
 				bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
-			}
 		break;
 	case 10:
-		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE||
-		bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT)
+		if(bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT)
 		{
 			diag_printf("recv iph intercom refuse.\n");
 			bcu_state.pcu_request_info.request_number=IphDeleteLink(p_BigConmInfo);

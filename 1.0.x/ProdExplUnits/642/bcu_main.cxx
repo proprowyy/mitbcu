@@ -306,12 +306,6 @@ void *SystemControl(void *arg)
 
 		///获取所有外部按钮当前状态
 		GetPAAllOuterButtonState();
-		//发送PA设备同步信号
-		//DevSyncHandle();
-
-		///<获取对端PPT状态
-		//ReadOtherBCUPttState();
-
 		/*D2D hangup D2P timeout handle*/
 		D2DHangUpD2PTimeOutHandle();
 		//司机对讲请求与挂断处理
@@ -349,8 +343,10 @@ void *SystemControl(void *arg)
 			if(bcu_state.pcu_request_info.request_number != 0)
 			{
 				AlarmTSToChangeScreen(4);
+
 				StartOrBrokeBroadcastPcuRequestAlarmAudioData();
 			}
+
 		}
 		/*if there have cmd information comes from touch screen thread,we should response it as soon as possible*/
 		if(BlockBufferRead(bcu_state.recv_cmd_from_touch,&recv_send_info_from_touch_screen,sizeof(recv_send_info_from_touch_screen)) > 0)

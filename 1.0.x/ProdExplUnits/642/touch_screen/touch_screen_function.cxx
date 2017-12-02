@@ -548,8 +548,7 @@ void ChangeIntercommButtonColor(int *param_whether_ts_is_running)
 	{
 
 		whether_intercomm_button_is_active = 0;
-
-		AlarmTSToChangeScreen(3);//恢复对讲按钮颜色
+		AlarmTSToChangeScreen(3);//恢复对讲按钮颜色s
 		*param_whether_ts_is_running = 0;
 		debug_print(("ChangeIntercommButtonColor-02\n"));
 
@@ -635,8 +634,6 @@ void ExchangeToLive()
 void ShowD2Ppage()
 {///<显示PCU请求界面
 	ChangeBtnState(5);
-	current_is_on_static_page = 0;
-	p_current_intercomm_group = gp_intercomm;//当前是在对讲页面
 	ShowD2PRequest();//显示请求pcu
 	bcu_state.d2p_button_state = 1;
 	wz_window_view->value(gp_intercomm);
@@ -681,9 +678,7 @@ void RefuseD2PRequest()
 	}
 	ShowD2Ppage();//显示请求pcu
 	btn_intercomm_refuse->deactivate();
-	wz_window_view->value(gp_static_show);
-	wz_select_window->value(main_group);
-	bcu_state.iph_monitor_cur_page=0;
+
 }
 unsigned char GetIntercommButtonState()
 {///<获取对讲按钮（软）状态
@@ -1266,6 +1261,8 @@ void EnterSelectCar()
 
 }
 
+
+
 void CannelSelectCar()
 {
 	if(1)
@@ -1310,5 +1307,25 @@ void CannelSelectCar()
 	next_page->deactivate();
 
 	}
+
+}
+void iphRequestMonitorIphBtnDisable(){
+
+	Node *temp=NULL;
+	Node *temp1=NULL;
+	int i=0;
+	int car_id;
+	int iph_id;
+	for(i=1;i<=8;i++)
+	{
+		temp=query_list(PCURequsthead,gwCurrCarNo,i,&temp1);
+		if(temp != NULL)
+		{
+			iph_id=temp->devices_id;
+			car_id=temp->vehicle_number;
+			(controlpage->child(iph_id-1))->hide();
+		}
+	}
+
 
 }

@@ -148,7 +148,7 @@ void LiveAnnEnter(send_infomation_t *send_information_live)
 	StartAudioSampleTimer();///<2013-10-24
 
 	bcu_state.bcu_info.current_state_ann = LIVE_ANN_EVENT;
-
+	bcu_state.this_bcu_intercomm_state =LIVE_ANN_EVENT;
 	CharBufferClear(bcu_state.audio_data_send_buffer_id);
 	CharBufferClear(bcu_state.pending_buffer_id);
 	CharBufferClear(bcu_state.audio_data_recv_buffer_id);
