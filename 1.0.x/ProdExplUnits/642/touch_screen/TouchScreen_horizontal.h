@@ -92,8 +92,8 @@ extern Fl_Button *pcu_8;
 #include <FL/Fl_Return_Button.H>
 extern Fl_Return_Button *btn_return;
 extern Fl_Tile *title;
-extern Fl_Button *enter1;
-extern Fl_Button *cancle_iph;
+extern Fl_Button *enter_monitor;
+extern Fl_Button *cancle_monitor;
 extern Fl_Group *gp_select_car_ann_page;
 extern Fl_Button *btn_ann_t1;
 extern Fl_Button *btn_ann_t2;

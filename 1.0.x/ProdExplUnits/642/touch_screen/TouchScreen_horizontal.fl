@@ -820,7 +820,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_1->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,1,&g_MonPcuCmdPakage);
 	gwCurrIphNO=1;
@@ -835,7 +835,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_2->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,2,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(2,gwCurrCarNo);
@@ -850,7 +850,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_3->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,3,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(3,gwCurrCarNo);
@@ -865,7 +865,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_4->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,4,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(4,gwCurrCarNo);
@@ -880,7 +880,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_5->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,5,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(5,gwCurrCarNo);
@@ -895,7 +895,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_6->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,6,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(6,gwCurrCarNo);
@@ -910,7 +910,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_7->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,7,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(7,gwCurrCarNo);
@@ -925,7 +925,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_8->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,8,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(8,gwCurrCarNo);
@@ -950,22 +950,22 @@ CannelSelectCar();
 gp_main_file_active_page=gp_select_car_ann_page;
 wz_window_view->value(gp_main_file_active_page);
 wz_select_window->activate();
-}} selected
+}}
           xywh {645 275 140 95}
         }
         Fl_Tile title {
           label {请取消监听后,返回上一页!}
           xywh {10 5 515 35} align 0
         } {}
-        Fl_Button enter1 {
+        Fl_Button enter_monitor {
           label {确认}
           callback {MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EVENT_CALL,&g_MonPcuCmdPakage);
-enter1->deactivate();
-enter1->color((Fl_Color)2);
+enter_monitor->deactivate();
+enter_monitor->color((Fl_Color)2);
 btn_return->deactivate();}
           xywh {330 275 140 95} selection_color 2
         }
-        Fl_Button cancle_iph {
+        Fl_Button cancle_monitor {
           label {取消}
           callback {CannelMonitorBigPakage(gwCurrIphNO,gwCurrCarNo);
 int i;
@@ -983,8 +983,8 @@ G_SetAndClearPakage(0,1,&g_MonPcuCmdPakage);
 MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EXIT_CALL,&g_MonPcuCmdPakage);
 memset(&g_MonPcuCmdPakage,0,sizeof(send_infomation_t));
 btn_return->activate();
-enter1->color((Fl_Color)50);
-enter1->redraw();}
+enter_monitor->color((Fl_Color)50);
+enter_monitor->redraw();} selected
           xywh {490 275 140 95} selection_color 2
         }
       }

@@ -765,7 +765,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_1->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,1,&g_MonPcuCmdPakage);
 	gwCurrIphNO=1;
@@ -781,7 +781,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_2->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,2,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(2,gwCurrCarNo);
@@ -797,7 +797,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_3->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,3,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(3,gwCurrCarNo);
@@ -813,7 +813,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_4->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,4,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(4,gwCurrCarNo);
@@ -829,7 +829,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_5->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,5,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(5,gwCurrCarNo);
@@ -845,7 +845,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_6->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,6,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(6,gwCurrCarNo);
@@ -861,7 +861,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_7->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,7,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(7,gwCurrCarNo);
@@ -877,7 +877,7 @@ for(int i=0;i<8;i++){
 }
 
 	pcu_8->color((Fl_Color)2);	
-	enter1->activate();
+	enter_monitor->activate();
 	btn_return->deactivate();	
 	G_SetAndClearPakage(1,8,&g_MonPcuCmdPakage);
 	SetMonitorBigPakage(8,gwCurrCarNo);
@@ -908,18 +908,18 @@ wz_select_window->activate();
 
 Fl_Tile *title=(Fl_Tile *)0;
 
-Fl_Button *enter1=(Fl_Button *)0;
+Fl_Button *enter_monitor=(Fl_Button *)0;
 
-static void cb_enter1(Fl_Button*, void*) {
+static void cb_enter_monitor(Fl_Button*, void*) {
   MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EVENT_CALL,&g_MonPcuCmdPakage);
-enter1->deactivate();
-enter1->color((Fl_Color)2);
+enter_monitor->deactivate();
+enter_monitor->color((Fl_Color)2);
 btn_return->deactivate();
 }
 
-Fl_Button *cancle_iph=(Fl_Button *)0;
+Fl_Button *cancle_monitor=(Fl_Button *)0;
 
-static void cb_cancle_iph(Fl_Button*, void*) {
+static void cb_cancle_monitor(Fl_Button*, void*) {
   CannelMonitorBigPakage(gwCurrIphNO,gwCurrCarNo);
 int i;
 for(i=0;i<8;i++)
@@ -936,8 +936,8 @@ G_SetAndClearPakage(0,1,&g_MonPcuCmdPakage);
 MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EXIT_CALL,&g_MonPcuCmdPakage);
 memset(&g_MonPcuCmdPakage,0,sizeof(send_infomation_t));
 btn_return->activate();
-enter1->color((Fl_Color)50);
-enter1->redraw();
+enter_monitor->color((Fl_Color)50);
+enter_monitor->redraw();
 }
 
 Fl_Group *gp_select_car_ann_page=(Fl_Group *)0;
@@ -1734,6 +1734,7 @@ int touch_screen_main() {
       } // Fl_Group* gp_window_black_screen
       { controlpage = new Fl_Group(0, -5, 805, 390);
         controlpage->color((Fl_Color)246);
+        controlpage->hide();
         { pcu_1 = new Fl_Button(10, 50, 140, 95, "PCU-1");
           pcu_1->callback((Fl_Callback*)cb_pcu_1);
         } // Fl_Button* pcu_1
@@ -1766,14 +1767,14 @@ int touch_screen_main() {
           title->align(Fl_Align(FL_ALIGN_CENTER));
           title->end();
         } // Fl_Tile* title
-        { enter1 = new Fl_Button(330, 275, 140, 95, "\347\241\256\350\256\244");
-          enter1->selection_color((Fl_Color)2);
-          enter1->callback((Fl_Callback*)cb_enter1);
-        } // Fl_Button* enter1
-        { cancle_iph = new Fl_Button(490, 275, 140, 95, "\345\217\226\346\266\210");
-          cancle_iph->selection_color((Fl_Color)2);
-          cancle_iph->callback((Fl_Callback*)cb_cancle_iph);
-        } // Fl_Button* cancle_iph
+        { enter_monitor = new Fl_Button(330, 275, 140, 95, "\347\241\256\350\256\244");
+          enter_monitor->selection_color((Fl_Color)2);
+          enter_monitor->callback((Fl_Callback*)cb_enter_monitor);
+        } // Fl_Button* enter_monitor
+        { cancle_monitor = new Fl_Button(490, 275, 140, 95, "\345\217\226\346\266\210");
+          cancle_monitor->selection_color((Fl_Color)2);
+          cancle_monitor->callback((Fl_Callback*)cb_cancle_monitor);
+        } // Fl_Button* cancle_monitor
         controlpage->hide();
         controlpage->end();
       } // Fl_Group* controlpage
@@ -1857,7 +1858,6 @@ int touch_screen_main() {
       } // Fl_Group* AnnOrMonitorSelect
       { D2D_intercom_page = new Fl_Group(0, 2, 850, 383);
         D2D_intercom_page->color((Fl_Color)246);
-        D2D_intercom_page->hide();
         { btn_d2d_1 = new Fl_Button(10, 12, 140, 95);
           btn_d2d_1->callback((Fl_Callback*)cb_btn_d2d_1);
           btn_d2d_1->hide();
@@ -1910,7 +1910,6 @@ int touch_screen_main() {
       wz_select_window->box(FL_UP_BOX);
       { main_group = new Fl_Group(0, 384, 800, 96);
         main_group->color((Fl_Color)191);
-        main_group->hide();
         { btn_main_file = new Fl_Button(15, 396, 150, 70, "\344\270\273\350\217\234\345\215\225");
           btn_main_file->box(FL_ROUNDED_BOX);
           btn_main_file->down_box(FL_ROUNDED_BOX);
@@ -1946,6 +1945,7 @@ int touch_screen_main() {
       } // Fl_Group* main_group
       { gp_select_black = new Fl_Group(0, 384, 800, 96);
         gp_select_black->color(FL_FOREGROUND_COLOR);
+        gp_select_black->hide();
         gp_select_black->end();
       } // Fl_Group* gp_select_black
       //select_window->hide();
