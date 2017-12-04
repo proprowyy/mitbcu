@@ -41,7 +41,7 @@ int SockfdServerInit(struct sockaddr_in server_addr,char *sock_model)
 			net_debug_printf(("socket fail\n"));
 			exit(1);
 		}
-//		net_debug_printf(("the sockfd_tcp is:%d !\n",listenfd));
+
 	}
 
 	if(strcmp(sock_model,"SOCK_DGRAM") == 0)

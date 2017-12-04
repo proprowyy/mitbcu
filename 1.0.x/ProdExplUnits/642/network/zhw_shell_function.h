@@ -33,10 +33,6 @@
 #include "zhw_dev_config_info.h"
 #include "zhw_socket_init.h"
 #include "../tftp_server_apply.h"
-//#include <cyg/infra/testcase.h>
-//#include <cyg/hal/hal_io.h>
-//#include <cyg/kernel/kapi.h>
-//#include <cyg/hal/plf_io.h>
 
 void ZhwProTS(network_shell_package_t t);
 
