@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 {
 	
 	int return_value_of_thread_create = 0;/*the return of thread create*/
-	void *return_value_of_join_thread[8];/*the return of thread wait*/
+	void *return_value_of_join_thread[6];/*the return of thread wait*/
 	int return_init_buffer = 0;/*the value of init buffer*/
 
 	/*the declaration of thread attributions*/
@@ -48,8 +48,6 @@ int main(int argc, char **argv)
 	pthread_attr_t attr_of_network;/*the attribution of network thread*/
 	pthread_attr_t attr_of_control;/*the attribution of control thread*/
 	pthread_attr_t attr_of_sample_and_play;/*the attribution of mic sample and audio play thread*/
-	pthread_attr_t attr_of_failure_statics;/*the attribution of failure statics thread*/
-	pthread_attr_t attr_of_gd_sync;/*the attribution of global device sync thread*/
 	pthread_attr_t attr_of_demao_thread;
 	//****************************//
 	/*设备软件版本号登记*/
@@ -114,8 +112,6 @@ int main(int argc, char **argv)
 	blank_audio_data = (char *)malloc((1024 * 1) * sizeof(char));
 	memset((void *)blank_audio_data,0xff,(1024 *1));
 
-
-
 	ThreadAttributionConfigure(&attr_of_screen,(BCU_PRIORIT),///<触摸屏线程属性值初始化
 								thread_stack_of_screen+(1024 * 20),(1024 * 25));
 
@@ -130,11 +126,6 @@ int main(int argc, char **argv)
 	ThreadAttributionConfigure(&attr_of_sample_and_play,BCU_HIGH_MIC_SAMPLE_PRIORITY,///<音频采集与播放线程属性值初始化
 									 (thread_stack_of_sample_amd_play + (1024 * 20)),(1024 * 20));
 
-	ThreadAttributionConfigure(&attr_of_failure_statics,BCU_PRIORIT,///<故障统计线程属性值初始化
-									 (thread_stack_of_failure_statics + (1024 * 3)),(1024 * 3));
-
-	ThreadAttributionConfigure(&attr_of_gd_sync,BCU_PRIORIT,///<同步线程属性值初始化
-									 (thread_stack_of_gd_sync + (1024 * 3)),(1024 * 3));
 
 	ThreadAttributionConfigure(&attr_of_demao_thread,BCU_HIGH_MIC_SAMPLE_PRIORITY+2,///<
 									 (thread_stack_of_dameo + (1024 * 3)),(1024 * 3));
@@ -181,21 +172,15 @@ int main(int argc, char **argv)
 	 CYG_TEST_CHECK(return_value_of_thread_create == 0,"mic get thread returned error");
 	 debug_print(("I am the sample and play thread!\n"));
 
-	 /*Create the thread of failure statics*/
-	 return_value_of_thread_create = pthread_create(&thread_of_failure_statics,
-														 &attr_of_failure_statics,
-														 BcuFailureStaticsEntry,
-														 NULL
-														 );
+
 	 CYG_TEST_CHECK(return_value_of_thread_create == 0,"failure statics thread returned error");
 	 debug_print(("I am failure statics thread!\n"));
 
 	 pthread_join(thread_of_network, &return_value_of_join_thread[1] );
 	 pthread_join(thread_of_control, &return_value_of_join_thread[2] );
 	 pthread_join(thread_of_sample_and_play, &return_value_of_join_thread[3] );
-	 pthread_join(thread_of_failure_statics, &return_value_of_join_thread[4] );
-	 pthread_join(thread_of_screen, &return_value_of_join_thread[0] );
-	 pthread_join(thread_of_demao, &return_value_of_join_thread[7] );
+	 pthread_join(thread_of_screen, &return_value_of_join_thread[4] );
+	 pthread_join(thread_of_demao, &return_value_of_join_thread[5] );
 
 
 	 debug_print(("I am main function, but I have finished my work now.\n"));
@@ -206,7 +191,7 @@ int main(int argc, char **argv)
 
 void *DemaoEntry(void *arg)
 {
-	diag_printf("####\n");
+	diag_printf("DemaoEntry start\n");
 	for(;;)
 	{
 		sem_wait(&sem_demao);

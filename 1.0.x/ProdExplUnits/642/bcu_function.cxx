@@ -1505,21 +1505,36 @@ void GetOuterButtonState()
 
 			if(bcu_state.live_button_state == 0 &&bcu_state.car_select_count_for_monitor>0)///<enter live
 			{
-				diag_printf(("enter live\n"));
-				ExchangeToLive();
-				ChangeBtnState(6);
-				ChangeBtnState(8);
+				if(bcu_state.select_monitor_or_ann_page==1&&bcu_state.elsect_car_page==0)
+
+				{
+					diag_printf(("enter live\n"));
+				   ExchangeToLive();
+				   ChangeBtnState(6);
+				   ChangeBtnState(8);
+
+				}
 			}
 			else if(bcu_state.live_button_state == 1)///<exit live
 			{
-				diag_printf("exit live\n");
-				CannelSelectCar();
-				RecovoryBtnState(6);
-				RecovoryBtnState(8);
-				ExitLive();
-				gp_main_file_active_page=gp_select_car_ann_page;
-				wz_window_view->value(gp_main_file_active_page);
-				wz_select_window->activate();
+
+				if(bcu_state.select_monitor_or_ann_page==1&&bcu_state.elsect_car_page==0)
+				{
+					diag_printf("exit live\n");
+					CannelSelectCar();
+					RecovoryBtnState(6);
+					RecovoryBtnState(8);
+					ExitLive();
+			     bcu_state.iph_monitor_cur_page =0;
+				 bcu_state.select_monitor_or_ann_page = 0;
+				 bcu_state.d2p_intercom_page = 0;
+				 bcu_state.d2d_intercom_page = 0;
+				 bcu_state.elsect_car_page=1;
+				 bcu_state.static_page=0;
+				 gp_main_file_active_page=gp_select_car_ann_page;
+				 wz_window_view->value(gp_main_file_active_page);
+				 wz_select_window->activate();
+				}
 
 			}
 }

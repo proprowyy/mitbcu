@@ -941,7 +941,7 @@ void EnableTS()
 {///<使能触摸屏
 	wz_window_view->box(FL_UP_BOX);
 	wz_select_window->box(FL_UP_BOX);
-	wz_window_view->value(gp_static_show);
+	//wz_window_view->value(gp_static_show);
 	wz_select_window->value(main_group);
 }
 
