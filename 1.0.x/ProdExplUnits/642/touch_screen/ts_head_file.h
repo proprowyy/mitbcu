@@ -12,7 +12,6 @@
 #include <string.h>
 #include <math.h>
 #include <stdio.h>
-#include "station_info.h"
 #include "error_handle.h"
 #include "global_param.h"
 #include "intercomm_info.h"

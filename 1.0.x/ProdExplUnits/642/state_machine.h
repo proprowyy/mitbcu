@@ -22,8 +22,6 @@
 #include "ts_type.h"
 #include "bcu_get_data_from_ccu_type.h"
 #include "touch_screen/intercomm_info.h"
-#include "touch_screen/station_info.h"
-
 
 /*the number of rules*/
 #define RECORD_OF_RULES 50

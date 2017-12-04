@@ -211,11 +211,6 @@ void ZhwProTS(network_shell_package_t t)
 	local_dev_info = ReadGlobalArray(local_dev_type_num.dev_type,NULL,local_dev_type_num.dev_number,1);
 
 	shell_sock_addr = IpAndPortInit(local_dev_info.dev_ip,local_port);
-//	memset(&my_addr, 0, sizeof(my_addr));
-//	my_addr.sin_family = AF_INET;
-//	my_addr.sin_len = sizeof(my_addr);
-//	my_addr.sin_port = server_addr.sin_port;
-//	my_addr.sin_addr.s_addr = server_addr.sin_addr.s_addr;
 
 	shell_sock = socket(AF_INET,SOCK_DGRAM,0);
 	if(shell_sock < 0)

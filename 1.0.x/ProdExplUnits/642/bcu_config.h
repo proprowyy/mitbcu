@@ -28,8 +28,6 @@
 #define HEART_BETA 100
 #define SAMPLE_AUDIO_FREQUENCE 10//15//21   ///<2014-01-13
 
-#define DEFAULT_LINE_NO 3
-
 #define BCU_PRIORIT 10 ///<BCU thread priority
 #define BCU_HIGH_MIC_SAMPLE_PRIORITY 14
 #define BCU_HIGH_NETWORK_PRIORITY 15
@@ -53,7 +51,7 @@ int GetCurrentDeviceInfomation(device_id_info_t *this_device_id_info);
  * @param  device id info
  * @return If success,return 0
 */
-void GetOtherDeviceNo();
+void GetDeviceNo();
 
 /** UpdateCurrentDeviceInformation Function
  * Update current device information

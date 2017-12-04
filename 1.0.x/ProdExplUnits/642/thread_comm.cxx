@@ -26,9 +26,6 @@ pthread_mutex_t mutex_of_global_device_info;/*the mutex of global info struct*/
 sem_t  sem_wakeup_bcu_mic_sample;
 sem_t sem_demao;
 
-#ifdef CONFIG_TEST_SND_IN_MULTI_THREAD
-sem_t  sem_snd_card_self_test;
-#endif
 
 //控制线程与网络线程之间的通信结构体:主控线程-->网络线程
 volatile threads_communication_type_t control_to_network_communication;

@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 	/*Update current device information*/
 	UpdateCurrentDeviceInformation();
 	/*Acquire this device number*/
-	GetOtherDeviceNo();
+	GetDeviceNo();
     /*创建pcu请求链表*/
     PCURequsthead=creat_linked_list();
     BCURequsthead=creat_linked_list();

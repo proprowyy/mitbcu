@@ -881,8 +881,6 @@ bcu_get_data_from_ccu_type.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/bcu_get_data_from_ccu_type.h
 touch_screen/intercomm_info.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/intercomm_info.h
-touch_screen/station_info.h
-/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/station_info.h
 
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/tftp_network_base.h
 stdio.h
@@ -1112,16 +1110,6 @@ string.h
 ts_head_file.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/ts_head_file.h
 
-/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/station_info.cxx
-station_info.h
-/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/station_info.h
-
-/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/station_info.h
-struct_type.h
-/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/struct_type.h
-ts_type.h
-/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/ts_type.h
-
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/touch_screen_ann.cxx
 touch_screen_ann.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/touch_screen_ann.h
@@ -1183,8 +1171,6 @@ math.h
 -
 stdio.h
 -
-station_info.h
-/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/station_info.h
 error_handle.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/error_handle.h
 global_param.h
@@ -1217,8 +1203,6 @@ bcu_get_data_from_ccu_type.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/bcu_get_data_from_ccu_type.h
 
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/ts_simulate.h
-station_info.h
-/home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/station_info.h
 intercomm_info.h
 /home/benty/workspace/Projects/ProdBCU/1.0.x/ProdExplUnits/sourcecode/touch_screen/intercomm_info.h
 data_struct.h

@@ -170,14 +170,12 @@ void IdleIntercomProcess(send_infomation_t *send_information_intercomm_idle)
 	{
                 bcu_state.pcu_request_info.pcu_alarm_playing_again = 0;
                 OpenAudioSampleTimer();
-		debug_print(("0108-idle-pcu: timer \n"));				
+
 	}
 
 	if(whether_have_begin_broadcast_alarm_audio_data == 1 &&
 			bcu_state.pcu_request_info.request_number == 0 &&
-			bcu_state.bcu_active_ann_state->state_id != OCC_EVENT &&
-			bcu_state.bcu_active_ann_state->state_id != LIVE_ANN_EVENT &&
-			bcu_state.bcu_active_ann_state->state_id != MIC_3D5_OUTER_EVENT)
+			bcu_state.bcu_active_ann_state->state_id != LIVE_ANN_EVENT)
 	{///<当前状态不需要使用声卡操作，因此关闭声卡相关操作函数
 		whether_have_begin_broadcast_alarm_audio_data = 0;
 		CloseAudioSampleTimer();///<2013-10-24

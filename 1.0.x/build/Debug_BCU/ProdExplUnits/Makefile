@@ -1093,30 +1093,6 @@ sourcecode/touch_screen/set_cmd_package.cxx.s:
 	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/touch_screen/set_cmd_package.cxx.s
 .PHONY : sourcecode/touch_screen/set_cmd_package.cxx.s
 
-sourcecode/touch_screen/station_info.o: sourcecode/touch_screen/station_info.cxx.o
-.PHONY : sourcecode/touch_screen/station_info.o
-
-# target to build an object file
-sourcecode/touch_screen/station_info.cxx.o:
-	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/touch_screen/station_info.cxx.o
-.PHONY : sourcecode/touch_screen/station_info.cxx.o
-
-sourcecode/touch_screen/station_info.i: sourcecode/touch_screen/station_info.cxx.i
-.PHONY : sourcecode/touch_screen/station_info.i
-
-# target to preprocess a source file
-sourcecode/touch_screen/station_info.cxx.i:
-	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/touch_screen/station_info.cxx.i
-.PHONY : sourcecode/touch_screen/station_info.cxx.i
-
-sourcecode/touch_screen/station_info.s: sourcecode/touch_screen/station_info.cxx.s
-.PHONY : sourcecode/touch_screen/station_info.s
-
-# target to generate assembly for a file
-sourcecode/touch_screen/station_info.cxx.s:
-	cd /home/benty/workspace/Projects/ProdBCU/1.0.x/build/Debug_BCU && $(MAKE) -f ProdExplUnits/CMakeFiles/ProdTest.dir/build.make ProdExplUnits/CMakeFiles/ProdTest.dir/sourcecode/touch_screen/station_info.cxx.s
-.PHONY : sourcecode/touch_screen/station_info.cxx.s
-
 sourcecode/touch_screen/touch_screen_ann.o: sourcecode/touch_screen/touch_screen_ann.cxx.o
 .PHONY : sourcecode/touch_screen/touch_screen_ann.o
 
@@ -1343,9 +1319,6 @@ help:
 	@echo "... sourcecode/touch_screen/set_cmd_package.o"
 	@echo "... sourcecode/touch_screen/set_cmd_package.i"
 	@echo "... sourcecode/touch_screen/set_cmd_package.s"
-	@echo "... sourcecode/touch_screen/station_info.o"
-	@echo "... sourcecode/touch_screen/station_info.i"
-	@echo "... sourcecode/touch_screen/station_info.s"
 	@echo "... sourcecode/touch_screen/touch_screen_ann.o"
 	@echo "... sourcecode/touch_screen/touch_screen_ann.i"
 	@echo "... sourcecode/touch_screen/touch_screen_ann.s"

@@ -7,7 +7,6 @@
 
 #ifndef TS_SIMULATE_H_
 #define TS_SIMULATE_H_
-#include "station_info.h"
 #include "intercomm_info.h"
 #include "data_struct.h"
 #include <FL/Fl_Group.H>

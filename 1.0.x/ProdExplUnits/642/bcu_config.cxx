@@ -22,18 +22,16 @@ extern bcu_state_t  bcu_state;
 /*get current device name id and car number */
 int GetCurrentDeviceInfomation(device_id_info_t *this_device_id_info)
 {
-
-
 	strcpy((char *)this_device_id_info->device_name,"BCU");
 	this_device_id_info->device_no = ReadNum();
 	this_device_id_info->dev_type = ReadType();
-	diag_printf("GetCurrentDeviceInfomation:%s,%d,%d\n",this_device_id_info->device_name,this_device_id_info->device_no,this_device_id_info->dev_type);
+	diag_printf("Get Current Device Infomation :%s,%d,%d\n",this_device_id_info->device_name,this_device_id_info->device_no,this_device_id_info->dev_type);
 
 	return 0;
 }
 
 /*Acquire other device number*/
-void GetOtherDeviceNo()
+void GetDeviceNo()
 {
 		bcu_state.bcu_info.devices_no=ReadNum();
 }
