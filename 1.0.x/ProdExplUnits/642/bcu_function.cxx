@@ -1776,7 +1776,6 @@ int TransformSendPackage(network_pcu_t *p_temp_pcu_network_package,network_send_
 	if(p_recv_network_info->send_information.event_type_intercom == D2P_INTERCOMM_EVENT){
 		p_temp_pcu_network_package->event_type_intercom=D2P_INTERCOMM_EVENT;
 		p_temp_pcu_network_package->event_type_ann=254;
-		//diag_printf("p_temp_pcu_network_package = %d\n",p_temp_pcu_network_package->event_type_intercom);
 	}
 	if(p_recv_network_info->send_information.event_type_intercom == D2P_MONITOR_EVENT){
 		p_temp_pcu_network_package->event_type_ann=254;
