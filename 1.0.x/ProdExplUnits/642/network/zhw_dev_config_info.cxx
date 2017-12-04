@@ -166,7 +166,6 @@ void InitGlobalArray(void)
 
 		global_array_ptr->global_config_info.dev_name = (char *)malloc(sizeof(point->device_name));
 		network_malloc_size = network_malloc_size + sizeof(point->device_name);
-		////////diag_printf("7-network_malloc_size = %ld\n",network_malloc_size);
 		bzero(global_array_ptr->global_config_info.dev_name,sizeof(point->device_name));
 		memcpy(global_array_ptr->global_config_info.dev_name,point->device_name,sizeof(point->device_name));
 		net_debug_printf(("device name  = %s--",point->device_name));
