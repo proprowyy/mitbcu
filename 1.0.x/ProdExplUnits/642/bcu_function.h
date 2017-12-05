@@ -936,13 +936,22 @@ void ChangeTSAccordingCurrentTCMSFlag();
 
 //add by panyao 2015-12-15
 void SimlateAtuoANNInofFill(send_infomation_t *param_send_package);
+
 void StartSimlateAnn();
+
 void CloseAUTOSIMTimer();
+
 void RestartAUTOSIMTimer();
+
 void CreateAUTOSIMTimer();
 //end of add
 int TransformIntercomPackage(network_send_package_t *p_recv_network_info);
+
 int TransformSendPackage(network_pcu_t *p_temp_pcu_network_package,network_send_package_t *p_recv_network_info);
+
 int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo);
+
+void ProbeMetalButtonToPerform( );
+
 #endif	/*BCU_FUNCTION_H*/
 

@@ -82,16 +82,11 @@ int ZhwReadFromTestDB(int *row, int *column,void **point)
 	int test_row = 0;
 	int *column_mark;
 	int *row_mark;
-
     test_row = device_info_items;
-	
 	column_mark = &test_column;
 	row_mark = &test_row;
 	memcpy(column,column_mark,sizeof(column_mark));
 	memcpy(row,row_mark,sizeof(row_mark));
-
 	*point = device_info;
-
-
 	return 1;
 }

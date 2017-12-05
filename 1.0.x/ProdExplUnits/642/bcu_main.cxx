@@ -256,6 +256,19 @@ void *SystemControl(void *arg)
 {
     int ret = 0;
 
+    int whether_ts_is_running = 0;
+
+    int temp_current_pcu_request_number = 0;
+
+    bcu_state.other_bcu_intercomm_state = INTERCOM_IDLE;
+
+    send_infomation_t recv_send_info_from_touch_screen;///<从触摸屏线程接收的命令
+
+    ts_dev_volume_info_t ctrl_recv_from_ts;///<触摸屏音量设置信息命令
+
+    network_send_package_t recv_network_info_from_network;///<从网络上接收的命令
+
+    bcu_state.this_bcu_is_active=1;
 
 	debug_print(("I am success entry control handle thread!\n"));
 
@@ -270,65 +283,35 @@ void *SystemControl(void *arg)
 	CreateAudioSampleTimer();/*create  audio sample timer*/
 
 	BCUStateInit();/*initialize the original state of bcu*/
-
-	send_infomation_t recv_send_info_from_touch_screen;///<从触摸屏线程接收的命令
-	ts_dev_volume_info_t ctrl_recv_from_ts;///<触摸屏音量设置信息命令
-	network_send_package_t recv_network_info_from_network;///<从网络上接收的命令
-
 	///<相关命令包的初始化
 	ControlCommomPackageInit(&dev_vol_to_eamp,&dev_vol_to_pcu,&dev_vol_to_bcu,&dev_vol_to_ccu);
 
-	int whether_ts_is_running = 0;
-	int temp_current_pcu_request_number = 0;
-
-	bcu_state.other_bcu_intercomm_state = INTERCOM_IDLE;
-
-	///<创建同步定时器
-	//CreateSYNCTimer();
-
 	for(;;)
 	{
-
-		///获取所有外部按钮当前状态
 		GetPAAllOuterButtonState();
-		/*D2D hangup D2P timeout handle*/
 		D2DHangUpD2PTimeOutHandle();
 		//司机对讲请求与挂断处理
 		///D2DReqAndResponseHandle();
-
-			bcu_state.this_bcu_is_active=1;
-
-			if(bcu_state.this_bcu_is_active != 0)
-			{
-				if(GetLiveExternButtonState() == 1)
-				{
-					AlarmTSToChangeScreen(16);
-				}
-			}
-			if(GetD2PExternButtonState() == 1)///<D2P外部按钮按下
-			{
-				AlarmTSToChangeScreen(17);
-			}
+		ProbeMetalButtonToPerform();
 		///<PCU请求时，改变相关按钮的颜色
 		ChangeIntercommButtonColor(&whether_ts_is_running);
 
-		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0){
+		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0)
+		{
 			diag_printf("Control recv a big package.\n");
 			ProbeBigCommPackage(&recv_temp_big);
-
 			if(bcu_state.bcu_request_number !=0)
 			{
 				AlarmTSToChangeScreen(9);
 				btn_emerg_ann->activate();
 			}
-			else{
-
+			else
+			{
 				btn_emerg_ann->deactivate();
 			}
 			if(bcu_state.pcu_request_info.request_number != 0)
 			{
 				AlarmTSToChangeScreen(4);
-
 				StartOrBrokeBroadcastPcuRequestAlarmAudioData();
 			}
 
@@ -336,28 +319,26 @@ void *SystemControl(void *arg)
 		/*if there have cmd information comes from touch screen thread,we should response it as soon as possible*/
 		if(BlockBufferRead(bcu_state.recv_cmd_from_touch,&recv_send_info_from_touch_screen,sizeof(recv_send_info_from_touch_screen)) > 0)
 		{///<接收触摸屏线程发送过来的控制命令
-							 DisplaySendCmd(recv_send_info_from_touch_screen);
-							 ANNStateHangle(&recv_cmd_info_of_ann,&recv_send_info_from_touch_screen);/*Handle announcement event*/
-							 PthreadPriorityChangeForSchedRr(thread_of_network, BCU_HIGH_NETWORK_PRIORITY-2);
-							 PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT+2);
-							 PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT+1);
-							 IntercomStateHangle(&recv_cmd_info_of_intercom,&recv_send_info_from_touch_screen);/*Handle intercom event*/
-							 cyg_thread_delay(20);
-							 PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT);
-							 PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT);
-
+			DisplaySendCmd(recv_send_info_from_touch_screen);
+		    ANNStateHangle(&recv_cmd_info_of_ann,&recv_send_info_from_touch_screen);/*Handle announcement event*/
+			PthreadPriorityChangeForSchedRr(thread_of_network, BCU_HIGH_NETWORK_PRIORITY-2);
+		    PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT+2);
+			PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT+1);
+			IntercomStateHangle(&recv_cmd_info_of_intercom,&recv_send_info_from_touch_screen);/*Handle intercom event*/
+			cyg_thread_delay(20);
+			PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT);
+		    PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT);
 		}
 #if 1
 		/*if there have cmd information comes from network thread,we should response it as soon as possible*/
 		if(BlockBufferRead(bcu_state.cmd_recv_buffer_id,(void *)&recv_network_info_from_network, sizeof(recv_network_info_from_network))>0 && recv_network_info_from_network.send_information.src_devices_no <= 18)
-		{
-			/*show the detail of cmd information*/
-
-			if(!TransformIntercomPackage(&recv_network_info_from_network)){diag_printf("error:%d:%s\n",__LINE__,__FUNCTION__);}
-
-				DisplayNetworkCmd(recv_network_info_from_network);
-
-			/*Update global device information*/
+		{  /*show the detail of cmd information*/
+			if(!TransformIntercomPackage(&recv_network_info_from_network))
+			{
+				diag_printf("error:%d:%s\n",__LINE__,__FUNCTION__);
+			}
+			DisplayNetworkCmd(recv_network_info_from_network);
+#if 0			/*Update global device information*/
 			if(strcmp(recv_network_info_from_network.send_information.src_devices_name,"PCU") == 0)
 			{
 				PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT+2);
@@ -370,10 +351,9 @@ void *SystemControl(void *arg)
 				PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT);
 				PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT);
 			}
-
+#endif
 			if(recv_network_info_from_network.send_information.event_type_intercom == D2D_INTERCOMM_EVENT)
 			{
-
 			//	JudgeWhetherHaveD2DRequest(&recv_cmd_info_of_intercom,&recv_network_info_from_network);
 			}
 
@@ -414,6 +394,7 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 	debug_print(("I am success entry sample and play handle thread!\n"));
 	int whether_send_blank_audio_data = 0;
     struct timeval tv_start, tv_end;
+    int CurAnnState,CurAnnStateInfo,CurIntercomState;
     CreateSndEnableTimer();
 	for(;;)
 	{
@@ -421,13 +402,11 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 		sem_wait(&sem_wakeup_bcu_mic_sample);
 		EnableSndEnableTimer();
 		GetPAAllOuterButtonState2();
-
-		if(bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT &&
-		   bcu_state.bcu_active_intercom_state->state_id != D2P_INTERCOMM_EVENT &&
-		   bcu_state.bcu_info.current_state_ann == LIVE_ANN_EVENT) //d2d??
+		CurAnnState = bcu_state.bcu_active_ann_state->state_id;
+		CurAnnStateInfo = bcu_state.bcu_info.current_state_ann;
+		CurIntercomState = bcu_state.bcu_active_intercom_state->state_id;
+		if(CurAnnState == LIVE_ANN_EVENT && CurIntercomState != D2P_INTERCOMM_EVENT &&CurAnnStateInfo == LIVE_ANN_EVENT)
 		{
-			//diag_printf("Sample ann audio data !--2\n");
-			///<采集口播音频数据
 			PutMicSampleDataintoBuffer_EAMP(bcu_audio_handle, bcu_state.audio_data_send_buffer_id );
 			if(bcu_state.this_bcu_ptt_state != GetPTTState())
 			{
@@ -437,9 +416,7 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 					whether_send_blank_audio_data = 5;
 				}
 			}
-			///<将口播音频数据写入到模拟总线上
-			///<改变网络优先级，确保音频文件能够及时发送出去
-			PthreadPriorityChangeForSchedRr(thread_of_network, BCU_HIGH_NETWORK_PRIORITY);
+			PthreadPriorityChangeForSchedRr(thread_of_network, BCU_HIGH_NETWORK_PRIORITY);///<改变网络优先级，确保音频文件能够及时发送出去
 			if(whether_send_blank_audio_data > 0 )
 			{///<决定是否发送空白数据
 				whether_send_blank_audio_data = 0;
@@ -447,12 +424,9 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 				CharBufferWrite(bcu_state.local_audio_data_recv_buffer_id, blank_audio_data, (1 * 1024));
 			}
 		}
-		else if(bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT)
+		else if(CurIntercomState == D2P_INTERCOMM_EVENT)
 		{
-
-
-			PutMicSampleDataintoBuffer_D2P(bcu_audio_handle, bcu_state.audio_data_send_buffer_id );
-			///<改变网络优先级，确保音频文件能够及时发送出去
+			PutMicSampleDataintoBuffer_D2P(bcu_audio_handle, bcu_state.audio_data_send_buffer_id );///<改变网络优先级，确保音频文件能够及时发送出去
 			PthreadPriorityChangeForSchedRr(thread_of_network, BCU_HIGH_NETWORK_PRIORITY);
 			if(begin_to_broadcast_audio_data == 1)
 			{
@@ -462,7 +436,6 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 					unsigned int current_total_bytes = 0;
 					unsigned int current_right_delta = 0;
 					CharBufferCurrentReadPointer_temp(bcu_state.audio_data_recv_buffer_id, &current_total_bytes,&current_right_delta);
-
 					if( current_total_bytes >= 1024*1)
 					{
 						play_audio = 1;
@@ -470,58 +443,46 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 						whe_d2d_souder_stable = 0;
 					}
 				}
-				if(1 == play_audio){///<播放D2P音频数据
-				PlayAudioTwice_D2P(bcu_audio_handle, bcu_state.audio_data_recv_buffer_id, bcu_state.pending_buffer_id);
+				if(1 == play_audio)
+				{///<播放D2P音频数据
+					PlayAudioTwice_D2P(bcu_audio_handle, bcu_state.audio_data_recv_buffer_id, bcu_state.pending_buffer_id);
 				}
 			}
-			///<发送PTT状态给PCU
-			SendPTTStateToPCU();
+			//SendPTTStateToPCU();
 		}
-
-		else if(bcu_state.bcu_active_intercom_state->state_id==D2P_MONITOR_EVENT)
+		else if(CurIntercomState == D2P_MONITOR_EVENT)
+		{//diag_printf("play monitir audio data !-1\n");
+			PthreadPriorityChangeForSchedRr(thread_of_network, BCU_HIGH_NETWORK_PRIORITY);
+			if(begin_to_broadcast_audio_data == 1)
+			{
+				if(0 == play_audio)
 				{
-					//diag_printf("play monitir audio data !-1\n");
-					PthreadPriorityChangeForSchedRr(thread_of_network, BCU_HIGH_NETWORK_PRIORITY);
-					if(begin_to_broadcast_audio_data == 1)
+					unsigned int current_total_bytes = 0;
+					unsigned int current_right_delta = 0;
+					CharBufferCurrentReadPointer_temp(bcu_state.audio_data_recv_buffer_id, &current_total_bytes,&current_right_delta);
+					if( current_total_bytes >= 1024*1)
 					{
-						if(0 == play_audio)
-						{
-
-							unsigned int current_total_bytes = 0;
-							unsigned int current_right_delta = 0;
-							CharBufferCurrentReadPointer_temp(bcu_state.audio_data_recv_buffer_id, &current_total_bytes,&current_right_delta);
-
-							if( current_total_bytes >= 1024*1)
-							{
-							//	diag_printf("play monitir audio data !-2\n");
-								play_audio = 1;
-								whe_d2d_souder_have_been_worked = 0;
-								whe_d2d_souder_stable = 0;
-							}
-						}
-						if(1 == play_audio)
-						{///<播放D2P音频数据
-
-							PlayAudioTwice_D2P(bcu_audio_handle, bcu_state.audio_data_recv_buffer_id, bcu_state.pending_buffer_id);
-
-						}
+						//	diag_printf("play monitir audio data !-2\n");
+						play_audio = 1;
+						whe_d2d_souder_have_been_worked = 0;
+						whe_d2d_souder_stable = 0;
 					}
+				}
+				if(1 == play_audio)
+				{///<播放D2P音频数据
+					PlayAudioTwice_D2P(bcu_audio_handle, bcu_state.audio_data_recv_buffer_id, bcu_state.pending_buffer_id);
 
 				}
-
-		else if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
-		{
-			{
-				///<采集司机对讲音量数据
-				diag_printf("d2d ------------------audio\n");
-				PutMicSampleDataintoBuffer_BCU(bcu_audio_handle, bcu_state.audio_data_send_buffer_id );
-
 			}
 
-
+		}
+		else if(CurIntercomState == D2D_INTERCOMM_EVENT)
+		{
+			///<采集司机对讲音量数据
+			diag_printf("d2d ------------------audio\n");
+			PutMicSampleDataintoBuffer_BCU(bcu_audio_handle, bcu_state.audio_data_send_buffer_id );
 			///<改变网络优先级，确保音频数据能够及时的发出
 			PthreadPriorityChangeForSchedRr(thread_of_network, BCU_HIGH_NETWORK_PRIORITY);
-
 			if(play_audio == 0)
 			{
 				unsigned int current_total_bytes = 0;
@@ -536,25 +497,19 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 			}
 #if 1
 			if(1 == play_audio)
-			{
-				///<播放司机对讲音频数据
+			{	///<播放司机对讲音频数据
 				PlayAudioTwice_D2D(bcu_audio_handle,bcu_state.audio_data_recv_buffer_id,bcu_state.pending_buffer_id);
 			}
 #endif
 		}
-		else if(bcu_state.bcu_active_intercom_state->state_id == D2D_HANGUP_D2P_EVENT )
+		else if(CurIntercomState == D2D_HANGUP_D2P_EVENT )
 		{
 			if(  bcu_state.this_bcu_ptt_state == 1 && bcu_state.other_bcu_ptt_state == 0)
-			{
-				///<采集司机对讲音量数据
+			{///<采集司机对讲音量数据
 				PutMicSampleDataintoBuffer_BCU(bcu_audio_handle, bcu_state.audio_data_send_buffer_id );
-
 			}
-
-
 			///<改变网络优先级，确保音频数据能够及时的发出
 			PthreadPriorityChangeForSchedRr(thread_of_network, BCU_HIGH_NETWORK_PRIORITY);
-
 			if(play_audio == 0)
 			{
 				unsigned int current_total_bytes = 0;
@@ -571,38 +526,27 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 			}
 #if 1
 			if(1 == play_audio)
-			{
-				///<播放司机对讲音频数据
+			{	///<播放司机对讲音频数据
 				PlayAudioTwice_D2D(bcu_audio_handle,bcu_state.audio_data_recv_buffer_id,bcu_state.pending_buffer_id);
 			}
 #endif
 		}
-		else if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE) ///< ach add, begin, 2014-01-08
+		else if(CurIntercomState == INTERCOM_IDLE) ///< ach add, begin, 2014-01-08
 		{
 			if( bcu_state.pcu_request_info.request_number !=0 )
 			{
 				//diag_printf("play AlarmAudio audio data !-1\n");
 			     if( 1==bcu_state.pcu_request_info.open_snd_playback )
 			     {
-
 				   bcu_state.pcu_request_info.open_snd_playback = 2;
-				   if( 2==GetSndCurrentMode() )
-				   {
-						//OpenSndCard(&bcu_audio_handle, "playback");
-				   }
 				   MicAdPcmWavheader(bcu_state.alarm_audio_data_buffer_id);	 ///<
-
 				   AlarmAudioDataIntoBuffer(bcu_state.alarm_audio_data_buffer_id);
-
 			     }
-				 
 			     if( bcu_state.pcu_request_info.pcu_alarm_playing==1 )
 			     {
 					if( -5==PlayAudioTwice(bcu_audio_handle, bcu_state.alarm_audio_data_buffer_id, bcu_state.pending_buffer_id) )
 					{
-
 						char tmp_array[64];
-
 						CharBufferBrush(bcu_state.alarm_audio_data_buffer_id);
 						CharBufferRead(bcu_state.alarm_audio_data_buffer_id, tmp_array, 48);
 						PlayAudioTwice(bcu_audio_handle, bcu_state.alarm_audio_data_buffer_id, bcu_state.pending_buffer_id);

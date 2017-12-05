@@ -2036,4 +2036,18 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 	}
 	return ret;
 }
+
+void ProbeMetalButtonToPerform( )
+{
+	if(GetLiveExternButtonState() == 1)
+	{
+		AlarmTSToChangeScreen(16);
+	}
+	if(GetD2PExternButtonState() == 1)///<D2P外部按钮按下
+	{
+		AlarmTSToChangeScreen(17);
+	}
+
+}
+
 //end of add
