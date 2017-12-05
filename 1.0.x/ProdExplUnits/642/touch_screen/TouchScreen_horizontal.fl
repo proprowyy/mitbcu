@@ -808,8 +808,8 @@ gp_main_file_active_page->show();}
         xywh {0 0 800 384} color 0 hide
         code0 {gp_window_black_screen->hide();}
       } {}
-      Fl_Group controlpage {open
-        xywh {0 -5 805 390} color 246
+      Fl_Group controlpage {
+        xywh {0 -5 805 390} color 246 hide
         code0 {controlpage->hide();}
       } {
         Fl_Button pcu_1 {
@@ -984,7 +984,7 @@ MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EXI
 memset(&g_MonPcuCmdPakage,0,sizeof(send_infomation_t));
 btn_return->activate();
 enter_monitor->color((Fl_Color)50);
-enter_monitor->redraw();} selected
+enter_monitor->redraw();}
           xywh {490 275 140 95} selection_color 2
         }
       }
@@ -1210,7 +1210,7 @@ wz_window_view->value(gp_main_file_active_page);
         }
       }
       Fl_Group D2D_intercom_page {open
-        xywh {0 2 850 383} color 246 hide
+        xywh {0 2 850 383} color 246
         code0 {D2D_intercom_page->hide();}
       } {
         Fl_Button btn_d2d_1 {
@@ -1221,7 +1221,7 @@ parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
 gwCurrBcuNo=bcu_no;
 gwCurD2dCarNo=vn;
 SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
-btn_d2d_1->color((Fl_Color)2);}
+btn_d2d_1->color((Fl_Color)2);} selected
           xywh {10 12 140 95}
           code0 {btn_d2d_1->hide();}
         }
@@ -1311,27 +1311,42 @@ btn_d2d_8->color((Fl_Color)2);}
         }
         Fl_Button enter_d2d {
           label {接通}
-          callback {StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_OR_DRIVER_CALL,&bcu_send_infomation);
-canenl_d2d->activate();
-return_D2D->deactivate();}
+          callback {if(bcu_state.this_bcu_request == 0)
+{
+	StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_OR_DRIVER_CALL,&bcu_send_infomation);
+	canenl_d2d->activate();
+	return_D2D->deactivate();
+}}
           xywh {335 275 140 95}
           code0 {enter_d2d->deactivate();}
         }
         Fl_Return_Button return_D2D {
           label {返回}
-          callback {gp_main_file_active_page=gp_static_show;
-wz_window_view->value(gp_main_file_active_page);
-RecovoryBtnState(3);///<恢复相关按钮}
+          callback {if(bcu_state.static_page == 0 && bcu_state.d2d_intercom_page ==1)
+{
+	gp_main_file_active_page=gp_static_show;
+	wz_window_view->value(gp_main_file_active_page);
+	RecovoryBtnState(3);///<恢复相关按钮
+ 	bcu_state.iph_monitor_cur_page =0;
+ 	bcu_state.select_monitor_or_ann_page = 0;
+ 	bcu_state.d2p_intercom_page = 0;
+ 	bcu_state.d2d_intercom_page = 0;
+	bcu_state.elsect_car_page=0;
+ 	bcu_state.static_page=1;
+}}
           xywh {650 275 140 95}
         }
         Fl_Button canenl_d2d {
           label {挂断}
-          callback {SetD2dRefuseCmdPackage(gwCurD2dCarNo,gwCurrBcuNo,&bcu_send_infomation);
-StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_RELEASE_AND_DRIVER_RELEASE,&bcu_send_infomation);
-send_cannel_d2d_big_package(gwCurD2dCarNo,gwCurrBcuNo);
-canenl_d2d->deactivate();
-return_D2D->activate();
-Enable_D2d_All_Btn();}
+          callback {if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
+{
+	SetD2dRefuseCmdPackage(gwCurD2dCarNo,gwCurrBcuNo,&bcu_send_infomation);
+	StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_RELEASE_AND_DRIVER_RELEASE,&bcu_send_infomation);
+	send_cannel_d2d_big_package(gwCurD2dCarNo,gwCurrBcuNo);
+	canenl_d2d->deactivate();
+	return_D2D->activate();
+	Enable_D2d_All_Btn();
+}}
           xywh {495 275 140 95}
           code0 {canenl_d2d->deactivate();}
         }
@@ -1342,7 +1357,7 @@ Enable_D2d_All_Btn();}
       code0 {//select_window->hide();}
     } {
       Fl_Group main_group {open
-        xywh {0 384 800 96} color 191 hide
+        xywh {0 384 800 96} color 191
       } {
         Fl_Button btn_main_file {
           label {主菜单}
@@ -1359,19 +1374,18 @@ wz_window_view->value(gp_main_file_active_page);}
         }
         Fl_Button btn_emerg_ann {
           label {车地对讲}
-          callback {if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
+          callback {if(bcu_state.d2d_intercom_page == 0&&bcu_state.static_page==1)
 {
-	return ;
-}
-ChangeBtnState(3);
-gp_main_file_active_page=D2D_intercom_page;
-wz_window_view->value(gp_main_file_active_page);
- bcu_state.iph_monitor_cur_page =0;
- bcu_state.select_monitor_or_ann_page = 0;
- bcu_state.d2p_intercom_page = 0;
- bcu_state.d2d_intercom_page = 1;
- bcu_state.elsect_car_page=0;
- bcu_state.static_page=0;}
+	ChangeBtnState(3);
+	gp_main_file_active_page=D2D_intercom_page;
+	wz_window_view->value(gp_main_file_active_page);
+	 bcu_state.iph_monitor_cur_page =0;
+ 	bcu_state.select_monitor_or_ann_page = 0;
+ 	bcu_state.d2p_intercom_page = 0;
+ 	bcu_state.d2d_intercom_page = 1;
+	bcu_state.elsect_car_page=0;
+ 	bcu_state.static_page=0;
+}}
           xywh {225 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
           code0 {btn_emerg_ann->deactivate();}
         }
@@ -1409,7 +1423,7 @@ ShowD2Ppage();
         }
       }
       Fl_Group gp_select_black {
-        xywh {0 384 800 96} color 0
+        xywh {0 384 800 96} color 0 hide
       } {}
     }
   }

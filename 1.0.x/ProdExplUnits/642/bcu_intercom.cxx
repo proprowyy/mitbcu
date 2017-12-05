@@ -212,7 +212,7 @@ void D2DIntercomEnter(send_infomation_t *send_information_intercomm_d2d)
 	StartAudioSampleTimer();///<2013-10-24
 	debug_print(("0108-d2d-enter: timer \n"));
 	bcu_state.other_bcu_ptt_state = 0;
-	SendCmd(&send_information_intercomm_d2d,"BCU",bcu_state.opposite_bcu_no);
+	SendCmd(&send_information_intercomm_d2d,"OCS",230);
 	BCU_LED_BUTTON3_ON ;///<点亮CC按钮的灯
 	AdjustVolumeAfterCODEC();///<调节BCU的音量
 }
@@ -473,8 +473,11 @@ void AdjustVolumeAfterCODEC()
 
 void D2DReqAndResponseHandle()
 {
-			JudgeWhetherD2DHaveFinished();/*Judge whether have finish d2d*/
-			//JudegWhetherRequestD2D();/*Judge whether want to enter D2D state*/
+	if(bcu_state.d2d_page_select_bcu_btn_state == 1)
+	{
+		JudgeWhetherD2DHaveFinished();/*Judge whether have finish d2d*/
+		JudegWhetherRequestD2D();/*Judge whether want to enter D2D state*/
+	}
 }
 
 

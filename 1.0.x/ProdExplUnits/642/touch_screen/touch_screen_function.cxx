@@ -115,7 +115,6 @@ void RecovoryBtnState(int index)
 	switch(index)
 	{
 		case 3:///<紧急广播有效
-			btn_emerg_ann->activate();
 			btn_emerg_ann->color((Fl_Color)50);
 			btn_emerg_ann->redraw();
 
@@ -196,9 +195,9 @@ void ChangeBtnState(int index)
 			break;
 		case 8:
 			 lable_state->hide();
-		       lable_state->label("车地广播中....\n\n\n取消广播后,请取消选车.");
-				lable_state->redraw();
-				lable_state->show();
+		     lable_state->label("车地广播中....\n\n\n取消广播后,请取消选车.");
+			 lable_state->redraw();
+		     lable_state->show();
 				break;
 
 		default:break;
@@ -296,6 +295,7 @@ void Enable_D2d_All_Btn()
 	{
 		(D2D_intercom_page->child(i))->activate();
 	}
+	bcu_state.d2d_page_select_bcu_btn_state=0;
 	enter_d2d->deactivate();
 	canenl_d2d->deactivate();
 }
@@ -307,6 +307,7 @@ void Disable_D2D_All_Btn()
 	{
 		(D2D_intercom_page->child(i))->deactivate();
 	}
+	bcu_state.d2d_page_select_bcu_btn_state=1;
 	enter_d2d->activate();
 	canenl_d2d->activate();
 
@@ -552,6 +553,24 @@ void ChangeIntercommButtonColor(int *param_whether_ts_is_running)
 		*param_whether_ts_is_running = 0;
 		debug_print(("ChangeIntercommButtonColor-02\n"));
 
+	}
+}
+
+
+void  AutoChangeIntercommButtonEnableStateAndColor()
+{
+	static int flag = 0;
+	if(bcu_state.bcu_request_number > 0 && flag == 0)
+	{
+		btn_emerg_ann->activate();
+		btn_emerg_ann->color((Fl_Color)2);
+		flag = 1;
+	}
+	if(bcu_state.bcu_request_number <= 0 && flag == 1)
+	{
+		flag = 0;
+		btn_emerg_ann->deactivate();
+		btn_emerg_ann->color((Fl_Color)50);
 	}
 }
 
@@ -941,7 +960,6 @@ void EnableTS()
 {///<使能触摸屏
 	wz_window_view->box(FL_UP_BOX);
 	wz_select_window->box(FL_UP_BOX);
-	//wz_window_view->value(gp_static_show);
 	wz_select_window->value(main_group);
 }
 
@@ -1117,19 +1135,26 @@ int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn)
 		diag_printf("src argument is null, return <0.\n");
 		return (ret-1);
 	}
-	diag_printf("value=%s\n",src);
-	diag_printf("value[8]=%c\n",src[8]);
+	diag_printf("parse btn lable value bcu : value = %s\n",src);
+	diag_printf("parse btn lable value bcu : char value[2] = %c\n",src[2]);
+	diag_printf("parse btn lable value bcu : int value[2]  = %d\n",src[2]);
+	diag_printf("parse btn lable value bcu : char value[8] = %c\n",src[8]);
+	diag_printf("parse btn lable value bcu : int value[8]  = %d\n",src[8]);
 	switch (src[8])
 	{
-		case 49:*dst_device=1;break;
-		case 50:*dst_device=2;break;
-		default:diag_printf("Without this type !\n");break;
+		case 49:*dst_device=1;
+		break;
+		case 50:*dst_device=2;
+		break;
+		default:
+			diag_printf("Without this type 8 bit!\n");
+			break;
 	}
 	switch (src[9])
 		{
 			case 49:*dst_device=1;break;
 			case 50:*dst_device=2;break;
-			default:diag_printf("Without this type !\n");break;
+			default:diag_printf("Without this type 9 bit!\n");break;
 		}
 	if(src[3]==48&&src[2]==49)
 	{
@@ -1161,7 +1186,7 @@ int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn)
 
 void SetD2dCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation)
 {
-
+			bcu_state.opposite_bcu_no=bcu_no;
 			common_big_package_t parame;
 			strcpy(parame.src_dev_name,"DBCU");
 		    parame.src_dev_number =  bcu_state.bcu_info.devices_no;

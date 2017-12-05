@@ -1275,28 +1275,43 @@ btn_d2d_8->color((Fl_Color)2);
 Fl_Button *enter_d2d=(Fl_Button *)0;
 
 static void cb_enter_d2d(Fl_Button*, void*) {
-  StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_OR_DRIVER_CALL,&bcu_send_infomation);
-canenl_d2d->activate();
-return_D2D->deactivate();
+  if(bcu_state.this_bcu_request == 0)
+{
+	StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_OR_DRIVER_CALL,&bcu_send_infomation);
+	canenl_d2d->activate();
+	return_D2D->deactivate();
+};
 }
 
 Fl_Return_Button *return_D2D=(Fl_Return_Button *)0;
 
 static void cb_return_D2D(Fl_Return_Button*, void*) {
-  gp_main_file_active_page=gp_static_show;
-wz_window_view->value(gp_main_file_active_page);
-RecovoryBtnState(3);///<恢复相关按钮;
+  if(bcu_state.static_page == 0 && bcu_state.d2d_intercom_page ==1)
+{
+	gp_main_file_active_page=gp_static_show;
+	wz_window_view->value(gp_main_file_active_page);
+	RecovoryBtnState(3);///<恢复相关按钮
+ 	bcu_state.iph_monitor_cur_page =0;
+ 	bcu_state.select_monitor_or_ann_page = 0;
+ 	bcu_state.d2p_intercom_page = 0;
+ 	bcu_state.d2d_intercom_page = 0;
+	bcu_state.elsect_car_page=0;
+ 	bcu_state.static_page=1;
+};
 }
 
 Fl_Button *canenl_d2d=(Fl_Button *)0;
 
 static void cb_canenl_d2d(Fl_Button*, void*) {
-  SetD2dRefuseCmdPackage(gwCurD2dCarNo,gwCurrBcuNo,&bcu_send_infomation);
-StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_RELEASE_AND_DRIVER_RELEASE,&bcu_send_infomation);
-send_cannel_d2d_big_package(gwCurD2dCarNo,gwCurrBcuNo);
-canenl_d2d->deactivate();
-return_D2D->activate();
-Enable_D2d_All_Btn();
+  if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
+{
+	SetD2dRefuseCmdPackage(gwCurD2dCarNo,gwCurrBcuNo,&bcu_send_infomation);
+	StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_RELEASE_AND_DRIVER_RELEASE,&bcu_send_infomation);
+	send_cannel_d2d_big_package(gwCurD2dCarNo,gwCurrBcuNo);
+	canenl_d2d->deactivate();
+	return_D2D->activate();
+	Enable_D2d_All_Btn();
+};
 }
 
 Fl_Wizard *wz_select_window=(Fl_Wizard *)0;
@@ -1318,19 +1333,18 @@ wz_window_view->value(gp_main_file_active_page);
 Fl_Button *btn_emerg_ann=(Fl_Button *)0;
 
 static void cb_btn_emerg_ann(Fl_Button*, void*) {
-  if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
+  if(bcu_state.d2d_intercom_page == 0&&bcu_state.static_page==1)
 {
-	return ;
-}
-ChangeBtnState(3);
-gp_main_file_active_page=D2D_intercom_page;
-wz_window_view->value(gp_main_file_active_page);
- bcu_state.iph_monitor_cur_page =0;
- bcu_state.select_monitor_or_ann_page = 0;
- bcu_state.d2p_intercom_page = 0;
- bcu_state.d2d_intercom_page = 1;
- bcu_state.elsect_car_page=0;
- bcu_state.static_page=0;
+	ChangeBtnState(3);
+	gp_main_file_active_page=D2D_intercom_page;
+	wz_window_view->value(gp_main_file_active_page);
+	 bcu_state.iph_monitor_cur_page =0;
+ 	bcu_state.select_monitor_or_ann_page = 0;
+ 	bcu_state.d2p_intercom_page = 0;
+ 	bcu_state.d2d_intercom_page = 1;
+	bcu_state.elsect_car_page=0;
+ 	bcu_state.static_page=0;
+};
 }
 
 Fl_Button *btn_live=(Fl_Button *)0;

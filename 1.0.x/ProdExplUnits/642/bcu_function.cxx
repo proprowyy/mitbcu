@@ -116,7 +116,7 @@ void InitBcuAndState()
 	  bcu_state.d2d_button_state = 0;
 	  bcu_state.d2p_button_state = 0;
 	  bcu_state.ts_current_state = 1;
-
+	  bcu_state.d2d_page_select_bcu_btn_state=0;
 
 	  bcu_state.iph_monitor_cur_page =0;
 	  bcu_state.select_monitor_or_ann_page = 0;
@@ -724,8 +724,7 @@ int PthreadPriorityChangeForSchedRr(pthread_t  target_thread_id, int  new_prior 
 /*Judge whether have finish d2d*/
 void JudgeWhetherD2DHaveFinished()
 {///<判断D2D是否已经完成
-	if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT ||
-	   bcu_state.bcu_active_intercom_state->state_id == D2D_HANGUP_D2P_EVENT)
+	if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
 	{
 		if(GetD2DExternButtonState() == 1 && bcu_state.d2d_button_state == 1)
 		{
@@ -741,34 +740,11 @@ void JudgeWhetherD2DHaveFinished()
 			d2d_over_package.event_info_intercom.d2d_intercomm.d2d_intercomm_request_or_over = 0;
 			d2d_over_package.event_info_intercom.d2d_intercomm.d2d_ppt_state = 0;
 			d2d_over_package.event_info_intercom.d2d_intercomm.d2d_intercomm_bcu_device_no = bcu_state.opposite_bcu_no;
-
-			UpdataGlobalDeviceInfo(d2d_over_package);/*Update global device information*/
-			if(bcu_state.bcu_active_intercom_state->state_id == D2D_HANGUP_D2P_EVENT)//pending
-			{
-				send_infomation_t rt_d2d_bk_d2p,*p_d2d_bk_d2p;
-				p_d2d_bk_d2p = &rt_d2d_bk_d2p;
-				memset((void *)p_d2d_bk_d2p,0x00,sizeof(rt_d2d_bk_d2p));
-				p_d2d_bk_d2p->event_type_ann = ANN_IDLE;
-				p_d2d_bk_d2p->event_type_intercom = D2P_INTERCOMM_EVENT;
-				p_d2d_bk_d2p->event_info_intercom.d2p_intercomm.d2p_intercomm_active = 1;
-				p_d2d_bk_d2p->event_info_intercom.d2p_intercomm.d2p_intercomm_pending = 0;
-				p_d2d_bk_d2p->event_info_intercom.d2p_intercomm.d2p_intercomm_bcu_device_no = bcu_state.bcu_info.devices_no;
-				p_d2d_bk_d2p->event_info_intercom.d2p_intercomm.d2p_intercomm_pcu_device_no = bcu_state.pcu_request_info.recept_pcu_no;
-				p_d2d_bk_d2p->event_info_intercom.d2p_intercomm.d2p_intercomm_request_or_over = 1;
-				p_d2d_bk_d2p->event_info_intercom.d2p_intercomm.d2p_intercomm_response = 0;
-				p_d2d_bk_d2p->src_devices_no = bcu_state.bcu_info.devices_no;
-				strcpy((char *)p_d2d_bk_d2p->src_devices_name,(char *)bcu_state.bcu_info.devices_name);
-				StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_CONFIRM_TRANSFER_TO_D2P,&rt_d2d_bk_d2p);
-
-				current_is_being_d2d = 0;
-
-				AlarmTSToChangeScreen(31);
-			}
-			else if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)//idle
-			{
-				debug_print(("We will finish the D2D\n"));
-				StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_RELEASE_AND_DRIVER_RELEASE,&d2d_over_package);
-			}
+			debug_print(("We will finish the D2D\n"));
+			StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_RELEASE_AND_DRIVER_RELEASE,&d2d_over_package);
+			send_cannel_d2d_big_package(gwCurD2dCarNo,gwCurrBcuNo);
+			return_D2D->activate();
+			Enable_D2d_All_Btn();
 		}
 	}
 }
@@ -887,24 +863,20 @@ void JudegWhetherRequestD2D()
 			GetD2DExternButtonState() == 1 && bcu_state.mic_owner == NONE && bcu_state.d2d_button_state == 0)
 	{
 		debug_print(("I want to enter D2D state\n"));
-
 		send_infomation_t D2D_request_cmd_package;
-
 		strcpy(D2D_request_cmd_package.src_devices_name,"BCU");
 		D2D_request_cmd_package.src_devices_no = bcu_state.bcu_info.devices_no;
-
 		D2D_request_cmd_package.event_type_ann = ANN_IDLE;
 		D2D_request_cmd_package.event_type_intercom = D2D_INTERCOMM_EVENT;
-
 		D2D_request_cmd_package.event_info_intercom.d2d_intercomm.d2d_intercomm_active = 1;
 		D2D_request_cmd_package.event_info_intercom.d2d_intercomm.d2d_intercomm_request_or_over = 0;
 		D2D_request_cmd_package.event_info_intercom.d2d_intercomm.d2d_intercomm_response = 0;
 		D2D_request_cmd_package.event_info_intercom.d2d_intercomm.d2d_intercomm_bcu_device_no = bcu_state.opposite_bcu_no;
 		D2D_request_cmd_package.event_info_intercom.d2d_intercomm.d2d_ppt_state = 1;
-		UpdataGlobalDeviceInfo(D2D_request_cmd_package);/*Update global device information*/
 		bcu_state.this_bcu_request = 1;
 		StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_PTT_OR_DRIVER_CALL,&D2D_request_cmd_package);
-
+		canenl_d2d->activate();
+		return_D2D->deactivate();
 	}
 
 }
@@ -1845,7 +1817,7 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 	  ret= dispalys(PCURequsthead);//显示请求，返回请求数
 	}
 	 ret= dispalys(PCURequsthead);//显示请求，返回请求
-
+	 AlarmTSToChangeScreen(4);
 	 return ret;
 
 }
@@ -1853,13 +1825,15 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 
 static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 {
-	int ret;
+	int ret=0;
 	diag_printf("Over the d2p intercom .\n");
 
 	PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
 
-	ret= dispalys(PCURequsthead);//显示请求，返回请求数
-
+	bcu_state.pcu_request_info.request_number= dispalys(PCURequsthead);//显示请求，返回请求数
+	ret=bcu_state.pcu_request_info.request_number;
+	diag_printf("debug ret =%d\n",ret);
+	AlarmTSToChangeScreen(4);
 	if(	ret == 0)
 	{
 		BcuResetPlayAlarmAudioWhenD2pReq();
@@ -1891,9 +1865,7 @@ static int BcuDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 	if(	ret == 0)
 	{
 		bcu_state.bcu_request_number=ret;
-
 		AlarmTSToChangeScreen(9);
-		AlarmTSToChangeScreen(12);
 	}
 	if(ret >0)
 	{
@@ -1915,12 +1887,11 @@ static int BcuUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 		return ret=-1 ;
 	}
 	if(p_BigConmInfo_temp->common_big_data_u.seat_id!=bcu_state.bcu_info.devices_no)
-		{
-			BCURequsthead = deletes_list( BCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
-
-		  ret= dispalys(BCURequsthead);//显示请求，返回请求数
-		}
-	ret= dispalys(BCURequsthead);//显示请求，返回请求数
+	{
+		BCURequsthead = deletes_list( BCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
+		ret= dispalys(BCURequsthead);//显示请求，返回请求数
+	}
+	ret = dispalys(BCURequsthead);//显示请求，返回请求数
 	AlarmTSToChangeScreen(9);
 	return ret;
 
@@ -1939,7 +1910,6 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 	switch(common_type_package)
 	{
 	case 4:
-
 			if(p_BigConmInfo->common_big_data_u.ann_event_flag ==1)
 			{
 				diag_printf("iscs enter control ann to car.\n");
@@ -2008,28 +1978,18 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 		}
 		break;
 	case 11:
-		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE&&
-				   bcu_state.bcu_active_ann_state->state_id == ANN_IDLE)
-		{
 			diag_printf("recv car bcu intercom request.\n");
 			bcu_state.bcu_request_number=BcuRequestInsertLink(p_BigConmInfo);
-		}
 		break;
 	case 12:
-		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE||
-				bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
-		{
 			diag_printf("recv car bcu intercom connecting update.\n");
 			BcuUpdateLink(p_BigConmInfo);
-		}
 		break;
 	case 13:
-		if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE||
-		bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
-		{
 			diag_printf("recv car bcu intercom refuse.\n");
-			bcu_state.bcu_request_number=BcuDeleteLink(p_BigConmInfo);
-		}
+			bcu_state.bcu_request_number = BcuDeleteLink(p_BigConmInfo);
+			printf("bcu_state.bcu_request_number =%d\n",bcu_state.bcu_request_number);
+			break;
 	default:
 		diag_printf("no package type\n");
 		break;

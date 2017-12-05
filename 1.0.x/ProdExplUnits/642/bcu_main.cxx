@@ -257,6 +257,7 @@ void *SystemControl(void *arg)
     int ret = 0;
 
     int whether_ts_is_running = 0;
+    int AutoEnableD2dPageBtn = 0;
 
     int temp_current_pcu_request_number = 0;
 
@@ -291,10 +292,12 @@ void *SystemControl(void *arg)
 		GetPAAllOuterButtonState();
 		D2DHangUpD2PTimeOutHandle();
 		//司机对讲请求与挂断处理
-		///D2DReqAndResponseHandle();
+
 		ProbeMetalButtonToPerform();
 		///<PCU请求时，改变相关按钮的颜色
+		D2DReqAndResponseHandle();
 		ChangeIntercommButtonColor(&whether_ts_is_running);
+		AutoChangeIntercommButtonEnableStateAndColor();
 
 		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0)
 		{
@@ -303,11 +306,7 @@ void *SystemControl(void *arg)
 			if(bcu_state.bcu_request_number !=0)
 			{
 				AlarmTSToChangeScreen(9);
-				btn_emerg_ann->activate();
-			}
-			else
-			{
-				btn_emerg_ann->deactivate();
+
 			}
 			if(bcu_state.pcu_request_info.request_number != 0)
 			{

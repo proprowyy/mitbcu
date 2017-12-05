@@ -48,17 +48,21 @@ void ShowD2PRequest(){
 	diag_printf("Pcu_request_number = %d\n",bcu_state.pcu_request_info.request_number);
 	Node *temp;
     temp=PCURequsthead->next;
-    if(bcu_state.pcu_request_info.request_number>12){
-    	for(i = 0;i < 12;i ++){
-		if(temp != NULL){
-			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
-			(gp_intercomm->child(i))->label(buffer[i]);
-			(gp_intercomm->child(i ))->show();
-			temp=temp->next;
+    if(bcu_state.pcu_request_info.request_number>12)
+    {
+    	for(i = 0;i < 12;i ++)
+    	{
+    		if(temp != NULL)
+    		{
+    			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
+    			(gp_intercomm->child(i))->label(buffer[i]);
+    			(gp_intercomm->child(i ))->show();
+    			temp=temp->next;
 			}
 	    }
     }
-    else{
+    else
+    {
     	for(i = 0;i < bcu_state.pcu_request_info.request_number; i ++){
     		if(temp!=NULL){
     			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
@@ -68,42 +72,57 @@ void ShowD2PRequest(){
 			}
 	      }
        }
-for(i = bcu_state.pcu_request_info.request_number; i < 12;i ++)
+    for(i = bcu_state.pcu_request_info.request_number; i < 12;i ++)
+    {
+    	(gp_intercomm->child(i))->hide();
+    }
+    if(bcu_state.d2p_intercom_page ==1)
+    {
+    	diag_printf("gp_intercomm update\n");
+    	wz_window_view->value(gp_intercomm);
+    }
+}
+
+
+void ShowD2DRequest()
 {
-	(gp_intercomm->child(i))->hide();
-}
-}
-
-
-void ShowD2DRequest(){
 	int i=0;
-	static char buffer[8][20];
+	static char buffer1[8][20];
 	Node *temp;
     temp=BCURequsthead->next;
-    if(bcu_state.bcu_request_number>8){
-    	for(i = 0;i < 8;i ++){
-		if(temp != NULL){
-			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
-			(D2D_intercom_page->child(i))->label(buffer[i]);
-			(D2D_intercom_page->child(i ))->show();
-			temp=temp->next;
+    if(bcu_state.bcu_request_number	> 8)
+    {
+    	for(i = 0 ; i < 8; i++ )
+    	{
+    		if(temp != NULL)
+    		{
+    			sprintf(buffer1[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
+			    (D2D_intercom_page->child(i))->label(buffer1[i]);
+			    (D2D_intercom_page->child(i ))->show();
+			    temp = temp->next;
 			}
 	    }
     }
-    else{
-    	for(i = 0;i < bcu_state.bcu_request_number; i ++){
-    		if(temp!=NULL){
-    			sprintf(buffer[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
+    else
+    {
+    	for(i = 0; i < bcu_state.bcu_request_number; i ++)
+    	{
+    		if(temp != NULL)
+    		{
+    			sprintf(buffer1[i],"%s%d%s%s%s%d","T-",temp->vehicle_number,":",temp->devices_name,"-",temp->devices_id);
 				(D2D_intercom_page->child(i ))->show();
-				(D2D_intercom_page->child(i ))->label(buffer[i]);
+				(D2D_intercom_page->child(i ))->label(buffer1[i]);
 				temp=temp->next;
 			}
-	      }
-		for(i = bcu_state.bcu_request_number; i < 8;i ++){
-			(D2D_intercom_page->child(i))->hide();
-		  }
+	    }
+
+
        }
-    		wz_window_view->value(D2D_intercom_page);
+    for(i = bcu_state.bcu_request_number; i < 8;i ++)
+    {
+		(D2D_intercom_page->child(i))->hide();
+    }
+
 }
 void SetD2PCmd(int enter_or_exit,int param_response_type,int param_pcu_no,int param_bcu_no)
 {///<发送D2P 命令

@@ -27,8 +27,6 @@ extern char car_volume_digit_2_string_buffer[10];
 extern char intercomm_volume_digit_2_string_buffer[10];
 extern char d2d_intercomm_volume_digit_2_string_buffer[10];
 
-
-
 extern unsigned char d2p_reponse_sursor;
 extern unsigned int gwCurrCarNo;
 extern unsigned int gwCurrIphNO;
@@ -39,6 +37,8 @@ extern Fl_Group *p_current_ann_group;
 extern Fl_Group *p_current_intercomm_group ;
 extern unsigned char whether_intercomm_button_is_active;
 extern unsigned char select_car_recoed;
+
+void  AutoChangeIntercommButtonEnableStateAndColor();
 
 /** SetPassword function description
  *   输入用户密码
