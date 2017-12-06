@@ -1327,8 +1327,8 @@ void CannelSelectCar()
 		if (ret <0){
 			diag_printf("BlockBufferWrite faill. \n");
 			BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&common_big_send_package,sizeof(common_big_package_t));
-
 		}
+		cyg_thread_delay(60);
 	}
 
 	bcu_state.car_select_finish = 0;
