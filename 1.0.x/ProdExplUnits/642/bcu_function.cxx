@@ -117,6 +117,7 @@ void InitBcuAndState()
 	  bcu_state.d2p_button_state = 0;
 	  bcu_state.ts_current_state = 1;
 	  bcu_state.d2d_page_select_bcu_btn_state=0;
+	  bcu_state.d2p_page_select_iph_btn_state=0;
 
 	  bcu_state.iph_monitor_cur_page =0;
 	  bcu_state.select_monitor_or_ann_page = 0;
@@ -1519,17 +1520,30 @@ void JudegD2PButton()
 		if(bcu_state.d2p_button_state == 0 && bcu_state.pcu_request_info.request_number>0)///< show d2p page
 		{
 
-			intercomm_debug_print(("Show D2P page\n"));
-			ResetSoundTimer();
-			ShowD2Ppage();
-			wd_touch_screen->show();
+			if(bcu_state.static_page==1)
+			{
+				intercomm_debug_print(("Show D2P page\n"));
+				ResetSoundTimer();
+				ShowD2Ppage();
+				wd_touch_screen->show();
+				bcu_state.iph_monitor_cur_page =0;
+				bcu_state.select_monitor_or_ann_page = 0;
+				bcu_state.d2p_intercom_page = 1;
+			    bcu_state.d2d_intercom_page = 0;
+				bcu_state.elsect_car_page=0;
+			    bcu_state.static_page=0;
+			}
 		}
 		else if(bcu_state.d2p_button_state == 1 )///<receive d2p
 		{
-			diag_printf("Recv D2P page\n");
-			ResetSoundTimer();
-			RecvD2PRequest();
-			wd_touch_screen->show();
+			if(bcu_state.d2p_page_select_iph_btn_state==1)
+			{
+				diag_printf("Recv D2P page\n");
+				ResetSoundTimer();
+				RecvD2PRequest();
+				wd_touch_screen->show();
+			}
+
 		}
 		else if(bcu_state.d2p_button_state == 2)///<refuse d2p
 		{
@@ -1538,7 +1552,6 @@ void JudegD2PButton()
 			{
 				CloseAudioSampleTimer();
 			}
-
 			RefuseD2PRequest();
 			wd_touch_screen->show();
 

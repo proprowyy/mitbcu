@@ -7,7 +7,6 @@
 
 #ifndef TFTP_NETWORK_BASE_H_
 #define TFTP_NETWORK_BASE_H_
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -25,7 +24,6 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sched.h>
-
 #include <network.h>
 #include <arpa/tftp.h>
 #include <tftp_support.h>

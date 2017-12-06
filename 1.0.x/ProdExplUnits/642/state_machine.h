@@ -170,6 +170,7 @@ typedef struct
     unsigned char static_page;
 
     unsigned char d2d_page_select_bcu_btn_state;
+    unsigned char d2p_page_select_iph_btn_state;
     int bcu_request_number;
     unsigned char this_bcu_request;
 

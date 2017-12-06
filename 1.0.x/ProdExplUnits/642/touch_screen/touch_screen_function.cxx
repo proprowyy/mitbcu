@@ -274,6 +274,7 @@ void Disable_D2p_All_Btn()
 	{
 		(gp_intercomm->child(i))->deactivate();
 	}
+	bcu_state.d2p_page_select_iph_btn_state=1;
 	btn_intercomm_accept->activate();
 	btn_intercomm_refuse->activate();
 }
@@ -287,6 +288,7 @@ void Enable_D2p_All_Btn()
 	}
 	btn_intercomm_accept->deactivate();
 	btn_intercomm_refuse->deactivate();
+	bcu_state.d2p_page_select_iph_btn_state=0;
 }
 void Enable_D2d_All_Btn()
 {
@@ -697,6 +699,7 @@ void RefuseD2PRequest()
 	}
 	ShowD2Ppage();//显示请求pcu
 	btn_intercomm_refuse->deactivate();
+	Enable_D2p_All_Btn();
 
 }
 unsigned char GetIntercommButtonState()

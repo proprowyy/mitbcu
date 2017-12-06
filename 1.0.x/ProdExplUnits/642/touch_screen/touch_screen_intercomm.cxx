@@ -38,6 +38,7 @@ void SetReceptPCUNo(unsigned char param_pcu_position,unsigned char vn)
 	SetIntercomBigPackage(vn,param_pcu_position,iph_select_intercom);
 	int ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
 	bcu_state.pcu_request_info.recept_pcu_no =param_pcu_position;
+
 	Disable_D2p_All_Btn();
 }
 

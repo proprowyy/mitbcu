@@ -257,8 +257,7 @@ cyg_thread_delay(100);
 
 RefuseD2PRequest();
 
-BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
-Enable_D2p_All_Btn();}
+BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));}
           xywh {645 185 150 85}
           code0 {btn_intercomm_refuse->deactivate();}
         }
@@ -458,8 +457,8 @@ gp_main_file->show();}
           xywh {652 291 135 70}
         }
       }
-      Fl_Group gp_setting {
-        xywh {0 1 800 384} color 246 hide
+      Fl_Group gp_setting {open selected
+        xywh {0 1 800 384} color 246
         code0 {gp_setting->hide();}
       } {
         Fl_Tile title_set_volume {
@@ -1106,7 +1105,7 @@ RecovoryBtnState(4);///<恢复相关按钮
           code0 {cancel_select->activate();}
         }
       }
-      Fl_Group AnnOrMonitorSelect {open
+      Fl_Group AnnOrMonitorSelect {
         xywh {0 0 850 388} color 246 hide
         code0 {AnnOrMonitorSelect->hide();}
       } {
@@ -1209,8 +1208,8 @@ wz_window_view->value(gp_main_file_active_page);
           xywh {650 280 140 95}
         }
       }
-      Fl_Group D2D_intercom_page {open
-        xywh {0 2 850 383} color 246
+      Fl_Group D2D_intercom_page {
+        xywh {0 2 850 383} color 246 hide
         code0 {D2D_intercom_page->hide();}
       } {
         Fl_Button btn_d2d_1 {
@@ -1221,7 +1220,7 @@ parse_btn_lable_value_bcu(buf,&bcu_no,&vn);
 gwCurrBcuNo=bcu_no;
 gwCurD2dCarNo=vn;
 SetD2dCmdPackage(vn, bcu_no,&bcu_send_infomation);
-btn_d2d_1->color((Fl_Color)2);} selected
+btn_d2d_1->color((Fl_Color)2);}
           xywh {10 12 140 95}
           code0 {btn_d2d_1->hide();}
         }
@@ -1365,7 +1364,6 @@ btn_d2d_8->color((Fl_Color)2);}
 btn_main_file->color((Fl_Color)70);
 btn_main_file->redraw();
 gp_input_password->hide();
-
 gp_main_file_active_page = gp_main_file;
 wz_window_view->value(gp_main_file_active_page);}
           xywh {15 396 150 70} box ROUNDED_BOX down_box ROUNDED_BOX color 50 align 128 hotspot

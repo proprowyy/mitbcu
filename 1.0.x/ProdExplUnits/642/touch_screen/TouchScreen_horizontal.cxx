@@ -274,7 +274,6 @@ cyg_thread_delay(100);
 RefuseD2PRequest();
 
 BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
-Enable_D2p_All_Btn();
 }
 
 Fl_Button *btn_intercomm_back=(Fl_Button *)0;
@@ -1407,7 +1406,6 @@ int touch_screen_main() {
       { gp_intercomm = new Fl_Group(0, 0, 800, 385);
         gp_intercomm->color((Fl_Color)246);
         gp_intercomm->align(Fl_Align(129));
-        gp_intercomm->hide();
         { btn_d2p_request_1 = new Fl_Button(10, 13, 140, 95);
           btn_d2p_request_1->callback((Fl_Callback*)cb_btn_d2p_request_1);
         } // Fl_Button* btn_d2p_request_1
@@ -1872,6 +1870,7 @@ int touch_screen_main() {
       } // Fl_Group* AnnOrMonitorSelect
       { D2D_intercom_page = new Fl_Group(0, 2, 850, 383);
         D2D_intercom_page->color((Fl_Color)246);
+        D2D_intercom_page->hide();
         { btn_d2d_1 = new Fl_Button(10, 12, 140, 95);
           btn_d2d_1->callback((Fl_Callback*)cb_btn_d2d_1);
           btn_d2d_1->hide();

@@ -175,14 +175,11 @@ int main(int argc, char **argv)
 
 	 CYG_TEST_CHECK(return_value_of_thread_create == 0,"failure statics thread returned error");
 	 debug_print(("I am failure statics thread!\n"));
-
 	 pthread_join(thread_of_network, &return_value_of_join_thread[1] );
 	 pthread_join(thread_of_control, &return_value_of_join_thread[2] );
 	 pthread_join(thread_of_sample_and_play, &return_value_of_join_thread[3] );
 	 pthread_join(thread_of_screen, &return_value_of_join_thread[4] );
 	 pthread_join(thread_of_demao, &return_value_of_join_thread[5] );
-
-
 	 debug_print(("I am main function, but I have finished my work now.\n"));
 
 	return 0;
@@ -204,14 +201,11 @@ void *DemaoEntry(void *arg)
 void *TouchScreenEntry(void *arg)
 {
 	debug_print(("I am success entry touch screen handle thread!\n"));
-
 	int screen_send_cmd_to_control,ts_dev_vol_info_buffer_id;
 	/*触摸屏发送给控制线程的事件命令包*/
 	screen_send_cmd_to_control = BlockBufferOpen("bcu-screen-cmd-tx");
-
 	/*触摸屏发送给控制线程的设备音量信息包*/
 	ts_dev_vol_info_buffer_id = BlockBufferOpen("bcu-control-recv-ts-info");
-
 	TouchScreenMain(screen_send_cmd_to_control,ts_dev_vol_info_buffer_id);
 	return NULL;
 }
