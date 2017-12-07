@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 	pthread_attr_t attr_of_demao_thread;
 	//****************************//
 	/*设备软件版本号登记*/
-	SetSoftwareVersion("642-PA-BCU-app-1-20171109","2017-11-09");
+	SetSoftwareVersion("642-PA-BCU-app-1-20171207","2017-12-07");
 	//*********************//
 	//初始化选车结构全局变量
 	Init_ocs_select_car_struct();
@@ -354,12 +354,12 @@ void *SystemControl(void *arg)
 				PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT);
 				PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT);
 			}
-#endif
+
 			if(recv_network_info_from_network.send_information.event_type_intercom == D2D_INTERCOMM_EVENT)
 			{
 			//	JudgeWhetherHaveD2DRequest(&recv_cmd_info_of_intercom,&recv_network_info_from_network);
 			}
-
+#endif
 		}
 
 #if 1
