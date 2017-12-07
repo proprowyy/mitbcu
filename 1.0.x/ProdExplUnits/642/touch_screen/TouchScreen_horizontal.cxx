@@ -27,15 +27,22 @@ wz_window_view->value(gp_main_file_active_page);
 Fl_Button *btn_main_file_back=(Fl_Button *)0;
 
 static void cb_btn_main_file_back(Fl_Button*, void*) {
-  gp_main_file->hide();
-btn_main_file->color((Fl_Color)50);
-btn_main_file->redraw();
-
-
-
-ShowDeviceVolumeInfo(255);
-wz_window_view->value(gp_static_show);
-current_is_on_static_page = 1;
+  if(bcu_state.static_page==0&&bcu_state.set_page==1)
+{
+ 	bcu_state.iph_monitor_cur_page =0;
+	bcu_state.select_monitor_or_ann_page = 0;
+ 	bcu_state.d2p_intercom_page = 0;
+ 	bcu_state.d2d_intercom_page = 0;
+	bcu_state.elsect_car_page=0;
+ 	bcu_state.static_page=1;
+ 	bcu_state.set_page=0;
+	gp_main_file->hide();
+	btn_main_file->color((Fl_Color)50);
+	btn_main_file->redraw();
+	ShowDeviceVolumeInfo(255);
+	wz_window_view->value(gp_static_show);
+	current_is_on_static_page = 1;
+};
 }
 
 Fl_Group *gp_intercomm=(Fl_Group *)0;
@@ -437,12 +444,6 @@ static void cb_btn_setting_back(Fl_Button*, void*) {
 gp_main_file_active_page = gp_setting_items;
 gp_main_file_active_page->show();
 }
-
-Fl_Tile *title_monitor_volume=(Fl_Tile *)0;
-
-Fl_Tile *title_car_volume=(Fl_Tile *)0;
-
-Fl_Tile *title_inercomm_volume=(Fl_Tile *)0;
 
 Fl_Button *btn_open_or_close_monitor=(Fl_Button *)0;
 
@@ -1100,6 +1101,7 @@ else if(flag==1)
 {
 	flag=0;
 	CannelSelectCar();
+
 	ExitLive();
 	if(bcu_state.car_select_count_for_monitor==1)
 	{
@@ -1320,13 +1322,21 @@ Fl_Group *main_group=(Fl_Group *)0;
 Fl_Button *btn_main_file=(Fl_Button *)0;
 
 static void cb_btn_main_file(Fl_Button*, void*) {
-  return ;
-btn_main_file->color((Fl_Color)70);
-btn_main_file->redraw();
-gp_input_password->hide();
-
-gp_main_file_active_page = gp_main_file;
-wz_window_view->value(gp_main_file_active_page);
+  if(bcu_state.static_page==1&&bcu_state.set_page==0)
+{
+ 	bcu_state.iph_monitor_cur_page =0;
+	bcu_state.select_monitor_or_ann_page = 0;
+ 	bcu_state.d2p_intercom_page = 0;
+ 	bcu_state.d2d_intercom_page = 0;
+	bcu_state.elsect_car_page=0;
+ 	bcu_state.static_page=0;
+ 	bcu_state.set_page=1;
+	btn_main_file->color((Fl_Color)70);
+	btn_main_file->redraw();
+	gp_input_password->hide();
+	gp_main_file_active_page = gp_main_file;
+	wz_window_view->value(gp_main_file_active_page);
+};
 }
 
 Fl_Button *btn_emerg_ann=(Fl_Button *)0;
@@ -1406,6 +1416,7 @@ int touch_screen_main() {
       { gp_intercomm = new Fl_Group(0, 0, 800, 385);
         gp_intercomm->color((Fl_Color)246);
         gp_intercomm->align(Fl_Align(129));
+        gp_intercomm->hide();
         { btn_d2p_request_1 = new Fl_Button(10, 13, 140, 95);
           btn_d2p_request_1->callback((Fl_Callback*)cb_btn_d2p_request_1);
         } // Fl_Button* btn_d2p_request_1
@@ -1632,7 +1643,6 @@ int touch_screen_main() {
       } // Fl_Group* gp_input_password
       { gp_setting = new Fl_Group(0, 1, 800, 384);
         gp_setting->color((Fl_Color)246);
-        gp_setting->hide();
         { title_set_volume = new Fl_Tile(10, 10, 95, 36, "\350\256\276\347\275\256\351\237\263\351\207\217");
           title_set_volume->align(Fl_Align(132|FL_ALIGN_INSIDE));
           title_set_volume->end();
@@ -1640,73 +1650,68 @@ int touch_screen_main() {
         { btn_setting_back = new Fl_Button(650, 301, 135, 70, "\351\200\200\345\207\272");
           btn_setting_back->callback((Fl_Callback*)cb_btn_setting_back);
         } // Fl_Button* btn_setting_back
-        { title_monitor_volume = new Fl_Tile(45, 39, 120, 37, "\347\233\221\345\220\254\351\237\263\351\207\217");
-          title_monitor_volume->align(Fl_Align(FL_ALIGN_CENTER|FL_ALIGN_INSIDE));
-          title_monitor_volume->end();
-        } // Fl_Tile* title_monitor_volume
-        { title_car_volume = new Fl_Tile(50, 136, 120, 34, "\345\256\242\345\256\244\351\237\263\351\207\217");
-          title_car_volume->align(Fl_Align(FL_ALIGN_CENTER|FL_ALIGN_INSIDE));
-          title_car_volume->end();
-        } // Fl_Tile* title_car_volume
-        { title_inercomm_volume = new Fl_Tile(43, 237, 124, 32, "\347\264\247\346\200\245\345\257\271\350\256\262\351\237\263\351\207\217");
-          title_inercomm_volume->align(Fl_Align(FL_ALIGN_CENTER|FL_ALIGN_INSIDE));
-          title_inercomm_volume->end();
-        } // Fl_Tile* title_inercomm_volume
-        { btn_open_or_close_monitor = new Fl_Button(485, 313, 135, 60, "\347\233\221\345\220\254\351\237\263\346\272\220\345\274\200");
+        { btn_open_or_close_monitor = new Fl_Button(495, 20, 135, 60, "\347\233\221\345\220\254\351\237\263\346\272\220\345\274\200");
           btn_open_or_close_monitor->callback((Fl_Callback*)cb_btn_open_or_close_monitor);
           btn_open_or_close_monitor->hide();
           btn_open_or_close_monitor->deactivate();
+          btn_open_or_close_monitor->hide();
         } // Fl_Button* btn_open_or_close_monitor
         { btn_setting_monitor_volume_sub = new Fl_Button(172, 18, 135, 70, "@-->");
           btn_setting_monitor_volume_sub->callback((Fl_Callback*)cb_btn_setting_monitor_volume_sub);
+          btn_setting_monitor_volume_sub->hide();
         } // Fl_Button* btn_setting_monitor_volume_sub
         { btn_setting_monitor_volume_inc = new Fl_Button(492, 18, 135, 70, "@+");
           btn_setting_monitor_volume_inc->callback((Fl_Callback*)cb_btn_setting_monitor_volume_inc);
+          btn_setting_monitor_volume_inc->hide();
         } // Fl_Button* btn_setting_monitor_volume_inc
         { title_setting_monitor_volume = new Fl_Tile(370, 18, 80, 65);
           title_setting_monitor_volume->labelsize(30);
           title_setting_monitor_volume->align(Fl_Align(FL_ALIGN_CENTER|FL_ALIGN_INSIDE));
-          bcu_state.device_volume.monitor_volume = 80;
+          title_setting_monitor_volume->hide();
           sprintf((char *)monitor_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.monitor_volume);
           title_setting_monitor_volume->label(monitor_volume_digit_2_string_buffer);
           title_setting_monitor_volume->end();
         } // Fl_Tile* title_setting_monitor_volume
-        { title_setting_car_volume = new Fl_Tile(370, 115, 80, 65);
+        { title_setting_car_volume = new Fl_Tile(365, 20, 80, 65);
           title_setting_car_volume->labelsize(30);
           title_setting_car_volume->align(Fl_Align(FL_ALIGN_CENTER|FL_ALIGN_INSIDE));
-          bcu_state.device_volume.car_volume = 50;
+          title_setting_car_volume->hide();
           sprintf((char *)car_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.car_volume);
           title_setting_car_volume->label(car_volume_digit_2_string_buffer);
           title_setting_car_volume->end();
         } // Fl_Tile* title_setting_car_volume
-        { btn_setting_car_volume_sub = new Fl_Button(172, 115, 135, 70, "@-->");
+        { btn_setting_car_volume_sub = new Fl_Button(170, 20, 135, 70, "@-->");
           btn_setting_car_volume_sub->callback((Fl_Callback*)cb_btn_setting_car_volume_sub);
+          btn_setting_car_volume_sub->hide();
         } // Fl_Button* btn_setting_car_volume_sub
-        { btn_setting_car_volume_inc = new Fl_Button(492, 115, 135, 70, "@+");
+        { btn_setting_car_volume_inc = new Fl_Button(492, 15, 135, 70, "@+");
           btn_setting_car_volume_inc->callback((Fl_Callback*)cb_btn_setting_car_volume_inc);
+          btn_setting_car_volume_inc->hide();
         } // Fl_Button* btn_setting_car_volume_inc
-        { btn_setting_intercomm_volume_sub = new Fl_Button(172, 214, 135, 70, "@-->");
+        { btn_setting_intercomm_volume_sub = new Fl_Button(172, 15, 135, 70, "@-->");
           btn_setting_intercomm_volume_sub->callback((Fl_Callback*)cb_btn_setting_intercomm_volume_sub);
+          btn_setting_intercomm_volume_sub->hide();
         } // Fl_Button* btn_setting_intercomm_volume_sub
-        { btn_setting_intercomm_volume_inc = new Fl_Button(492, 214, 135, 70, "@+");
+        { btn_setting_intercomm_volume_inc = new Fl_Button(492, 15, 135, 70, "@+");
           btn_setting_intercomm_volume_inc->callback((Fl_Callback*)cb_btn_setting_intercomm_volume_inc);
+          btn_setting_intercomm_volume_inc->hide();
         } // Fl_Button* btn_setting_intercomm_volume_inc
-        { title_setting_intercomm_volume = new Fl_Tile(375, 214, 80, 65);
+        { title_setting_intercomm_volume = new Fl_Tile(370, 10, 80, 65);
           title_setting_intercomm_volume->labelsize(30);
           title_setting_intercomm_volume->align(Fl_Align(FL_ALIGN_CENTER|FL_ALIGN_INSIDE));
-          bcu_state.device_volume.intercomm_volume = 30;
+          title_setting_intercomm_volume->hide();
           sprintf((char *)intercomm_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.intercomm_volume);
           title_setting_intercomm_volume->label(intercomm_volume_digit_2_string_buffer);
           title_setting_intercomm_volume->end();
         } // Fl_Tile* title_setting_intercomm_volume
-        { btn_setting_d2d_intercomm_volume_sub = new Fl_Button(172, 301, 135, 70, "@-->");
+        { btn_setting_d2d_intercomm_volume_sub = new Fl_Button(170, 160, 135, 70, "@-->");
           btn_setting_d2d_intercomm_volume_sub->callback((Fl_Callback*)cb_btn_setting_d2d_intercomm_volume_sub);
         } // Fl_Button* btn_setting_d2d_intercomm_volume_sub
-        { title_d2d_inercomm_volume = new Fl_Tile(47, 322, 115, 38, "\345\217\270\346\234\272\345\257\271\350\256\262\351\237\263\351\207\217");
+        { title_d2d_inercomm_volume = new Fl_Tile(30, 177, 115, 38, "\345\217\270\346\234\272\345\257\271\350\256\262\351\237\263\351\207\217");
           title_d2d_inercomm_volume->align(Fl_Align(FL_ALIGN_CENTER|FL_ALIGN_INSIDE));
           title_d2d_inercomm_volume->end();
         } // Fl_Tile* title_d2d_inercomm_volume
-        { title_setting_d2d_intercomm_volume = new Fl_Tile(370, 301, 80, 65);
+        { title_setting_d2d_intercomm_volume = new Fl_Tile(370, 160, 80, 65);
           title_setting_d2d_intercomm_volume->labelsize(30);
           title_setting_d2d_intercomm_volume->align(Fl_Align(FL_ALIGN_CENTER|FL_ALIGN_INSIDE));
           bcu_state.device_volume.intercomm_volume = 30;
@@ -1714,7 +1719,7 @@ int touch_screen_main() {
           title_setting_d2d_intercomm_volume->label(d2d_intercomm_volume_digit_2_string_buffer);
           title_setting_d2d_intercomm_volume->end();
         } // Fl_Tile* title_setting_d2d_intercomm_volume
-        { btn_setting_d2d_intercomm_volume_inc = new Fl_Button(495, 301, 135, 70, "@+");
+        { btn_setting_d2d_intercomm_volume_inc = new Fl_Button(500, 160, 135, 70, "@+");
           btn_setting_d2d_intercomm_volume_inc->callback((Fl_Callback*)cb_btn_setting_d2d_intercomm_volume_inc);
         } // Fl_Button* btn_setting_d2d_intercomm_volume_inc
         gp_setting->hide();
@@ -1731,7 +1736,7 @@ int touch_screen_main() {
           btn_back_setting_items->callback((Fl_Callback*)cb_btn_back_setting_items);
           btn_back_setting_items->align(Fl_Align(192|FL_ALIGN_INSIDE));
         } // Fl_Button* btn_back_setting_items
-        { title_version_info = new Fl_Tile(30, 345, 105, 25);
+        { title_version_info = new Fl_Tile(155, 330, 105, 25);
           title_version_info->align(Fl_Align(FL_ALIGN_CENTER|FL_ALIGN_INSIDE));
           title_version_info->end();
         } // Fl_Tile* title_version_info

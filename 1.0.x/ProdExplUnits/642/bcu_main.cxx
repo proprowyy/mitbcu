@@ -254,7 +254,7 @@ void *SystemControl(void *arg)
     int AutoEnableD2dPageBtn = 0;
 
     int temp_current_pcu_request_number = 0;
-
+    unsigned char vol_temp = 0;
     bcu_state.other_bcu_intercomm_state = INTERCOM_IDLE;
 
     send_infomation_t recv_send_info_from_touch_screen;///<从触摸屏线程接收的命令
@@ -293,10 +293,20 @@ void *SystemControl(void *arg)
 		ChangeIntercommButtonColor(&whether_ts_is_running);
 		AutoChangeIntercommButtonEnableStateAndColor();
 
+		if(BlockBufferRead(bcu_state.dev_vol_info_buffer_id,&ctrl_recv_from_ts,sizeof(ts_dev_volume_info_t))>0)
+		{
+			printf("Dev vol info recv.\n");
+			printf("Dev vol  recv vlue = %d\n",ctrl_recv_from_ts.device_volume);
+			vol_temp=ctrl_recv_from_ts.device_volume;
+			bcu_6d5w_ctrl_wilson(vol_temp);
+		}
+
 		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0)
 		{
 			diag_printf("Control recv a big package.\n");
+
 			ProbeBigCommPackage(&recv_temp_big);
+
 			if(bcu_state.bcu_request_number !=0)
 			{
 				AlarmTSToChangeScreen(9);

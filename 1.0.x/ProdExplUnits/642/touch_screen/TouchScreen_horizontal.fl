@@ -6,13 +6,13 @@ Function {touch_screen_main()} {open return_type int
 } {
   Fl_Window wd_touch_screen {
     label {Touch Screen} open
-    xywh {5 78 800 480} type Double box BORDER_BOX color 0 selection_color 0 hide resizable
-    code0 {\#include "ts_head_file.h"}
+    xywh {5 78 800 480} type Double box BORDER_BOX color 0 selection_color 0 resizable
+    code0 {\#include "ts_head_file.h"} visible
   } {
     Fl_Wizard wz_window_view {open
       xywh {-70 -124 920 512} box UP_BOX color 246
     } {
-      Fl_Group gp_main_file {
+      Fl_Group gp_main_file {open
         xywh {0 -4 800 384} color 246 hide resizable
         code0 {gp_main_file->hide();}
       } {
@@ -33,15 +33,22 @@ wz_window_view->value(gp_main_file_active_page);}
         }
         Fl_Button btn_main_file_back {
           label {返回}
-          callback {gp_main_file->hide();
-btn_main_file->color((Fl_Color)50);
-btn_main_file->redraw();
-
-
-
-ShowDeviceVolumeInfo(255);
-wz_window_view->value(gp_static_show);
-current_is_on_static_page = 1;}
+          callback {if(bcu_state.static_page==0&&bcu_state.set_page==1)
+{
+ 	bcu_state.iph_monitor_cur_page =0;
+	bcu_state.select_monitor_or_ann_page = 0;
+ 	bcu_state.d2p_intercom_page = 0;
+ 	bcu_state.d2d_intercom_page = 0;
+	bcu_state.elsect_car_page=0;
+ 	bcu_state.static_page=1;
+ 	bcu_state.set_page=0;
+	gp_main_file->hide();
+	btn_main_file->color((Fl_Color)50);
+	btn_main_file->redraw();
+	ShowDeviceVolumeInfo(255);
+	wz_window_view->value(gp_static_show);
+	current_is_on_static_page = 1;
+}}
           xywh {650 270 140 95}
         }
       }
@@ -457,8 +464,8 @@ gp_main_file->show();}
           xywh {652 291 135 70}
         }
       }
-      Fl_Group gp_setting {
-        xywh {0 1 800 384} color 246 hide
+      Fl_Group gp_setting {open
+        xywh {0 1 800 384} color 246
         code0 {gp_setting->hide();}
       } {
         Fl_Tile title_set_volume {
@@ -472,18 +479,6 @@ gp_main_file_active_page = gp_setting_items;
 gp_main_file_active_page->show();}
           xywh {650 301 135 70}
         }
-        Fl_Tile title_monitor_volume {
-          label {监听音量} open
-          xywh {45 39 120 37} align 16
-        } {}
-        Fl_Tile title_car_volume {
-          label {客室音量} open
-          xywh {50 136 120 34} align 16
-        } {}
-        Fl_Tile title_inercomm_volume {
-          label {紧急对讲音量} open
-          xywh {43 237 124 32} align 16
-        } {}
         Fl_Button btn_open_or_close_monitor {
           label {监听音源开}
           callback {if(strcmp((char *)btn_open_or_close_monitor->label(),"监听音源开") == 0)
@@ -496,7 +491,8 @@ else
 	btn_open_or_close_monitor->label("监听音源开");
 	
 }}
-          xywh {485 313 135 60} hide deactivate
+          xywh {495 20 135 60} hide deactivate
+          code0 {btn_open_or_close_monitor->hide();}
         }
         Fl_Button btn_setting_monitor_volume_sub {
           label {@-->}
@@ -534,6 +530,7 @@ if(bcu_state.device_volume.monitor_volume == 0)
 SetDeviceVolumeCMDPackage(0,bcu_state.device_volume.monitor_volume);
 \#endif}
           xywh {172 18 135 70}
+          code0 {btn_setting_monitor_volume_sub->hide();}
         }
         Fl_Button btn_setting_monitor_volume_inc {
           label {@+}
@@ -571,16 +568,17 @@ SetDeviceVolumeCMDPackage(0,bcu_state.device_volume.monitor_volume);
 
 \#endif}
           xywh {492 18 135 70}
+          code0 {btn_setting_monitor_volume_inc->hide();}
         }
         Fl_Tile title_setting_monitor_volume {open
           xywh {370 18 80 65} labelsize 30 align 16
-          code0 {bcu_state.device_volume.monitor_volume = 80;}
+          code0 {title_setting_monitor_volume->hide();}
           code1 {sprintf((char *)monitor_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.monitor_volume);}
           code2 {title_setting_monitor_volume->label(monitor_volume_digit_2_string_buffer);}
         } {}
         Fl_Tile title_setting_car_volume {open
-          xywh {370 115 80 65} labelsize 30 align 16
-          code0 {bcu_state.device_volume.car_volume = 50;}
+          xywh {365 20 80 65} labelsize 30 align 16
+          code0 {title_setting_car_volume->hide();}
           code2 {sprintf((char *)car_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.car_volume);}
           code3 {title_setting_car_volume->label(car_volume_digit_2_string_buffer);}
         } {}
@@ -618,7 +616,8 @@ if(bcu_state.device_volume.car_volume == 0)
 }
 SetDeviceVolumeCMDPackage(1,bcu_state.device_volume.car_volume);
 \#endif}
-          xywh {172 115 135 70}
+          xywh {170 20 135 70}
+          code0 {btn_setting_car_volume_sub->hide();}
         }
         Fl_Button btn_setting_car_volume_inc {
           label {@+}
@@ -652,7 +651,8 @@ if(bcu_state.device_volume.car_volume == 100)
 }
 SetDeviceVolumeCMDPackage(1,bcu_state.device_volume.car_volume);
 \#endif}
-          xywh {492 115 135 70}
+          xywh {492 15 135 70}
+          code0 {btn_setting_car_volume_inc->hide();}
         }
         Fl_Button btn_setting_intercomm_volume_sub {
           label {@-->}
@@ -690,7 +690,8 @@ if(bcu_state.device_volume.intercomm_volume == 0)
 }
 SetDeviceVolumeCMDPackage(2,bcu_state.device_volume.intercomm_volume);
 \#endif}
-          xywh {172 214 135 70}
+          xywh {172 15 135 70}
+          code0 {btn_setting_intercomm_volume_sub->hide();}
         }
         Fl_Button btn_setting_intercomm_volume_inc {
           label {@+}
@@ -725,11 +726,12 @@ if(bcu_state.device_volume.intercomm_volume == 4)
 }
 SetDeviceVolumeCMDPackage(2,bcu_state.device_volume.intercomm_volume);
 \#endif}
-          xywh {492 214 135 70}
+          xywh {492 15 135 70}
+          code0 {btn_setting_intercomm_volume_inc->hide();}
         }
-        Fl_Tile title_setting_intercomm_volume {open
-          xywh {375 214 80 65} labelsize 30 align 16
-          code0 {bcu_state.device_volume.intercomm_volume = 30;}
+        Fl_Tile title_setting_intercomm_volume {open selected
+          xywh {370 10 80 65} labelsize 30 align 16
+          code0 {title_setting_intercomm_volume->hide();}
           code2 {sprintf((char *)intercomm_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.intercomm_volume);}
           code3 {title_setting_intercomm_volume->label(intercomm_volume_digit_2_string_buffer);}
         } {}
@@ -750,14 +752,14 @@ if(bcu_state.device_volume.d2d_volume == 0)
 	btn_setting_d2d_intercomm_volume_sub->deactivate();	
 }
 SetDeviceVolumeCMDPackage(4,bcu_state.device_volume.d2d_volume);}
-          xywh {172 301 135 70}
+          xywh {170 160 135 70}
         }
         Fl_Tile title_d2d_inercomm_volume {
           label {司机对讲音量} open
-          xywh {47 322 115 38} align 16
+          xywh {30 177 115 38} align 16
         } {}
         Fl_Tile title_setting_d2d_intercomm_volume {open
-          xywh {370 301 80 65} labelsize 30 align 16
+          xywh {370 160 80 65} labelsize 30 align 16
           code0 {bcu_state.device_volume.intercomm_volume = 30;}
           code2 {sprintf((char *)d2d_intercomm_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.d2d_volume);}
           code3 {title_setting_d2d_intercomm_volume->label(d2d_intercomm_volume_digit_2_string_buffer);}
@@ -777,10 +779,10 @@ if(bcu_state.device_volume.d2d_volume == 4)
 	btn_setting_d2d_intercomm_volume_inc->deactivate();	
 }
 SetDeviceVolumeCMDPackage(4,bcu_state.device_volume.d2d_volume);}
-          xywh {495 301 135 70}
+          xywh {500 160 135 70}
         }
       }
-      Fl_Group gp_setting_items {
+      Fl_Group gp_setting_items {open
         xywh {0 0 800 384} color 246 hide
         code0 {gp_setting_items->hide();}
       } {
@@ -800,7 +802,7 @@ gp_main_file_active_page->show();}
           xywh {650 280 140 95} align 208
         }
         Fl_Tile title_version_info {open
-          xywh {30 345 105 25} align 16
+          xywh {155 330 105 25} align 16
         } {}
       }
       Fl_Group gp_window_black_screen {
@@ -1106,7 +1108,7 @@ RecovoryBtnState(4);///<恢复相关按钮
         }
       }
       Fl_Group AnnOrMonitorSelect {open
-        xywh {0 0 850 388} color 246
+        xywh {0 0 850 388} color 246 hide
         code0 {AnnOrMonitorSelect->hide();}
       } {
         Fl_Button btn_enter {
@@ -1140,6 +1142,7 @@ else if(flag==1)
 {
 	flag=0;
 	CannelSelectCar();
+
 	ExitLive();
 	if(bcu_state.car_select_count_for_monitor==1)
 	{
@@ -1166,7 +1169,7 @@ else if(flag==1)
 	  bcu_state.elsect_car_page=1;
 	  bcu_state.static_page=0;
 	  }		
-}} selected
+}}
           xywh {205 140 140 95} selection_color 2
           code0 {btn_enter->deactivate();btn_enter->color((Fl_Color)50);}
         }
@@ -1360,12 +1363,21 @@ btn_d2d_8->color((Fl_Color)2);}
       } {
         Fl_Button btn_main_file {
           label {主菜单}
-          callback {return ;
-btn_main_file->color((Fl_Color)70);
-btn_main_file->redraw();
-gp_input_password->hide();
-gp_main_file_active_page = gp_main_file;
-wz_window_view->value(gp_main_file_active_page);}
+          callback {if(bcu_state.static_page==1&&bcu_state.set_page==0)
+{
+ 	bcu_state.iph_monitor_cur_page =0;
+	bcu_state.select_monitor_or_ann_page = 0;
+ 	bcu_state.d2p_intercom_page = 0;
+ 	bcu_state.d2d_intercom_page = 0;
+	bcu_state.elsect_car_page=0;
+ 	bcu_state.static_page=0;
+ 	bcu_state.set_page=1;
+	btn_main_file->color((Fl_Color)70);
+	btn_main_file->redraw();
+	gp_input_password->hide();
+	gp_main_file_active_page = gp_main_file;
+	wz_window_view->value(gp_main_file_active_page);
+}}
           xywh {15 396 150 70} box ROUNDED_BOX down_box ROUNDED_BOX color 50 align 128 hotspot
           code0 {wz_window_view->value(gp_static_show);}
           code1 {gp_main_file_active_page = gp_main_file;}

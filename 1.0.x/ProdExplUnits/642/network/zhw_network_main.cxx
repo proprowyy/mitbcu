@@ -339,8 +339,35 @@ void NetWorkMain(network_buffer_t network_buffer)
 					}
 				}
 			}
-
 			//××××××××××××××××××××××××××//
+			if(FD_ISSET(udp_common_big_socket, &fwd))
+					{
+						//发送big common 数据
+						if(BlockBufferRead(network_buffer.server_udp_socket_buffer.udp_server_socket_send_buffer,(void *)&common_big_package_buffer,sizeof(common_big_package_buffer))>0)
+						{
+							DEBUG("send big common cmd to ocs ,len=%d\n",sizeof(common_big_package_buffer));;
+							if(common_big_package_buffer.pkg_type==1)
+							{
+								diag_printf("select car big common cmd.\n");
+		#if 0
+								int i=0;
+								for(;i<11;i++)
+								{
+									DEBUG("i=%d,common_big_package_buffer=%d\n",i,common_big_package_buffer.common_big_data_u.car_select_flag[i]);
+								}
+		#endif
+							}
+
+
+							UdpSendFunCMD(udp_common_big_socket,&common_big_package_buffer,sizeof(common_big_package_t),OCS_IP,UDP_COMMON_BIG_PORT);//发送控制数据
+
+							if(common_big_package_buffer.pkg_type==9||common_big_package_buffer.pkg_type==10||
+									common_big_package_buffer.pkg_type==12||common_big_package_buffer.pkg_type==13)
+							{
+								UdpSendFunCMD(udp_common_big_socket,&common_big_package_buffer,sizeof(common_big_package_t),MUL_IP_SYNC_COMMON_BCU,UDP_BIG_PORT);//发送控制数据
+							}
+						}
+					}
 
 			//发送数据
 			if(FD_ISSET(udp_cmd_socket,&fwd))
@@ -413,34 +440,6 @@ void NetWorkMain(network_buffer_t network_buffer)
 				}
 			}
 
-			if(FD_ISSET(udp_common_big_socket, &fwd))
-			{
-				//发送big common 数据
-				if(BlockBufferRead(network_buffer.server_udp_socket_buffer.udp_server_socket_send_buffer,(void *)&common_big_package_buffer,sizeof(common_big_package_buffer))>0)
-				{
-					DEBUG("send big common cmd to ocs ,len=%d\n",sizeof(common_big_package_buffer));;
-					if(common_big_package_buffer.pkg_type==1)
-					{
-						diag_printf("select car big common cmd.\n");
-#if 0
-						int i=0;
-						for(;i<11;i++)
-						{
-							DEBUG("i=%d,common_big_package_buffer=%d\n",i,common_big_package_buffer.common_big_data_u.car_select_flag[i]);
-						}
-#endif
-					}
-
-
-					UdpSendFunCMD(udp_common_big_socket,&common_big_package_buffer,sizeof(common_big_package_t),OCS_IP,UDP_COMMON_BIG_PORT);//发送控制数据
-
-					if(common_big_package_buffer.pkg_type==9||common_big_package_buffer.pkg_type==10||
-							common_big_package_buffer.pkg_type==12||common_big_package_buffer.pkg_type==13)
-					{
-						UdpSendFunCMD(udp_common_big_socket,&common_big_package_buffer,sizeof(common_big_package_t),MUL_IP_SYNC_COMMON_BCU,UDP_BIG_PORT);//发送控制数据
-					}
-				}
-			}
 
 
 #if 0

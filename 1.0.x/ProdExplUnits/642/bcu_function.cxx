@@ -124,6 +124,7 @@ void InitBcuAndState()
 	  bcu_state.d2p_intercom_page = 0;
 	  bcu_state.d2d_intercom_page = 0;
 	  bcu_state.elsect_car_page=0;
+	  bcu_state.set_page=0;
 	  bcu_state.static_page=1;
 }
 
@@ -149,8 +150,6 @@ int InitBuffer(void)
 	int network_udp_common_recv_buffer;
 	int control_recv_ts_buffer;
 	int dev_vol_info_buffer;
-
-
 
 	control_recv_ts_buffer = BlockBufferCreate(2, sizeof(ts_dev_volume_info_t), "bcu-control-recv-ts-info");
 	if (0 == control_recv_ts_buffer )
@@ -1980,8 +1979,8 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 			bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
 		break;
 	case 9:
-				diag_printf("recv iph intercom connecting update.\n");
-				bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
+			diag_printf("recv iph intercom connecting update.\n");
+			bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
 		break;
 	case 10:
 		if(bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT)

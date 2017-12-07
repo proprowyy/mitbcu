@@ -123,7 +123,7 @@ struct global_info ResolveUseIp(char *device_ip);
 
 /*
  *   	@brief	本函数的功能是根据所给的设备名称返回设备数量
- *     @param char *dev_name 需要查询的设备名
+ *     @param echar *dev_name 需要查询的设备名
  *     @return  dev_number  所需查询的设备的数量。
  *     				-1:表示表中查询不到所要设备信息，或所得数量为0。
  */

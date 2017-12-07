@@ -167,6 +167,7 @@ typedef struct
     unsigned char d2p_intercom_page;
     unsigned char d2d_intercom_page;
     unsigned char elsect_car_page;
+    unsigned char set_page;
     unsigned char static_page;
 
     unsigned char d2d_page_select_bcu_btn_state;
