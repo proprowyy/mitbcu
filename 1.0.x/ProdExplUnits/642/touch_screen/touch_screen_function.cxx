@@ -681,7 +681,7 @@ void RecvD2PRequest()
 }
 void RefuseD2PRequest()
 {///<拒绝PCU请求
-	bcu_state.d2p_button_state = 0;
+
 	if(is_intercomming_with_pcu == 1)
 	{///<当前正在与PCU进行对讲
 		diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
@@ -697,10 +697,11 @@ void RefuseD2PRequest()
 				SetD2PCmd(1,0,bcu_state.pcu_request_info.recept_pcu_no,0);
 		}
 	}
-	ShowD2Ppage();//显示请求pcu
+	ShowD2PRequest();//显示请求pcu
 	btn_intercomm_refuse->deactivate();
 	Enable_D2p_All_Btn();
-
+	cyg_thread_delay(10);
+	BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
 }
 unsigned char GetIntercommButtonState()
 {///<获取对讲按钮（软）状态
@@ -1339,6 +1340,7 @@ void CannelSelectCar()
 }
 void iphRequestMonitorIphBtnDisable(){
 
+	return ;
 	Node *temp=NULL;
 	Node *temp1=NULL;
 	int i=0;

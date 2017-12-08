@@ -52,8 +52,8 @@ wz_window_view->value(gp_main_file_active_page);}
           xywh {650 270 140 95}
         }
       }
-      Fl_Group gp_intercomm {
-        xywh {0 0 800 385} color 246 align 129 hide
+      Fl_Group gp_intercomm {open
+        xywh {0 0 800 385} color 246 align 129
         code0 {gp_intercomm->hide();}
       } {
         Fl_Button btn_d2p_request_1 {
@@ -257,14 +257,9 @@ BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,si
 }
 
 iph_select_intercom->pkg_type=10;
-
 BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
-
-cyg_thread_delay(100);
-
-RefuseD2PRequest();
-
-BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));}
+cyg_thread_delay(10);
+RefuseD2PRequest();} selected
           xywh {645 185 150 85}
           code0 {btn_intercomm_refuse->deactivate();}
         }
@@ -464,8 +459,8 @@ gp_main_file->show();}
           xywh {652 291 135 70}
         }
       }
-      Fl_Group gp_setting {open
-        xywh {0 1 800 384} color 246
+      Fl_Group gp_setting {
+        xywh {0 1 800 384} color 246 hide
         code0 {gp_setting->hide();}
       } {
         Fl_Tile title_set_volume {
@@ -729,7 +724,7 @@ SetDeviceVolumeCMDPackage(2,bcu_state.device_volume.intercomm_volume);
           xywh {492 15 135 70}
           code0 {btn_setting_intercomm_volume_inc->hide();}
         }
-        Fl_Tile title_setting_intercomm_volume {open selected
+        Fl_Tile title_setting_intercomm_volume {open
           xywh {370 10 80 65} labelsize 30 align 16
           code0 {title_setting_intercomm_volume->hide();}
           code2 {sprintf((char *)intercomm_volume_digit_2_string_buffer,"%d",bcu_state.device_volume.intercomm_volume);}

@@ -305,8 +305,11 @@ void *SystemControl(void *arg)
 		{
 			diag_printf("Control recv a big package.\n");
 
+			PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT+2);
+			PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT+1);
 			ProbeBigCommPackage(&recv_temp_big);
-
+			PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT);
+			PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT);
 			if(bcu_state.bcu_request_number !=0)
 			{
 				AlarmTSToChangeScreen(9);
@@ -342,17 +345,12 @@ void *SystemControl(void *arg)
 			}
 			DisplayNetworkCmd(recv_network_info_from_network);
 #if 0			/*Update global device information*/
-			if(strcmp(recv_network_info_from_network.send_information.src_devices_name,"PCU") == 0)
-			{
-				PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT+2);
-				PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT+1);
-			}
+
 			//UpdataGlobalDeviceInfo(recv_network_info_from_network.send_information);
 			cyg_thread_delay(10);
 			if(strcmp(recv_network_info_from_network.send_information.src_devices_name,"PCU") == 0)
 			{
-				PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT);
-				PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT);
+
 			}
 
 			if(recv_network_info_from_network.send_information.event_type_intercom == D2D_INTERCOMM_EVENT)

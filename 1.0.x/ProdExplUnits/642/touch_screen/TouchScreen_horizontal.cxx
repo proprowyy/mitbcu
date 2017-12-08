@@ -273,14 +273,9 @@ static void cb_btn_intercomm_refuse(Fl_Button*, void*) {
 }
 
 iph_select_intercom->pkg_type=10;
-
 BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
-
-cyg_thread_delay(100);
-
+cyg_thread_delay(10);
 RefuseD2PRequest();
-
-BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
 }
 
 Fl_Button *btn_intercomm_back=(Fl_Button *)0;
@@ -1416,7 +1411,6 @@ int touch_screen_main() {
       { gp_intercomm = new Fl_Group(0, 0, 800, 385);
         gp_intercomm->color((Fl_Color)246);
         gp_intercomm->align(Fl_Align(129));
-        gp_intercomm->hide();
         { btn_d2p_request_1 = new Fl_Button(10, 13, 140, 95);
           btn_d2p_request_1->callback((Fl_Callback*)cb_btn_d2p_request_1);
         } // Fl_Button* btn_d2p_request_1
@@ -1643,6 +1637,7 @@ int touch_screen_main() {
       } // Fl_Group* gp_input_password
       { gp_setting = new Fl_Group(0, 1, 800, 384);
         gp_setting->color((Fl_Color)246);
+        gp_setting->hide();
         { title_set_volume = new Fl_Tile(10, 10, 95, 36, "\350\256\276\347\275\256\351\237\263\351\207\217");
           title_set_volume->align(Fl_Align(132|FL_ALIGN_INSIDE));
           title_set_volume->end();

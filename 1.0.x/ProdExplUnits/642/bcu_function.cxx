@@ -1524,7 +1524,6 @@ void JudegD2PButton()
 				intercomm_debug_print(("Show D2P page\n"));
 				ResetSoundTimer();
 				ShowD2Ppage();
-				wd_touch_screen->show();
 				bcu_state.iph_monitor_cur_page =0;
 				bcu_state.select_monitor_or_ann_page = 0;
 				bcu_state.d2p_intercom_page = 1;
@@ -1540,7 +1539,6 @@ void JudegD2PButton()
 				diag_printf("Recv D2P page\n");
 				ResetSoundTimer();
 				RecvD2PRequest();
-				wd_touch_screen->show();
 			}
 
 		}
@@ -1551,9 +1549,10 @@ void JudegD2PButton()
 			{
 				CloseAudioSampleTimer();
 			}
+			iph_select_intercom->pkg_type=10;
+			BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
+			cyg_thread_delay(10);
 			RefuseD2PRequest();
-			wd_touch_screen->show();
-
 		}
 	}
 }
@@ -1603,7 +1602,6 @@ void RefuseAllPCUReqest()
 	network_send_package.send_information.event_info_intercom.d2p_intercomm.d2p_intercomm_active = 0;
 	network_send_package.send_information.event_info_intercom.d2p_intercomm.d2p_intercomm_bcu_device_no = bcu_state.bcu_info.devices_no;
 	network_send_package.send_information.event_info_intercom.d2p_intercomm.d2p_intercomm_pcu_device_no = MUL_DST_NO;
-
 	BlockBufferWrite(bcu_state.cmd_send_buffer_id,&network_send_package,sizeof(network_send_package));
 }
 
@@ -1825,10 +1823,12 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 	if(p_BigConmInfo_temp->common_big_data_u.seat_id!=bcu_state.bcu_info.devices_no)
 	{
 		PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
-
-	  ret= dispalys(PCURequsthead);//显示请求，返回请求数
+		bcu_state.pcu_request_info.request_number= dispalys(PCURequsthead);//显示请求，返回请求数
 	}
-	 ret= dispalys(PCURequsthead);//显示请求，返回请求
+	else
+	{
+		bcu_state.pcu_request_info.request_number= dispalys(PCURequsthead);//显示请求，返回请求
+	}
 	 AlarmTSToChangeScreen(4);
 	 return ret;
 
@@ -1841,7 +1841,6 @@ static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 	diag_printf("Over the d2p intercom .\n");
 
 	PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
-
 	bcu_state.pcu_request_info.request_number= dispalys(PCURequsthead);//显示请求，返回请求数
 	ret=bcu_state.pcu_request_info.request_number;
 	diag_printf("debug ret =%d\n",ret);
@@ -1915,9 +1914,9 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 	int ret=0;
 	int i=0,j=0;
 	int common_type_package=p_BigConmInfo->pkg_type;
-	diag_printf("Probe big package iph_requset_no=%d\n",p_BigConmInfo->common_big_data_u.iph_requset_no);
-	diag_printf("Probe big package iph_receive_no=%d\n",p_BigConmInfo->common_big_data_u.iph_receive_no);
-	diag_printf("Probe big package iph_refuse_no=%d\n",p_BigConmInfo->common_big_data_u.iph_refuse_no);
+	//diag_printf("Probe big package iph_requset_no=%d\n",p_BigConmInfo->common_big_data_u.iph_requset_no);
+	//diag_printf("Probe big package iph_receive_no=%d\n",p_BigConmInfo->common_big_data_u.iph_receive_no);
+	//diag_printf("Probe big package iph_refuse_no=%d\n",p_BigConmInfo->common_big_data_u.iph_refuse_no);
 	diag_printf("Probe big package type = %d\n",common_type_package);
 	switch(common_type_package)
 	{
