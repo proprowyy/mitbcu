@@ -231,8 +231,12 @@ typedef struct
 	int dst_dev_number;					//1
     char src_dev_name[DEVICE_NAME_LENGTH];//GBCU
 	int src_dev_number;						//1-5
-	int pkg_type; //1,（地面口播），2(ISCS口播），3.(监听地面）4.选车（监听地面取消），5.选车+IPH（ISCS监听） ，6.选车+选IPH（ISCS紧急对讲）
-			      //7.sync 8,requset iph,9,recv iph,10,refuse iph;
+	int pkg_type;
+	   //1: 确认选车(口播)       1:  取消选车(口播)        2: 确认(ISCS口播)      2: 取消(ISCS口播)
+	    //3: 确认选IPH(监听)     4: 取消选IPH(监听)        5:  确认(ISCS监听)      5: 取消(ISCS监听)
+	    //8: IPH请求(紧急对讲)    9:  确认选IPH(紧急对讲)   10: 取消选IPH(紧急对讲)  6:确认(ISCS紧急对讲)  6:取消(ISCS紧急对讲)
+	    //11: BCU请求(司机对讲)   12: 确认选BCU(司机对讲)   13: 取消选BCU(司机对讲)
+	    //7: 同步控制
  	common_big_data_t common_big_data_u;
 }common_big_package_t;
 

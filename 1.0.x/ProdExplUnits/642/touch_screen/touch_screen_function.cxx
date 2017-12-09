@@ -276,7 +276,7 @@ void Disable_D2p_All_Btn()
 	}
 	bcu_state.d2p_page_select_iph_btn_state=1;
 	btn_intercomm_accept->activate();
-	btn_intercomm_refuse->activate();
+	//btn_intercomm_refuse->activate();
 }
 
 void Enable_D2p_All_Btn()
@@ -938,7 +938,7 @@ void AlarmTSToChangeScreen(int param)
 	{
 		cyg_thread_delay(10);
 		diag_printf("AlarmTSToChangeScreen = %d\n",param);
-		diag_printf("-----------------------------------\n");
+		diag_printf("***************************\n");
 	}
 }
 
@@ -985,10 +985,10 @@ int SetMonitorBigPakage(int iph,unsigned int vn)
 	    	  parame.src_dev_number =  bcu_state.bcu_info.devices_no;
 	    	  strcpy(parame.dst_dev_name,"OCS");
 	    	  parame.dst_dev_number = 230;
-	    	  parame.pkg_type=2;
+	    	  parame.pkg_type=3;
 	    	  parame.common_big_data_u.car_no=vn;
 	    	  parame.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
-	    	  parame.common_big_data_u.iph_select_flag[iph-1]=1;
+	    	  parame.common_big_data_u.iph_receive_no=iph;
 	    	  ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));
 	    	  return 0;
 }
@@ -1002,10 +1002,10 @@ int CannelMonitorBigPakage(int iph,unsigned int vn)
 	    	  parame.src_dev_number =  bcu_state.bcu_info.devices_no;
 	    	  strcpy(parame.dst_dev_name,"OCS");
 	    	  parame.dst_dev_number = 230;
-	    	  parame.pkg_type=14;
+	    	  parame.pkg_type=4;
 	    	  parame.common_big_data_u.car_no=vn;
 	    	  parame.common_big_data_u.seat_id=bcu_state.bcu_info.devices_no;
-	    	  parame.common_big_data_u.iph_select_flag[iph-1]=1;
+	    	  parame.common_big_data_u.iph_refuse_no=iph;
 	    	  ret = BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,&parame,sizeof(common_big_package_t));
 	    	  return 0;
 }
@@ -1103,13 +1103,13 @@ int parse_btn_lable_value(const char *src,unsigned char *dst_device,unsigned cha
 	if(src[2]==49&&src[3]==48)
 	{
 	*dst_vn=10;
-	diag_printf("v===========%d\n",*dst_vn);
+	diag_printf("v=%d\n",*dst_vn);
 	return ret;
 	}
 	if(src[3]==49&&src[2]==49)
 	{
 			*dst_vn=11;
-			diag_printf("v===========%d\n",*dst_vn);
+			diag_printf("v=%d\n",*dst_vn);
 			return ret;
 	}
 	switch(src[2])

@@ -1788,6 +1788,7 @@ int TransformSendPackage(network_pcu_t *p_temp_pcu_network_package,network_send_
 
 static int IphRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 {
+		diag_printf("line:%d---function:%s\n",__LINE__,__FUNCTION__);
 		Node * tempnode = create_node();
 		int ret;
 		strcpy( tempnode->devices_name, "PCU");
@@ -1797,11 +1798,14 @@ static int IphRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 		tempnode->next = NULL;
 		PCURequsthead = insert_list( PCURequsthead, tempnode);
 		ret = dispalys( PCURequsthead);//显示请求，返回请求数
+		diag_printf("---------------------------\n");
 		return ret;
+
 }
 
 static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 {
+	diag_printf("line:%d---function:%s\n",__LINE__,__FUNCTION__);
 	int ret=0;
 	Node *temp;
 	int vn=p_BigConmInfo_temp->common_big_data_u.car_no;
@@ -1809,19 +1813,30 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 	temp=update_list(PCURequsthead,vn,iph,1);
 	if( temp == NULL )
 	{
-		return ret=0 ;
+		printf("Without the iph.\n") ;
 	}
 
 	if(p_BigConmInfo_temp->common_big_data_u.seat_id!=bcu_state.bcu_info.devices_no)
 	{
 		PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
-		bcu_state.pcu_request_info.request_number= dispalys(PCURequsthead);//显示请求，返回请求数
+		ret= dispalys(PCURequsthead);//显示请求，返回请求数
+		if(ret == 0)
+		{
+			bcu_state.pcu_request_info.request_number=ret;
+			AlarmTSToChangeScreen(4);
+		}
 	}
 	else
 	{
-		bcu_state.pcu_request_info.request_number= dispalys(PCURequsthead);//显示请求，返回请求
+		ret= dispalys(PCURequsthead);//显示请求，返回请求
+		if(ret == 0)
+		{
+			bcu_state.pcu_request_info.request_number=ret;
+			AlarmTSToChangeScreen(4);
+		}
 	}
-	 AlarmTSToChangeScreen(4);
+
+	 diag_printf("---------------------------\n");
 	 return ret;
 
 }
@@ -1830,26 +1845,28 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 {
 	int ret=0;
-	diag_printf("line:%dfunction:%s\n",__LINE__,__FUNCTION__);
+	diag_printf("line:%d---function:%s\n",__LINE__,__FUNCTION__);
 	if(p_BigConmInfo_temp->common_big_data_u.seat_id==bcu_state.bcu_info.devices_no)
 	{
 		PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
-		bcu_state.pcu_request_info.request_number= dispalys(PCURequsthead);//显示请求，返回请求数
-		ret=bcu_state.pcu_request_info.request_number;
+		ret= dispalys(PCURequsthead);//显示请求，返回请求数
 		diag_printf("debug ret =%d\n",ret);
-		AlarmTSToChangeScreen(4);
+
 		if(	ret == 0)
 		{
+			bcu_state.pcu_request_info.request_number=ret;
+			AlarmTSToChangeScreen(4);
 			BcuResetPlayAlarmAudioWhenD2pReq();
 		}
 	}
-	diag_printf("------------------------------------------\n");
+	diag_printf("---------------------------\n");
 	return ret;
 
 }
 
 static int BcuRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 {
+		diag_printf("line:%d---function:%s\n",__LINE__,__FUNCTION__);
 		Node * tempnode = create_node();
 		int ret;
 		strcpy( tempnode->devices_name, "BCU");
@@ -1859,24 +1876,25 @@ static int BcuRequestInsertLink(const common_big_package_t *p_BigConmInfo_temp )
 		tempnode->next = NULL;
 		BCURequsthead = insert_list( BCURequsthead, tempnode);
 		ret = dispalys( BCURequsthead);//显示请求，返回请求数
-		diag_printf("BCU Request \n");
+		diag_printf("---------------------------\n");
 		return ret;
+
 }
 static int BcuDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 {
 	int ret;
-	diag_printf("Over the d2d intercom .\n");
-	BCURequsthead = deletes_list( BCURequsthead, p_BigConmInfo_temp->common_big_data_u.bcu_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
-	ret= dispalys(BCURequsthead);//显示请求，返回请求数
-	if(	ret == 0)
+	diag_printf("line:%d---function:%s\n",__LINE__,__FUNCTION__);
+	if(p_BigConmInfo_temp->common_big_data_u.seat_id==bcu_state.bcu_info.devices_no)
 	{
-		bcu_state.bcu_request_number=ret;
-		AlarmTSToChangeScreen(9);
+		BCURequsthead = deletes_list( BCURequsthead, p_BigConmInfo_temp->common_big_data_u.bcu_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
+		ret= dispalys(BCURequsthead);//显示请求，返回请求数
+		if(	ret == 0)
+		{
+			bcu_state.bcu_request_number=ret;
+			AlarmTSToChangeScreen(9);
+		}
 	}
-	if(ret >0)
-	{
-		AlarmTSToChangeScreen(9);
-	}
+	diag_printf("---------------------------\n");
 	return ret;
 
 }
@@ -1890,15 +1908,27 @@ static int BcuUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 	temp=update_list(BCURequsthead,vn,iph,1);
 	if( temp == NULL )
 	{
-		return ret=-1 ;
+		printf("Without the cbcu.\n") ; ;
 	}
 	if(p_BigConmInfo_temp->common_big_data_u.seat_id!=bcu_state.bcu_info.devices_no)
 	{
 		BCURequsthead = deletes_list( BCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
 		ret= dispalys(BCURequsthead);//显示请求，返回请求数
+		if(ret == 0)
+		{
+			bcu_state.bcu_request_number=ret;
+			AlarmTSToChangeScreen(9);
+		}
 	}
-	ret = dispalys(BCURequsthead);//显示请求，返回请求数
-	AlarmTSToChangeScreen(9);
+	else
+	{
+			ret = dispalys(BCURequsthead);//显示请求，返回请求数
+			if(ret==0)
+			{
+				bcu_state.bcu_request_number=ret;
+				AlarmTSToChangeScreen(9);
+			}
+	}
 	return ret;
 
 }
@@ -1908,7 +1938,8 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 {
 	int ret=0;
 	int i=0,j=0;
-	diag_printf("line:%dfunction:%s\n",__LINE__,__FUNCTION__);
+	diag_printf("line:%d---function:%s\n",__LINE__,__FUNCTION__);
+
 	int common_type_package=p_BigConmInfo->pkg_type;
 	//diag_printf("Probe big package iph_requset_no=%d\n",p_BigConmInfo->common_big_data_u.iph_requset_no);
 	//diag_printf("Probe big package iph_receive_no=%d\n",p_BigConmInfo->common_big_data_u.iph_receive_no);
@@ -1936,26 +1967,17 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 			ret=4;
 			break;
 	case 5:
-		diag_printf("iscs enter control iph monitor to car.\n");
-			for(i=0; i<8; i++)
-			{
-		diag_printf("enable=%d:no=%d :iph=02x%02x\n", p_BigConmInfo->common_big_data_u.monitor_event_flag,i,p_BigConmInfo->common_big_data_u.iph_select_flag[i]);
-				if(p_BigConmInfo->common_big_data_u.iph_select_flag[i]==1&&
-				   p_BigConmInfo->common_big_data_u.monitor_event_flag==1)
+				diag_printf("iscs enter control iph monitor to car.\n");
+				if(p_BigConmInfo->common_big_data_u.monitor_event_flag==1)
 				{
-					G_SetAndClearPakage(1,i+1,&g_iph_pcu);
+					G_SetAndClearPakage(1,p_BigConmInfo->common_big_data_u.iph_receive_no,&g_iph_pcu);
 					MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EVENT_CALL,&g_iph_pcu);
-					break;
 				}
-				if(p_BigConmInfo->common_big_data_u.iph_select_flag[i]==1 &&
-				   p_BigConmInfo->common_big_data_u.monitor_event_flag == 0)
+				if(p_BigConmInfo->common_big_data_u.monitor_event_flag == 0)
 				{
-					G_SetAndClearPakage(0,i+1,&g_iph_pcu);
+					G_SetAndClearPakage(0,p_BigConmInfo->common_big_data_u.iph_receive_no,&g_iph_pcu);
 					MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EXIT_CALL,&g_iph_pcu);
-					break;
 				}
-
-			}
 			ret =5;
 			break;
 	case 7:
@@ -1970,37 +1992,28 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 			AlarmTSToChangeScreen(33);
 		break;
 	case 8:
-			diag_printf("recv iph intercom request.\n");
 			bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
-
 			break;
 	case 9:
-			diag_printf("recv iph intercom connecting update.\n");
 			bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
-
 		break;
 	case 10:
-			diag_printf("recv iph intercom refuse.\n");
-			IphDeleteLink(p_BigConmInfo);
+			bcu_state.pcu_request_info.request_number=IphDeleteLink(p_BigConmInfo);
 		break;
 	case 11:
-			diag_printf("recv car bcu intercom request.\n");
 			bcu_state.bcu_request_number=BcuRequestInsertLink(p_BigConmInfo);
 		break;
 	case 12:
-			diag_printf("recv car bcu intercom connecting update.\n");
-			BcuUpdateLink(p_BigConmInfo);
-		break;
+			bcu_state.bcu_request_number=BcuUpdateLink(p_BigConmInfo);
+			break;
 	case 13:
-			diag_printf("recv car bcu intercom refuse.\n");
 			bcu_state.bcu_request_number = BcuDeleteLink(p_BigConmInfo);
-			printf("bcu_state.bcu_request_number =%d\n",bcu_state.bcu_request_number);
 			break;
 	default:
 		diag_printf("no package type\n");
 		break;
 	}
-	diag_printf("--------------------------------------------\n");
+	diag_printf("---------------------------\n");
 	return ret;
 }
 

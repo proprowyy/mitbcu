@@ -245,7 +245,8 @@ wz_window_view->value(gp_main_file_active_page);}
         Fl_Button btn_intercomm_accept {
           label {接通}
           callback {RecvD2PRequest();
-BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t))}
+BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
+btn_intercomm_refuse->activate();} selected
           xywh {645 80 150 85}
           code0 {btn_intercomm_accept->deactivate();}
         }
@@ -259,7 +260,7 @@ BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,si
 iph_select_intercom->pkg_type=10;
 BlockBufferWrite(bcu_state.comm_server_send_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
 cyg_thread_delay(10);
-RefuseD2PRequest();} selected
+RefuseD2PRequest();}
           xywh {645 185 150 85}
           code0 {btn_intercomm_refuse->deactivate();}
         }

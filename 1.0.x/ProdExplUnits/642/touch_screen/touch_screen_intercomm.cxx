@@ -123,7 +123,11 @@ void ShowD2DRequest()
     {
 		(D2D_intercom_page->child(i))->hide();
     }
-
+    if(bcu_state.d2d_intercom_page ==1)
+     {
+       	diag_printf("gp_intercomm update\n");
+       	wz_window_view->value(D2D_intercom_page);
+     }
 }
 void SetD2PCmd(int enter_or_exit,int param_response_type,int param_pcu_no,int param_bcu_no)
 {///<发送D2P 命令

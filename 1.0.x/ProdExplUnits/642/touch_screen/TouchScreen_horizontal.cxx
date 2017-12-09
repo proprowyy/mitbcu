@@ -262,6 +262,7 @@ Fl_Button *btn_intercomm_accept=(Fl_Button *)0;
 static void cb_btn_intercomm_accept(Fl_Button*, void*) {
   RecvD2PRequest();
 BlockBufferWrite(bcu_state.comm_server_recv_big_buffer_id,iph_select_intercom,sizeof(common_big_package_t));
+btn_intercomm_refuse->activate();
 }
 
 Fl_Button *btn_intercomm_refuse=(Fl_Button *)0;
