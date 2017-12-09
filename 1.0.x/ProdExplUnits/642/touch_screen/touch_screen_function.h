@@ -679,4 +679,6 @@ extern void CannelSelectCar();
 extern void EnterSelectCar();
 
 extern void iphRequestMonitorIphBtnDisable();
+
+extern void iphRequestMonitorIphBtnEnable();
 #endif

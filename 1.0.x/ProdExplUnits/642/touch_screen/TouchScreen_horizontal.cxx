@@ -892,10 +892,7 @@ CannelSelectCar();
  bcu_state.d2d_intercom_page = 0;
  bcu_state.elsect_car_page=1;
  bcu_state.static_page=0;
- int i=0;
- for(i=0;i<8;i++){
- 	(controlpage->child(i))->show();
- }
+ iphRequestMonitorIphBtnEnable();
 gp_main_file_active_page=gp_select_car_ann_page;
 wz_window_view->value(gp_main_file_active_page);
 wz_select_window->activate();
@@ -934,6 +931,7 @@ memset(&g_MonPcuCmdPakage,0,sizeof(send_infomation_t));
 btn_return->activate();
 enter_monitor->color((Fl_Color)50);
 enter_monitor->redraw();
+iphRequestMonitorIphBtnDisable();
 }
 
 Fl_Group *gp_select_car_ann_page=(Fl_Group *)0;
@@ -1132,8 +1130,8 @@ Fl_Button *btn_monitor=(Fl_Button *)0;
 static void cb_btn_monitor(Fl_Button*, void*) {
   if(bcu_state.iph_monitor_cur_page ==0&&bcu_state.select_monitor_or_ann_page==1)
 {
-gp_main_file_active_page = controlpage;
-wz_window_view->value(gp_main_file_active_page);
+	gp_main_file_active_page = controlpage;
+	wz_window_view->value(gp_main_file_active_page);
  bcu_state.iph_monitor_cur_page =1;
  bcu_state.select_monitor_or_ann_page = 0;
  bcu_state.d2p_intercom_page = 0;
@@ -1294,6 +1292,7 @@ static void cb_return_D2D(Fl_Return_Button*, void*) {
  	bcu_state.d2d_intercom_page = 0;
 	bcu_state.elsect_car_page=0;
  	bcu_state.static_page=1;
+ //	iphRequestMonitorIphBtnEnable();
 };
 }
 
@@ -1412,6 +1411,7 @@ int touch_screen_main() {
       { gp_intercomm = new Fl_Group(0, 0, 800, 385);
         gp_intercomm->color((Fl_Color)246);
         gp_intercomm->align(Fl_Align(129));
+        gp_intercomm->hide();
         { btn_d2p_request_1 = new Fl_Button(10, 13, 140, 95);
           btn_d2p_request_1->callback((Fl_Callback*)cb_btn_d2p_request_1);
         } // Fl_Button* btn_d2p_request_1
@@ -1572,7 +1572,6 @@ int touch_screen_main() {
       } // Fl_Group* gp_static_show
       { gp_input_password = new Fl_Group(0, 0, 800, 384);
         gp_input_password->color((Fl_Color)246);
-        gp_input_password->hide();
         { btn_input_password_1 = new Fl_Button(12, 13, 135, 70, "1");
           btn_input_password_1->callback((Fl_Callback*)cb_btn_input_password_1);
         } // Fl_Button* btn_input_password_1

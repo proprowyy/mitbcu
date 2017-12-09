@@ -1340,7 +1340,6 @@ void CannelSelectCar()
 }
 void iphRequestMonitorIphBtnDisable(){
 
-	return ;
 	Node *temp=NULL;
 	Node *temp1=NULL;
 	int i=0;
@@ -1353,9 +1352,18 @@ void iphRequestMonitorIphBtnDisable(){
 		{
 			iph_id=temp->devices_id;
 			car_id=temp->vehicle_number;
-			(controlpage->child(iph_id-1))->hide();
+			(controlpage->child(iph_id-1))->deactivate();
 		}
 	}
 
 
+}
+void iphRequestMonitorIphBtnEnable()
+{
+
+	int i=0;
+	for(i=0;i<=8;i++)
+		{
+			(controlpage->child(i))->activate();
+		}
 }

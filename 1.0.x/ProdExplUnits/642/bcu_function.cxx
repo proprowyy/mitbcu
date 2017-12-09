@@ -1948,6 +1948,8 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 	switch(common_type_package)
 	{
 	case 2:
+		if(p_BigConmInfo->common_big_data_u.seat_id ==bcu_state.bcu_info.devices_no)
+		{
 			if(p_BigConmInfo->common_big_data_u.ann_event_flag ==1)
 			{
 				diag_printf("iscs enter control ann to car.\n");
@@ -1964,10 +1966,13 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 				diag_printf("iscs cannel control ann to car.\n");
 			    SetLiveCmd(2);
 			}
-			ret=4;
+			ret=2;
+		}
 			break;
 	case 5:
-				diag_printf("iscs enter control iph monitor to car.\n");
+			diag_printf("iscs enter control iph monitor to car.\n");
+			if(p_BigConmInfo->common_big_data_u.seat_id ==bcu_state.bcu_info.devices_no)
+			{
 				if(p_BigConmInfo->common_big_data_u.monitor_event_flag==1)
 				{
 					G_SetAndClearPakage(1,p_BigConmInfo->common_big_data_u.iph_receive_no,&g_iph_pcu);
@@ -1978,8 +1983,15 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 					G_SetAndClearPakage(0,p_BigConmInfo->common_big_data_u.iph_receive_no,&g_iph_pcu);
 					MoniortStateMachineExchange(&bcu_state.bcu_active_intercom_state,D2P_MONITOR_EXIT_CALL,&g_iph_pcu);
 				}
+			}
 			ret =5;
 			break;
+	case 6:
+		if(p_BigConmInfo->common_big_data_u.seat_id ==bcu_state.bcu_info.devices_no)
+		{
+
+		}
+		break;
 	case 7:
 			diag_printf("recv select sync comm big form ocs .\n");
 			for(j = 0 ; j < 11 ; ++j)
