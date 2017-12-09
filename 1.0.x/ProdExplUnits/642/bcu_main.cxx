@@ -305,11 +305,8 @@ void *SystemControl(void *arg)
 		{
 			diag_printf("Control recv a big package.\n");
 
-			PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT+2);
-			PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT+1);
 			ProbeBigCommPackage(&recv_temp_big);
-			PthreadPriorityChangeForSchedRr(thread_of_screen, BCU_PRIORIT);
-			PthreadPriorityChangeForSchedRr(thread_of_control, BCU_PRIORIT);
+
 			if(bcu_state.bcu_request_number !=0)
 			{
 				AlarmTSToChangeScreen(9);
@@ -343,10 +340,10 @@ void *SystemControl(void *arg)
 			{
 				diag_printf("error:%d:%s\n",__LINE__,__FUNCTION__);
 			}
-			DisplayNetworkCmd(recv_network_info_from_network);
-#if 0			/*Update global device information*/
+			//DisplayNetworkCmd(recv_network_info_from_network);
+#if 0
 
-			//UpdataGlobalDeviceInfo(recv_network_info_from_network.send_information);
+
 			cyg_thread_delay(10);
 			if(strcmp(recv_network_info_from_network.send_information.src_devices_name,"PCU") == 0)
 			{
@@ -496,12 +493,11 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 					whe_d2d_souder_stable = 0;
 				}
 			}
-#if 1
 			if(1 == play_audio)
 			{	///<播放司机对讲音频数据
 				PlayAudioTwice_D2D(bcu_audio_handle,bcu_state.audio_data_recv_buffer_id,bcu_state.pending_buffer_id);
 			}
-#endif
+
 		}
 		else if(CurIntercomState == D2D_HANGUP_D2P_EVENT )
 		{

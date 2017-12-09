@@ -14,7 +14,7 @@
 
 Node * creat_linked_list(){
 
-	diag_printf("The %s !\n",__FUNCTION__);
+	//diag_printf("The %s !\n",__FUNCTION__);
 
 	Node    *head = NULL;
 
@@ -29,7 +29,7 @@ Node * creat_linked_list(){
 Node * query_list(Node* head, int p_vehicle_number,int p_device_id, Node **precursor )
 {
 
-	diag_printf("The %s !\n",__FUNCTION__);
+	//diag_printf("The %s !\n",__FUNCTION__);
 
 	Node  *temp;
 
@@ -42,7 +42,7 @@ Node * query_list(Node* head, int p_vehicle_number,int p_device_id, Node **precu
 		if((temp->devices_id == p_device_id) && (temp->vehicle_number == p_vehicle_number))
 		{
 
-			  diag_printf("Successful lookup ! \n");
+			  //diag_printf("Successful lookup ! \n");
 
 			  return temp;
 
@@ -61,7 +61,7 @@ Node * query_list(Node* head, int p_vehicle_number,int p_device_id, Node **precu
 
 Node* update_list(Node  *head,int p_vehicle_number,int p_device_id,char p_current_state){
 
-	diag_printf("The %s !\n",__FUNCTION__);
+	//diag_printf("The %s !\n",__FUNCTION__);
 
 	Node    *temp;
 
@@ -71,13 +71,13 @@ Node* update_list(Node  *head,int p_vehicle_number,int p_device_id,char p_curren
 
 	if(temp == NULL){
 
-		diag_printf("Error lookup,Cannot update !\n");
+		//diag_printf("Error lookup,Cannot update !\n");
 
 		return NULL;
 	}
 	else
 	{
-		diag_printf("Update successful!");
+		//diag_printf("Update successful!");
 
 		temp->current_state = p_current_state;
 	}
@@ -88,7 +88,7 @@ Node* update_list(Node  *head,int p_vehicle_number,int p_device_id,char p_curren
 
 Node * insert_list(Node *head,Node *node)
 {
-	diag_printf("The %s !\n",__FUNCTION__);
+	//diag_printf("The %s !\n",__FUNCTION__);
 
 	Node *temp1;
 
@@ -96,7 +96,7 @@ Node * insert_list(Node *head,Node *node)
 	
 	if(temp1->next == NULL)
 	{
-		diag_printf("This a empty list!\n");
+		//diag_printf("This a empty list!\n");
 
 		temp1->next = node;
 
@@ -140,7 +140,7 @@ Node *create_node()
 
 int dispalys(Node*head)
 {
-	diag_printf("The %s !\n",__FUNCTION__);
+	//diag_printf("The %s !\n",__FUNCTION__);
 
 	Node *temp = NULL;
 
@@ -151,13 +151,13 @@ int dispalys(Node*head)
 	if(head->next == NULL)
 	{
 
-		diag_printf("This is empty !\n");
+		//diag_printf("This is empty !\n");
 
 	}
 	while( temp ){
 
 
-		diag_printf("Dispalys=%d,%d,%s\n",temp->vehicle_number,temp->devices_id,temp->devices_name);
+		//diag_printf("Dispalys=%d,%d,%s\n",temp->vehicle_number,temp->devices_id,temp->devices_name);
 
 		temp = temp->next;
 
@@ -171,7 +171,7 @@ int dispalys(Node*head)
 
 int dispalys_no_recv(Node * head)
 {
-	diag_printf("The %s !\n",__FUNCTION__);
+	//diag_printf("The %s !\n",__FUNCTION__);
 
 	Node *temp = NULL;
 
@@ -182,13 +182,13 @@ int dispalys_no_recv(Node * head)
 	if(head->next == NULL)
 	{
 
-		diag_printf("This is empty !\n");
+		//diag_printf("This is empty !\n");
 
 	}
 	while( temp ){
 
 
-		diag_printf("Dispalys=%d,%d,%s\n",temp->vehicle_number,temp->devices_id,temp->devices_name);
+		//diag_printf("Dispalys=%d,%d,%s\n",temp->vehicle_number,temp->devices_id,temp->devices_name);
 		if(temp->current_state==0)
 		{
 			i = i + 1;
@@ -204,7 +204,7 @@ int dispalys_no_recv(Node * head)
 
  Node* deletes_list( Node *head, int p_device_no, int p_vehicle_number){
 
-	 diag_printf("The %s !\n",__FUNCTION__);
+	 //diag_printf("The %s !\n",__FUNCTION__);
 
 	 Node *temp=NULL;
 
@@ -215,7 +215,7 @@ int dispalys_no_recv(Node * head)
 	 if(head->next  ==  NULL)
 	 {
 
-		 diag_printf("This is empty !\n");
+		 //diag_printf("This is empty !\n");
 
          return head;
 
@@ -227,7 +227,7 @@ int dispalys_no_recv(Node * head)
 	 if(temp==NULL)
 	 {
 
-		diag_printf("Find faile !\n");
+		//diag_printf("Find faile !\n");
 
 		return head;
 
@@ -239,7 +239,7 @@ int dispalys_no_recv(Node * head)
 
 	     free( temp);
 
-	     diag_printf("Delete !\n");
+	     //diag_printf("Delete !\n");
 
 	     return head;
 

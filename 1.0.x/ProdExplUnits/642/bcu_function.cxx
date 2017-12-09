@@ -931,12 +931,7 @@ void IntercomStateHangle(send_infomation_t *param_recv_cmd_info_of_intercom,send
 	/*refuse the request of PCU*/
 	if(param_cmd_info->event_type_intercom != INTERCOM_IDLE)
 	{
-		if(param_cmd_info->event_type_intercom == D2P_INTERCOMM_EVENT &&
-		   param_cmd_info->event_info_intercom.d2p_intercomm.d2p_intercomm_active == 0)
-		{
-		//	BCUUpdataPCUDeviceInfo(*param_cmd_info);
-//			CharBufferBrush(bcu_state.alarm_audio_data_buffer_id);
-		}
+
 
 		if(param_cmd_info->event_type_intercom == D2P_INTERCOMM_EVENT &&
 		   param_cmd_info->event_info_intercom.d2p_intercomm.d2p_intercomm_active == 1 &&
@@ -944,7 +939,6 @@ void IntercomStateHangle(send_infomation_t *param_recv_cmd_info_of_intercom,send
 		{
 			bcu_state.pcu_request_info.recept_pcu_no =
 					param_cmd_info->event_info_intercom.d2p_intercomm.d2p_intercomm_pcu_device_no;
-
 			debug_print(("active_pcu_no = %d\n",bcu_state.pcu_request_info.recept_pcu_no));
 		}
 
@@ -1513,9 +1507,9 @@ void GetOuterButtonState()
 void JudegD2PButton()
 {
 	{
+		diag_printf("line:%dfunction:%s\n",__LINE__,__FUNCTION__);
 		diag_printf("bcu_state.pcu_request_info.request_number=%d\n",bcu_state.pcu_request_info.request_number);
-		diag_printf("bcu_state.d2p_button_state======%d\n",bcu_state.d2p_button_state);
-		debug_print(("bcu_state.d2p_button_state = %d\n",bcu_state.d2p_button_state));
+		diag_printf("bcu_state.d2p_button_state = %d\n",bcu_state.d2p_button_state);
 		if(bcu_state.d2p_button_state == 0 && bcu_state.pcu_request_info.request_number>0)///< show d2p page
 		{
 
@@ -1555,6 +1549,7 @@ void JudegD2PButton()
 			RefuseD2PRequest();
 		}
 	}
+	diag_printf("-----------------------------------------\n");
 }
 
 void SendCMDToEAMP(int param_current_event_state_id)
@@ -1661,12 +1656,9 @@ void ForceBreakD2DToD2P()
 			p_d2d_bk_d2p->src_devices_no = bcu_state.bcu_info.devices_no;
 			strcpy((char *)p_d2d_bk_d2p->src_devices_name,(char *)bcu_state.bcu_info.devices_name);
 			StateMachineExchange(&bcu_state.bcu_active_intercom_state,EVENT_CONFIRM_TRANSFER_TO_D2P,&rt_d2d_bk_d2p);
-
 			current_is_being_d2d = 0;
-			diag_printf("4444\n");
-//			AlarmTSToChangeScreen(31);
 			ChangeIntercommLabelState(current_is_being_d2d);
-			diag_printf("555\n");
+
 		}
 	}
 	else if(bcu_state.bcu_active_intercom_state->state_id == D2D_INTERCOMM_EVENT)
@@ -1838,17 +1830,20 @@ static int IphUpdateLink(const common_big_package_t *p_BigConmInfo_temp)
 static int IphDeleteLink(const common_big_package_t *p_BigConmInfo_temp)
 {
 	int ret=0;
-	diag_printf("Over the d2p intercom .\n");
-
-	PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
-	bcu_state.pcu_request_info.request_number= dispalys(PCURequsthead);//显示请求，返回请求数
-	ret=bcu_state.pcu_request_info.request_number;
-	diag_printf("debug ret =%d\n",ret);
-	AlarmTSToChangeScreen(4);
-	if(	ret == 0)
+	diag_printf("line:%dfunction:%s\n",__LINE__,__FUNCTION__);
+	if(p_BigConmInfo_temp->common_big_data_u.seat_id==bcu_state.bcu_info.devices_no)
 	{
-		BcuResetPlayAlarmAudioWhenD2pReq();
+		PCURequsthead = deletes_list( PCURequsthead, p_BigConmInfo_temp->common_big_data_u.iph_refuse_no, p_BigConmInfo_temp->common_big_data_u.car_no);
+		bcu_state.pcu_request_info.request_number= dispalys(PCURequsthead);//显示请求，返回请求数
+		ret=bcu_state.pcu_request_info.request_number;
+		diag_printf("debug ret =%d\n",ret);
+		AlarmTSToChangeScreen(4);
+		if(	ret == 0)
+		{
+			BcuResetPlayAlarmAudioWhenD2pReq();
+		}
 	}
+	diag_printf("------------------------------------------\n");
 	return ret;
 
 }
@@ -1913,6 +1908,7 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 {
 	int ret=0;
 	int i=0,j=0;
+	diag_printf("line:%dfunction:%s\n",__LINE__,__FUNCTION__);
 	int common_type_package=p_BigConmInfo->pkg_type;
 	//diag_printf("Probe big package iph_requset_no=%d\n",p_BigConmInfo->common_big_data_u.iph_requset_no);
 	//diag_printf("Probe big package iph_receive_no=%d\n",p_BigConmInfo->common_big_data_u.iph_receive_no);
@@ -1920,7 +1916,7 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 	diag_printf("Probe big package type = %d\n",common_type_package);
 	switch(common_type_package)
 	{
-	case 4:
+	case 2:
 			if(p_BigConmInfo->common_big_data_u.ann_event_flag ==1)
 			{
 				diag_printf("iscs enter control ann to car.\n");
@@ -1976,17 +1972,16 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 	case 8:
 			diag_printf("recv iph intercom request.\n");
 			bcu_state.pcu_request_info.request_number=IphRequestInsertLink(p_BigConmInfo);
-		break;
+
+			break;
 	case 9:
 			diag_printf("recv iph intercom connecting update.\n");
 			bcu_state.pcu_request_info.request_number=IphUpdateLink(p_BigConmInfo);
+
 		break;
 	case 10:
-		if(bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT)
-		{
 			diag_printf("recv iph intercom refuse.\n");
-			bcu_state.pcu_request_info.request_number=IphDeleteLink(p_BigConmInfo);
-		}
+			IphDeleteLink(p_BigConmInfo);
 		break;
 	case 11:
 			diag_printf("recv car bcu intercom request.\n");
@@ -2005,6 +2000,7 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 		diag_printf("no package type\n");
 		break;
 	}
+	diag_printf("--------------------------------------------\n");
 	return ret;
 }
 

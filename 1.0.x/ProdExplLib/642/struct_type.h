@@ -42,7 +42,6 @@
     #define thread_debug_print(s) //diag_printf s
 	#define debug_test_print(s)     //diag_printf s
 	#define dfu_debug_print(s)   diag_printf s
-
 #endif
 
 #define WYY 0

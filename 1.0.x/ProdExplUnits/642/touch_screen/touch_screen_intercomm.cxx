@@ -184,9 +184,9 @@ void ChangeIntercommLabelState(int param_current_intercomm_state)
 
 void ClearAllPCURequest()
 {///<清除所有PCU请求
-	bcu_state.pcu_request_info.request_number = 0;
-	bcu_state.pcu_request_info.hang_up_pcu_no = 0;
-	bcu_state.pcu_request_info.recept_pcu_no = 0;
+	//bcu_state.pcu_request_info.request_number = 0;
+	//bcu_state.pcu_request_info.hang_up_pcu_no = 0;
+	//bcu_state.pcu_request_info.recept_pcu_no = 0;
 }
 
 void ChangeD2DBreakUpD2PBtnState()

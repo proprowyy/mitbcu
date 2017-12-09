@@ -412,17 +412,6 @@ void NetWorkMain(network_buffer_t network_buffer)
 				}
 			}
 
-#if 0
-			if(FD_ISSET(udp_common_socket, &fwd))
-			{//发送common 数据
-				if(BlockBufferRead(network_buffer.udp_common_socket_buffer.udp_common_socket_send_buffer,(void *)&select_car_package_buffer,sizeof(select_car_package_buffer))>0)
-				{
-					//UdpSendFunCMD(udp_common_socket,&select_car_package_buffer,sizeof(ocs_select_car_t),,UDP_COMMON_PORT);//发送控制数据
-		        }
-			}
-#endif
-
-
 			if(FD_ISSET(udp_shell_socket,&fwd))
 			{
 				memset(shell_send_buffer,0,sizeof(shell_send_buffer));
@@ -439,18 +428,6 @@ void NetWorkMain(network_buffer_t network_buffer)
 				}
 			}
 
-
-
-#if 0
-			if(FD_ISSET(udp_heart_socket, &fwd))
-			{
-				//发送heart 数据
-				if(BlockBufferRead(network_buffer.udp_heart_socket_buffer.udp_heart_socket_send_buffer,(void *)&heart_package_buffer,sizeof(heart_package_buffer))>0)
-				{
-					UdpSendFunCMD(udp_heart_socket,&heart_package_buffer,sizeof(network_heart_package_t),,UDP_HEART_PORT);
-				}
-			}
-#endif
 			//××××××××××××××××××××××××××//
 
 		}

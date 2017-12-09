@@ -8,9 +8,6 @@
 #ifndef LINK_H_
 #define LINK_H_
 
-
-
-
 typedef struct linkstruct
 {
 

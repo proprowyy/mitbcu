@@ -684,7 +684,7 @@ void RefuseD2PRequest()
 
 	if(is_intercomming_with_pcu == 1)
 	{///<当前正在与PCU进行对讲
-		diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
+		diag_printf("line:%dfunction:%s\n",__LINE__,__FUNCTION__);
 		is_intercomming_with_pcu = 0;
 		ts_package_sequence = 2;
 		SetD2PCmd(1,0,bcu_state.pcu_request_info.recept_pcu_no,0);//进入、运行、退出-响应类型-pcu_no-bcu_no
@@ -693,11 +693,11 @@ void RefuseD2PRequest()
 	{///<当前没有接通PCU，直接拒绝相关PCU请求
 		if(bcu_state.pcu_request_info.request_number > 0)
 		{
-				diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
+				diag_printf("line:%dfunction:%s\n",__LINE__,__FUNCTION__);
 				SetD2PCmd(1,0,bcu_state.pcu_request_info.recept_pcu_no,0);
 		}
 	}
-	ShowD2PRequest();//显示请求pcu
+	//ShowD2PRequest();//显示请求pcu
 	btn_intercomm_refuse->deactivate();
 	Enable_D2p_All_Btn();
 	cyg_thread_delay(10);

@@ -85,19 +85,19 @@ int DisplaySendCmd(send_infomation_t  param_cmd_info)
 
 	}
 	if(param_cmd_info.event_type_intercom==D2P_INTERCOMM_EVENT){
-					diag_printf("---D2P_INTERCOMM_EVENT-DisPlay----\n");
-					diag_printf("SrcName = %s\nSrcId = %d\nDtsId = %d\nEvent = %d\nActive = %d\n",
+					diag_printf("--------------------D2P-----------------------\n");
+					diag_printf("SrcName = \t%s\nSrcId = \t%d\nDtsId = \t%d\nEvent = \t%d\nActive = \t%d\n",
 							param_cmd_info.src_devices_name,
 							param_cmd_info.src_devices_no,
 							param_cmd_info.event_info_intercom.d2p_intercomm.d2p_intercomm_bcu_device_no,
 							param_cmd_info.event_type_intercom,
 							param_cmd_info.event_info_intercom.d2p_intercomm.d2p_intercomm_active);
-					diag_printf("Ppt = %d\nPending = %d\nReqOver = %d\ntResponse = %d\n",
+					diag_printf("Ppt = \t%d\nPending = \t%d\nReqOver = \t%d\ntResponse = \t%d\n",
 							param_cmd_info.event_ptt_state,
 							param_cmd_info.event_info_intercom.d2p_intercomm.d2p_intercomm_pending,
 							param_cmd_info.event_info_intercom.d2p_intercomm.d2p_intercomm_request_or_over,
 							param_cmd_info.event_info_intercom.d2p_intercomm.d2p_intercomm_response);
-					diag_printf("-------------------\n\n");
+					diag_printf("--------------------------------\n\n");
 	}
 
 return 0;
