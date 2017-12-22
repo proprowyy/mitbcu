@@ -1456,6 +1456,7 @@ int touch_screen_main() {
       } // Fl_Group* gp_intercomm
       { gp_static_show = new Fl_Group(0, 0, 800, 384);
         gp_static_show->color((Fl_Color)246);
+        gp_static_show->hide();
         { Fl_Box* o = new Fl_Box(315, 135, 20, 20);
           o->box(FL_FLAT_BOX);
           o->color((Fl_Color)1);
@@ -1809,7 +1810,6 @@ int touch_screen_main() {
       } // Fl_Group* gp_select_car_ann_page
       { AnnOrMonitorSelect = new Fl_Group(0, 0, 850, 388);
         AnnOrMonitorSelect->color((Fl_Color)246);
-        AnnOrMonitorSelect->hide();
         { btn_enter = new Fl_Button(205, 140, 140, 95, "\345\271\277\346\222\255");
           btn_enter->selection_color((Fl_Color)2);
           btn_enter->callback((Fl_Callback*)cb_btn_enter);
@@ -1901,14 +1901,14 @@ int touch_screen_main() {
           btn_emerg_ann->down_box(FL_ROUNDED_BOX);
           btn_emerg_ann->callback((Fl_Callback*)cb_btn_emerg_ann);
           btn_emerg_ann->align(Fl_Align(FL_ALIGN_WRAP));
-          btn_emerg_ann->deactivate();
+          btn_emerg_ann->deactivate();btn_emerg_ann->hide();
         } // Fl_Button* btn_emerg_ann
         { btn_live = new Fl_Button(445, 395, 150, 70, "\351\200\211\350\275\246\347\225\214\351\235\242");
           btn_live->box(FL_ROUNDED_BOX);
           btn_live->down_box(FL_ROUNDED_BOX);
           btn_live->callback((Fl_Callback*)cb_btn_live);
           btn_live->align(Fl_Align(FL_ALIGN_WRAP));
-          gp_main_file_active_page=gp_select_car_ann_page;
+          gp_main_file_active_page=gp_select_car_ann_page;btn_live->hide();
         } // Fl_Button* btn_live
         { btn_intercomm = new Fl_Button(645, 395, 150, 70, "\347\264\247\346\200\245\346\212\245\350\255\246");
           btn_intercomm->box(FL_ROUNDED_BOX);
