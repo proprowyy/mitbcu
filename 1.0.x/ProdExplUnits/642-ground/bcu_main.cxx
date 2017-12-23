@@ -338,20 +338,7 @@ void *SystemControl(void *arg)
 				diag_printf("error:%d:%s\n",__LINE__,__FUNCTION__);
 			}
 			//DisplayNetworkCmd(recv_network_info_from_network);
-#if 0
 
-
-			cyg_thread_delay(10);
-			if(strcmp(recv_network_info_from_network.send_information.src_devices_name,"PCU") == 0)
-			{
-
-			}
-
-			if(recv_network_info_from_network.send_information.event_type_intercom == D2D_INTERCOMM_EVENT)
-			{
-			//	JudgeWhetherHaveD2DRequest(&recv_cmd_info_of_intercom,&recv_network_info_from_network);
-			}
-#endif
 		}
 
 		if(BlockBufferRead(bcu_state.shell_recv_buffer_id,(void *)&recv_shell_from_network,sizeof(recv_shell_from_network))>0)
