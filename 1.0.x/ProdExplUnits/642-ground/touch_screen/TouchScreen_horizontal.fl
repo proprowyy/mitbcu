@@ -6,7 +6,7 @@ Function {touch_screen_main()} {open return_type int
 } {
   Fl_Window wd_touch_screen {
     label {Touch Screen} open
-    xywh {851 114 800 485} type Double box BORDER_BOX color 0 selection_color 0 resizable
+    xywh {549 114 800 485} type Double box BORDER_BOX color 0 selection_color 0 resizable
     code0 {\#include "ts_head_file.h"} visible
   } {
     Fl_Wizard wz_window_view {open
@@ -53,7 +53,7 @@ wz_window_view->value(gp_main_file_active_page);}
         }
       }
       Fl_Group gp_intercomm {open
-        xywh {0 0 800 385} color 246 align 129 hide
+        xywh {0 0 800 385} color 246 align 129
         code0 {gp_intercomm->hide();}
       } {
         Fl_Button btn_d2p_request_1 {
@@ -209,11 +209,16 @@ wz_window_view->value(gp_main_file_active_page);}
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
-	//SetReceptPCUNo(d2p_reponse_sursor + 9);
+	char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_10->label());
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
+
 	currend_d2P_position = 10;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
-}}
+}} selected
           xywh {170 230 140 95}
         }
         Fl_Button btn_d2p_request_11 {
@@ -222,7 +227,12 @@ wz_window_view->value(gp_main_file_active_page);}
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
-	//SetReceptPCUNo(d2p_reponse_sursor + 10);
+	char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_11->label());
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
+
 	currend_d2P_position = 11;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -236,7 +246,12 @@ wz_window_view->value(gp_main_file_active_page);}
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
 	currend_d2P_position = 12;
-//	SetReceptPCUNo(d2p_reponse_sursor + 11);
+	char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_12->label());
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
+
 	
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
 }}
@@ -280,11 +295,11 @@ wz_window_view->value(gp_main_file_active_page);
           xywh {645 290 150 85}
         }
       }
-      Fl_Group gp_static_show {open
-        xywh {0 0 800 384} color 246
+      Fl_Group gp_static_show {
+        xywh {0 0 800 384} color 246 hide
         code0 {gp_static_show->hide();}
       } {
-        Fl_Box {} {selected
+        Fl_Box {} {
           xywh {315 135 20 20} box FLAT_BOX color 1 selection_color 1 labelcolor 1
         }
         Fl_Box {} {

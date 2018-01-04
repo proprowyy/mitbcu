@@ -220,7 +220,12 @@ static void cb_btn_d2p_request_10(Fl_Button*, void*) {
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
-	//SetReceptPCUNo(d2p_reponse_sursor + 9);
+	char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_10->label());
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
+
 	currend_d2P_position = 10;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -235,7 +240,12 @@ static void cb_btn_d2p_request_11(Fl_Button*, void*) {
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)50);
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
-	//SetReceptPCUNo(d2p_reponse_sursor + 10);
+	char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_11->label());
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
+
 	currend_d2P_position = 11;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
@@ -251,7 +261,12 @@ static void cb_btn_d2p_request_12(Fl_Button*, void*) {
 	(gp_intercomm->child(currend_d2P_position - 1))->redraw();
 
 	currend_d2P_position = 12;
-//	SetReceptPCUNo(d2p_reponse_sursor + 11);
+	char buf[10];
+	sprintf(buf,"%s",btn_d2p_request_12->label());
+	unsigned char vn=0;	
+	parse_btn_lable_value(buf,&d2p_reponse_sursor,&vn);	
+	SetReceptPCUNo(d2p_reponse_sursor,vn);
+
 	
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
 };
@@ -1403,7 +1418,6 @@ int touch_screen_main() {
       { gp_intercomm = new Fl_Group(0, 0, 800, 385);
         gp_intercomm->color((Fl_Color)246);
         gp_intercomm->align(Fl_Align(129));
-        gp_intercomm->hide();
         { btn_d2p_request_1 = new Fl_Button(10, 13, 140, 95);
           btn_d2p_request_1->callback((Fl_Callback*)cb_btn_d2p_request_1);
         } // Fl_Button* btn_d2p_request_1
@@ -1456,6 +1470,7 @@ int touch_screen_main() {
       } // Fl_Group* gp_intercomm
       { gp_static_show = new Fl_Group(0, 0, 800, 384);
         gp_static_show->color((Fl_Color)246);
+        gp_static_show->hide();
         { Fl_Box* o = new Fl_Box(315, 135, 20, 20);
           o->box(FL_FLAT_BOX);
           o->color((Fl_Color)1);
