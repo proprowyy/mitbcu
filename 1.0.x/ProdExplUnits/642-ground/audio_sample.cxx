@@ -103,13 +103,7 @@ void StartAudioSampleTimer()
 	///<设置音频采集定时器采样周期
 	if(bcu_state.bcu_active_intercom_state->state_id == D2P_INTERCOMM_EVENT)
 	{
-<<<<<<< HEAD
 		SetAudioSampleTimeInterval(8);
-=======
-
-		SetAudioSampleTimeInterval(13);
-
->>>>>>> 29c78d3cb58c48ed420bdabc7cc9be4e98f8e42e
 	}
 	else if(bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT)
 	{
