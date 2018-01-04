@@ -50,11 +50,9 @@ int main(int argc, char **argv)
 	pthread_attr_t attr_of_demao_thread;
 	//****************************//
 	/*设备软件版本号登记*/
-<<<<<<< HEAD
+
 	SetSoftwareVersion("642-PA-BCU-app-1-20180104","2018-01-04");
-=======
-	SetSoftwareVersion("680-PA-BCU-app-1-20171227","2017-12-27");
->>>>>>> c0359b41c89d64afc187bec9570efda9717c1dcf
+
 	//*********************//
 	//初始化选车结构全局变量
 	Init_ocs_select_car_struct();
