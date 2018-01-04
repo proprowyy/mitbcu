@@ -6,8 +6,8 @@ Function {touch_screen_main()} {open return_type int
 } {
   Fl_Window wd_touch_screen {
     label {Touch Screen} open
-    xywh {851 114 800 485} type Double box BORDER_BOX color 0 selection_color 0 resizable
-    code0 {\#include "ts_head_file.h"} visible
+    xywh {301 104 800 485} type Double box BORDER_BOX color 0 selection_color 0 hide resizable
+    code0 {\#include "ts_head_file.h"}
   } {
     Fl_Wizard wz_window_view {open
       xywh {-70 -124 920 512} box UP_BOX color 246
@@ -284,7 +284,7 @@ wz_window_view->value(gp_main_file_active_page);
         xywh {0 0 800 384} color 246
         code0 {gp_static_show->hide();}
       } {
-        Fl_Box {} {selected
+        Fl_Box {} {
           xywh {315 135 20 20} box FLAT_BOX color 1 selection_color 1 labelcolor 1
         }
         Fl_Box {} {
@@ -1374,9 +1374,9 @@ btn_d2d_8->color((Fl_Color)2);}
  	bcu_state.d2d_intercom_page = 1;
 	bcu_state.elsect_car_page=0;
  	bcu_state.static_page=0;
-}}
+}} selected
           xywh {225 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
-          code0 {btn_emerg_ann->deactivate();}
+          code0 {btn_emerg_ann->deactivate();btn_emerg_ann->hide();}
         }
         Fl_Button btn_live {
           label {选车界面}
@@ -1394,7 +1394,7 @@ ChangeBtnState(4);
  bcu_state.static_page=0;
  }}
           xywh {445 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
-          code0 {gp_main_file_active_page=gp_select_car_ann_page;}
+          code0 {gp_main_file_active_page=gp_select_car_ann_page;btn_live->hide();}
         }
         Fl_Button btn_intercomm {
           label {紧急报警}
