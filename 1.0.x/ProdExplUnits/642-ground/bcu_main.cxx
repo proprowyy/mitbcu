@@ -41,8 +41,6 @@ int main(int argc, char **argv)
 	int return_value_of_thread_create = 0;/*the return of thread create*/
 	void *return_value_of_join_thread[6];/*the return of thread wait*/
 	int return_init_buffer = 0;/*the value of init buffer*/
-
-	/*the declaration of thread attributions*/
 	pthread_attr_t attr_of_screen;/*the attribution of touch sreen thread*/
 	pthread_attr_t attr_of_network;/*the attribution of network thread*/
 	pthread_attr_t attr_of_control;/*the attribution of control thread*/
