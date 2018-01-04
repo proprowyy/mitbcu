@@ -77,8 +77,8 @@
 /**
  * 系统事件类型
  */
-#define OCC_EVENT 1					///<OCC
-#define LIVE_ANN_EVENT 2				///<口播
+#define OCC_EVENT 2				///<OCC
+#define LIVE_ANN_EVENT 1				///<口播
 #define EMERG_ANN_EVENT 3				///<紧急广播
 #define MANUAL_ANN_EVENT 4			///<手动广播
 #define TMS_MANUAL_ANN_EVENT 5		///<半自动广播
