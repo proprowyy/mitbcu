@@ -218,7 +218,7 @@ wz_window_view->value(gp_main_file_active_page);}
 	currend_d2P_position = 10;
 
 	(gp_intercomm->child(currend_d2P_position - 1))->color((Fl_Color)94);
-}} selected
+}}
           xywh {170 230 140 95}
         }
         Fl_Button btn_d2p_request_11 {
@@ -1381,6 +1381,7 @@ btn_d2d_8->color((Fl_Color)2);}
           callback {if(bcu_state.d2d_intercom_page == 0&&bcu_state.static_page==1)
 {
 	ChangeBtnState(3);
+	ShowD2DRequest();
 	gp_main_file_active_page=D2D_intercom_page;
 	wz_window_view->value(gp_main_file_active_page);
 	 bcu_state.iph_monitor_cur_page =0;
@@ -1389,7 +1390,7 @@ btn_d2d_8->color((Fl_Color)2);}
  	bcu_state.d2d_intercom_page = 1;
 	bcu_state.elsect_car_page=0;
  	bcu_state.static_page=0;
-}}
+}} selected
           xywh {225 395 150 70} box ROUNDED_BOX down_box ROUNDED_BOX align 128
           code0 {btn_emerg_ann->deactivate();}
         }

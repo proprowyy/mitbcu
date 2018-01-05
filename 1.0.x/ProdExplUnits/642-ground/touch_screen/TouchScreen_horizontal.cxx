@@ -1347,6 +1347,7 @@ static void cb_btn_emerg_ann(Fl_Button*, void*) {
   if(bcu_state.d2d_intercom_page == 0&&bcu_state.static_page==1)
 {
 	ChangeBtnState(3);
+	ShowD2DRequest();
 	gp_main_file_active_page=D2D_intercom_page;
 	wz_window_view->value(gp_main_file_active_page);
 	 bcu_state.iph_monitor_cur_page =0;
