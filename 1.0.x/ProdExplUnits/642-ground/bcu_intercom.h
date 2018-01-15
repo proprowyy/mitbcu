@@ -278,5 +278,8 @@ int ZhwPcuToEampMap(int input_pcu_number);
 
 extern int GetSndCurrentMode(void); ///< add, 0107
 extern int CloseAudioSampleTimerForPcuAlarm(void); ///< add, 0107
+int BcuInitPlayAlarmAudioWhenD2dReq(void);
+int BcuResetPlayAlarmAudioWhenD2dReq(void);
+void  StartOrBrokeBroadcastBcuRequestAlarmAudioData();
 
 #endif /* BCU_INTERCOM_H_ */

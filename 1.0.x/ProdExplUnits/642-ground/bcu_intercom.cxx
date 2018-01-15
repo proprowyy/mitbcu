@@ -122,10 +122,10 @@ void StartD2DHangUpD2PTimeOutTimer()
 /*The enter of intercom idle*/
 void IdleIntercomEnter(send_infomation_t *send_information_intercomm_idle)
 {
-
+	printf("line:%dfunction:%s",__LINE__,__FUNCTION__);
 	///<开始或者结束PCU请求提示音
 	StartOrBrokeBroadcastPcuRequestAlarmAudioData();
-#ifndef CONFIG_TEST_SND_IN_MULTI_THREAD
+	StartOrBrokeBroadcastBcuRequestAlarmAudioData();
 	diag_printf("I am idle intercom enter\n");
 	if(send_information_intercomm_idle->event_type_intercom == D2D_INTERCOMM_EVENT)
 	{
@@ -143,34 +143,32 @@ void IdleIntercomEnter(send_infomation_t *send_information_intercomm_idle)
 		SendCmd(&send_information_intercomm_idle,"PCU",send_information_intercomm_idle->event_info_intercom.d2p_intercomm.d2p_intercomm_pcu_device_no);
 	}
 	ClearAllAudioDataBuffer();
-#endif
+
 }
 
 /*The exit of intercom idle*/
 void IdleIntercomExit()
 {
-#ifndef CONFIG_TEST_SND_IN_MULTI_THREAD
-	///<发送当前PTT状态给BCU
+	printf("line:%dfunction:%s",__LINE__,__FUNCTION__);
 	SendPTTStateToBCU_Once();
-	debug_print(("I am idle intercom exit\n"));
-
 	ClearAllAudioDataBuffer();
-
 	whether_have_begin_broadcast_alarm_audio_data = 0;
-
-#endif
 }
 
 /*The process of intercom idle*/
 void IdleIntercomProcess(send_infomation_t *send_information_intercomm_idle)
 {
-#ifndef CONFIG_TEST_SND_IN_MULTI_THREAD
-
-	if( bcu_state.pcu_request_info.pcu_alarm_playing_again == 1&& bcu_state.pcu_request_info.pcu_alarm_playing == 1 )
+	if( bcu_state.pcu_request_info.pcu_alarm_playing_again == 1
+		&& bcu_state.pcu_request_info.pcu_alarm_playing == 1 )
 	{
-                bcu_state.pcu_request_info.pcu_alarm_playing_again = 0;
-                OpenAudioSampleTimer();
+         bcu_state.pcu_request_info.pcu_alarm_playing_again = 0;
+         OpenAudioSampleTimer();
+	}
 
+	if( bcu_state.bcu_request_info.bcu_alarm_playing_again == 1&& bcu_state.bcu_request_info.bcu_alarm_playing == 1 )
+	{
+	    bcu_state.bcu_request_info.bcu_alarm_playing_again = 0;
+	    OpenAudioSampleTimer();
 	}
 
 	if(whether_have_begin_broadcast_alarm_audio_data == 1 &&
@@ -191,13 +189,13 @@ void IdleIntercomProcess(send_infomation_t *send_information_intercomm_idle)
 		SendCmd(&send_information_intercomm_idle,"PCU",bcu_state.pcu_request_info.refuse_pcu_no);
 
 	}
-#endif	
+
 }
 
 /*The enter of D2D intercom*/
 void D2DIntercomEnter(send_infomation_t *send_information_intercomm_d2d)
 {
-	debug_print(("I am d2d intercom enter\n"));
+	BcuResetPlayAlarmAudioWhenD2dReq();
 	bcu_6d5w_ctrl_wilson(bcu_state.device_volume.d2d_volume);
 	bcu_state.d2d_button_state = 1;
 	whether_eant_to_delay_finished_d2d = 0;
@@ -220,7 +218,6 @@ void D2DIntercomEnter(send_infomation_t *send_information_intercomm_d2d)
 /*The exit of D2D intercom*/
 void D2DIntercomExit()
 {
-	debug_print(("I am d2d intercom exit\n"));
 	bcu_state.d2d_button_state = 0;
 	whether_eant_to_delay_finished_d2d= 0;
 	CloseAudioSampleTimer();
@@ -244,7 +241,7 @@ void D2DIntercomProcess(send_infomation_t *send_information)
 
 void D2PMoniortEnter(send_infomation_t *send_information_moniort_d2p)
 {
-	diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
+
 	bcu_6d5w_ctrl_wilson(bcu_state.device_volume.d2d_volume);
 	bcu_6d5w_ctrl_wilson(4);
 	SendCmd(&send_information_moniort_d2p,"PCU",send_information_moniort_d2p->event_info_intercom.d2p_intercomm.d2p_intercomm_pcu_device_no);
@@ -261,7 +258,6 @@ void D2PMoniortEnter(send_infomation_t *send_information_moniort_d2p)
 
 void D2PMoniortExit()
 {
-	diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
 	begin_to_broadcast_audio_data = 0;
 	ClearAudioDataDestination();
 	bcu_state.mic_owner = NONE;
@@ -271,15 +267,13 @@ void D2PMoniortExit()
 	BCU_LED_BUTTON2_DIS;
 }
 
-void D2PMoniortProcess(send_infomation_t *send_information_moniort_d2p){
-
-	//diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
-	 SendCmd(&send_information_moniort_d2p,"PCU",1);
+void D2PMoniortProcess(send_infomation_t *send_information_moniort_d2p)
+{
+	SendCmd(&send_information_moniort_d2p,"PCU",1);
 }
 /*The enter of D2P intercom*/
 void D2PIntercomEnter(send_infomation_t *send_information_intercomm_d2p)
 {
-	diag_printf("%d:%s\n",__LINE__,__FUNCTION__);
     BcuResetPlayAlarmAudioWhenD2pReq(); ///< add, 0107
     bcu_6d5w_ctrl_wilson(bcu_state.device_volume.d2d_volume);
 	bcu_6d5w_ctrl_wilson(4);
@@ -374,6 +368,7 @@ void IntercomHangUpExit()
 	debug_print(("I am intercom hang up exit\n"));
 
 	SendToOverOtherBCUD2D();
+
 	begin_to_broadcast_d2d = 0;
 
 	bcu_state.d2d_button_state = 0;
@@ -382,9 +377,10 @@ void IntercomHangUpExit()
 
 	ClearAudioDataDestination();
 
-
 	bcu_state.mic_owner = NONE;
+
 	BCU_LED_BUTTON3_DIS;
+
 	bcu_6d5w_ctrl_wilson(0);
 }
 
@@ -414,8 +410,7 @@ int BcuResetPlayAlarmAudioWhenD2pReq(void)
        return 0;
 }
 int BcuInitPlayAlarmAudioWhenD2pReq(void)
-{///<PCU请求时，初始化播放信息
-		//intercomm_debug_print(("Init, D2pReq, enter: %d, %d, %d--%d \n", GetSndCurrentMode(), bcu_state.pcu_request_info.open_snd_playback,bcu_state.pcu_request_info.pcu_alarm_playing, bcu_state.pcu_request_info.request_number ));
+{
          if( (bcu_state.pcu_request_info.open_snd_playback==0 && 2==GetSndCurrentMode()) || (bcu_state.pcu_request_info.pcu_alarm_playing==0 && 1==GetSndCurrentMode()) )
          {
         	 //diag_printf("Init, D2pReq, ready: %d, %d, %d \n", GetSndCurrentMode(), bcu_state.pcu_request_info.open_snd_playback,bcu_state.pcu_request_info.pcu_alarm_playing);
@@ -441,13 +436,72 @@ int BcuInitPlayAlarmAudioWhenD2pReq(void)
 void  StartOrBrokeBroadcastPcuRequestAlarmAudioData()
 {///<打开或关闭PCU请求提示音的播放
 	if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE
-	   && bcu_state.bcu_active_ann_state->state_id == ANN_IDLE ){
+	   && bcu_state.bcu_active_ann_state->state_id == ANN_IDLE
+	   && bcu_state.bcu_request_number == 0){
 			bcu_6d5w_ctrl_wilson(2);
 			BcuInitPlayAlarmAudioWhenD2pReq(); ///< add, 0107
 		}
 }
 
 
+
+
+int BcuResetPlayAlarmAudioWhenD2dReq(void)
+{
+	bcu_state.bcu_request_info.open_snd_playback = 0;
+    bcu_state.bcu_request_info.bcu_alarm_playing_again = 0;
+    CloseAudioSampleTimerForPcuAlarm();
+    CharBufferClear(bcu_state.alarm_audio_data_buffer_id);
+    CharBufferClear(bcu_state.pending_buffer_id);
+	if( bcu_state.bcu_request_info.bcu_alarm_playing == 1 )
+	{
+		bcu_state.bcu_request_info.bcu_alarm_playing = 0;
+	}
+	if(bcu_state.bcu_active_ann_state->state_id == LIVE_ANN_EVENT)
+	{
+		OpenAudioSampleTimer();
+    }
+	return 0;
+}
+
+int BcuInitPlayAlarmAudioWhenD2dReq(void)
+{
+
+	if( (bcu_state.bcu_request_info.open_snd_playback==0&& 2==GetSndCurrentMode())
+	  || (bcu_state.bcu_request_info.bcu_alarm_playing==0&& 1==GetSndCurrentMode()))
+	{
+		CharBufferClear(bcu_state.alarm_audio_data_buffer_id);
+        CharBufferClear(bcu_state.pending_buffer_id);
+        SetAudioSampleTimeInterval(20+2); ///< timer = 200ms for Mp3_Thread
+        OpenAudioSampleTimer();
+        bcu_state.bcu_request_info.bcu_alarm_playing = 1;
+        bcu_state.bcu_request_info.open_snd_playback = 1;
+    }
+	else if(bcu_state.bcu_request_info.bcu_alarm_playing==1 && 1==GetSndCurrentMode())
+	{
+		if( bcu_state.bcu_request_number ==0 )
+		{
+			BcuResetPlayAlarmAudioWhenD2dReq();
+		}
+	}
+   return 0;
+}
+
+
+void  StartOrBrokeBroadcastBcuRequestAlarmAudioData()
+{///<打开或关闭PCU请求提示音的播放
+	if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE
+			&&   bcu_state.bcu_active_ann_state->state_id == ANN_IDLE )
+	{
+		bcu_6d5w_ctrl_wilson(2);
+		BcuInitPlayAlarmAudioWhenD2dReq(); ///< add, 0107
+	}
+}
+
+
+
+
+//------------------------------------------------------
 void AdjustVolumeAfterCODEC()
 {///<在CODEC下调节音量
 	if(current_sounder_mode != BCU_SND_MODE_CODEC)

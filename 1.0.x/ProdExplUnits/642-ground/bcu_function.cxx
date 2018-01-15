@@ -126,6 +126,7 @@ void InitBcuAndState()
 	  bcu_state.elsect_car_page=0;
 	  bcu_state.set_page=0;
 	  bcu_state.static_page=1;
+	  memset(&bcu_state.bcu_request_info,0,sizeof(bcu_request_info_t));
 }
 
 int BcuGetNetTxCmdBuffId(void)

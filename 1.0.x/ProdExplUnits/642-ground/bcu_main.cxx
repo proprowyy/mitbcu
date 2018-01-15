@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	pthread_attr_t attr_of_demao_thread;
 	//****************************//
 	/*设备软件版本号登记*/
-	SetSoftwareVersion("642-PA-BCU-app-1-20180104","20180104");
+	SetSoftwareVersion("642-PA-BCU-app-1-20180112","20180112");
 	//*********************//
 	//初始化选车结构全局变量
 	Init_ocs_select_car_struct();
@@ -282,14 +282,10 @@ void *SystemControl(void *arg)
 	{
 		GetPAAllOuterButtonState();
 		D2DHangUpD2PTimeOutHandle();
-		//司机对讲请求与挂断处理
-
 		ProbeMetalButtonToPerform();
-		///<PCU请求时，改变相关按钮的颜色
 		D2DReqAndResponseHandle();
 		ChangeIntercommButtonColor(&whether_ts_is_running);
 		AutoChangeIntercommButtonEnableStateAndColor();
-
 		if(BlockBufferRead(bcu_state.dev_vol_info_buffer_id,&ctrl_recv_from_ts,sizeof(ts_dev_volume_info_t))>0)
 		{
 			printf("Dev vol info recv.\n");
@@ -301,12 +297,12 @@ void *SystemControl(void *arg)
 		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0)
 		{
 			diag_printf("Control recv a big package-%d\n",recv_temp_big.pkg_type);
-
 			ProbeBigCommPackage(&recv_temp_big);
 			diag_printf("bcu_state.bcu_request_number-%d\n",bcu_state.bcu_request_number);
 			if(bcu_state.bcu_request_number !=0)
 			{
 				AlarmTSToChangeScreen(9);//ShowD2DRequest
+				StartOrBrokeBroadcastBcuRequestAlarmAudioData();
 			}
 			if(bcu_state.pcu_request_info.request_number != 0)
 			{
@@ -336,20 +332,6 @@ void *SystemControl(void *arg)
 				diag_printf("error:%d:%s\n",__LINE__,__FUNCTION__);
 			}
 			//DisplayNetworkCmd(recv_network_info_from_network);
-#if 0
-
-
-			cyg_thread_delay(10);
-			if(strcmp(recv_network_info_from_network.send_information.src_devices_name,"PCU") == 0)
-			{
-
-			}
-
-			if(recv_network_info_from_network.send_information.event_type_intercom == D2D_INTERCOMM_EVENT)
-			{
-			//	JudgeWhetherHaveD2DRequest(&recv_cmd_info_of_intercom,&recv_network_info_from_network);
-			}
-#endif
 		}
 
 		if(BlockBufferRead(bcu_state.shell_recv_buffer_id,(void *)&recv_shell_from_network,sizeof(recv_shell_from_network))>0)
@@ -436,7 +418,6 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 					PlayAudioTwice_D2P(bcu_audio_handle, bcu_state.audio_data_recv_buffer_id, bcu_state.pending_buffer_id);
 				}
 			}
-			//SendPTTStateToPCU();
 		}
 		else if(CurIntercomState == D2P_MONITOR_EVENT)
 		{//diag_printf("play monitir audio data !-1\n");
@@ -522,7 +503,7 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 		{
 			if( bcu_state.pcu_request_info.request_number !=0 )
 			{
-				//diag_printf("play AlarmAudio audio data !-1\n");
+
 			     if( 1==bcu_state.pcu_request_info.open_snd_playback )
 			     {
 				   bcu_state.pcu_request_info.open_snd_playback = 2;
@@ -550,6 +531,38 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 					BcuResetPlayAlarmAudioWhenD2pReq();
 				}
 			}
+
+			if( bcu_state.bcu_request_number !=0 )
+			{
+				if( 1==bcu_state.bcu_request_info.open_snd_playback )
+				{
+					bcu_state.bcu_request_info.open_snd_playback = 2;
+					MicAdPcmWavheader(bcu_state.alarm_audio_data_buffer_id);	 ///<
+					AlarmAudioDataIntoBuffer(bcu_state.alarm_audio_data_buffer_id);
+				}
+				if( bcu_state.bcu_request_info.bcu_alarm_playing==1 )
+				{
+					if( -5==PlayAudioTwice(bcu_audio_handle, bcu_state.alarm_audio_data_buffer_id, bcu_state.pending_buffer_id) )
+					{
+						char tmp_array[64];
+						CharBufferBrush(bcu_state.alarm_audio_data_buffer_id);
+						CharBufferRead(bcu_state.alarm_audio_data_buffer_id, tmp_array, 48);
+						PlayAudioTwice(bcu_audio_handle, bcu_state.alarm_audio_data_buffer_id, bcu_state.pending_buffer_id);
+						CharBufferClear(bcu_state.pending_buffer_id);
+						bcu_state.bcu_request_info.bcu_alarm_playing_again = 1;
+					}
+				}
+			}
+			else
+			{
+				if( bcu_state.bcu_request_info.bcu_alarm_playing==1 )
+				{
+					debug_print(("Bcu,mp3 thread:  close alarm play and reset \n"));
+					BcuResetPlayAlarmAudioWhenD2dReq();
+				}
+			}
+
+
 		}		
 
 	}

@@ -530,7 +530,7 @@ int GetNetData2(const int sockfd,void *pToData, int len_num)
 		udp_print(("recvfrom error!\n"));
 		return -1;
 	}
-//	udp_print(("recvfrom---ret:%d\n",ret));
+     diag_printf("recvfrom---ret:%d\n",ret);
 //	PrintPortAndIp(recv_add);
 
 	return 0;

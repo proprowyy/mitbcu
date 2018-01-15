@@ -36,6 +36,29 @@ extern state_process_t emergency_annoucement_state;
 extern state_process_t manual_annoucement_state;
 extern state_process_t mic_outer_3d5_ann_state;
 
+#define ANN_PIN_SET() \
+   	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(F, 24, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(F, 24, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_set( CYGHWR_HAL_KINETIS_PIN(F, 24, 1, KINETIS_PIN_PULLUP) );\
+   	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(F, 25, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(F, 25, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_set( CYGHWR_HAL_KINETIS_PIN(F, 25, 1, KINETIS_PIN_PULLUP) );\
+	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_set( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );\
+	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_set( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );\
+
+
+#define ANN_PIN_CLR() \
+	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_clear( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );\
+	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );\
+	hal_gpio_pin_clear( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) ); \
+
 /** IdleAnnEnter function description
  *  This function belongs to BCU，it's the entre of idle announcement state
  *  @param   the point of control information

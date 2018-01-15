@@ -152,6 +152,7 @@ typedef struct
 	device_volume_t device_volume;
 	event_priority_t event_priority;
 	pcu_request_info_t pcu_request_info;
+	bcu_request_info_t bcu_request_info;
 	global_region_info_t bcu_region_info[2];
 
 	/*---------end-----------------*/

@@ -86,18 +86,16 @@ cyg_alarm alarm_object_sync;
 
 void IdleAnnEnter(send_infomation_t *send_information_idle)
 {
+	printf("line:%dfunction:%s",__LINE__,__FUNCTION__);
 	StartOrBrokeBroadcastPcuRequestAlarmAudioData();
-	debug_print(("I am idle ann enter\n"));
-
+	StartOrBrokeBroadcastBcuRequestAlarmAudioData();
 	bcu_state.bcu_info.current_state_ann = ANN_IDLE;
-
 	SendCmd(&send_information_idle,"OCS",MUL_DST_NO);
 }
 
 void IdleAnnExit()
 {
-	debug_print(("I am idle ann exit\n"));
-;
+	printf("line:%dfunction:%s",__LINE__,__FUNCTION__);
 }
 
 void IdleAnnProcess(send_infomation_t *send_information_idle)
@@ -107,46 +105,30 @@ void IdleAnnProcess(send_infomation_t *send_information_idle)
 
 void AutoAnnEnter(send_infomation_t *send_information_tms_auto)
 {
-	debug_print(("I am auto ann enter\n"));
+	printf("line:%dfunction:%s",__LINE__,__FUNCTION__);
 	RestartSYNCTimer();///<重置同步定时器
-
-
 	SendCmd(&send_information_tms_auto,"EAMP",MUL_DST_NO);
-
-	/*Start timer*/
-//	StartAutoSimulateTimer();
 }
 
 void AutoAnnExit()
 {
-	debug_print(("I am auto ann exit\n"));
-
-	/*Close timer*/
+	printf("line:%dfunction:%s",__LINE__,__FUNCTION__);
 }
 
 void AutoAnnProcess(send_infomation_t *send_information_tms_auto)
 {
-//	diag_printf("ann process\n");
-//	RestartSYNCTimer();///<重置同步定时器
 	SendCmd(&send_information_tms_auto,"EAMP",MUL_DST_NO);
 }
 
 void LiveAnnEnter(send_infomation_t *send_information_live)
 {
-    diag_printf("I am live ann enter\n");
-
+	printf("line:%dfunction:%s",__LINE__,__FUNCTION__);
 	SendCmd(&send_information_live,"OCS",MUL_DST_NO);///<2013-12-3
-
 	bcu_state.live_button_state = 1;
-
 	CloseAudioSampleTimer();
-
 	SetAudioDataDestination("OCS",LIVE_DST_NO);
-
 	bcu_state.mic_owner = ANNOUNCE;
-
 	StartAudioSampleTimer();///<2013-10-24
-
 	bcu_state.bcu_info.current_state_ann = LIVE_ANN_EVENT;
 	bcu_state.this_bcu_intercomm_state =LIVE_ANN_EVENT;
 	CharBufferClear(bcu_state.audio_data_send_buffer_id);
@@ -154,26 +136,7 @@ void LiveAnnEnter(send_infomation_t *send_information_live)
 	CharBufferClear(bcu_state.audio_data_recv_buffer_id);
 	CharBufferClear(bcu_state.local_audio_data_recv_buffer_id);
 	MicAdPcmWavheader(bcu_state.local_audio_data_recv_buffer_id);
-
-
-#if 1
-   	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(F, 24, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(F, 24, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_set( CYGHWR_HAL_KINETIS_PIN(F, 24, 1, KINETIS_PIN_PULLUP) );
-
-   	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(F, 25, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(F, 25, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_set( CYGHWR_HAL_KINETIS_PIN(F, 25, 1, KINETIS_PIN_PULLUP) );
-
-
-	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_set( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );
-
-	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_set( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) ); ///< PTB20 = audio_ctrl0
-#endif	
+	ANN_PIN_SET();
 	BCU_LED_BUTTON1_ON;
 
 
@@ -190,20 +153,13 @@ void LiveAnnExit()
 	///<BCU 音频输出到扬声器
 	bcu_audio_talk_pa_choose(SET_TALK_AUDIO);
 	whether_have_begin_broadcast_alarm_audio_data = 0;
-	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_clear( CYGHWR_HAL_KINETIS_PIN(A, 11, 1, KINETIS_PIN_PULLUP) ); ///< for d2p
-	hal_set_pin_function( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_ddr_out( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) );
-	hal_gpio_pin_clear( CYGHWR_HAL_KINETIS_PIN(B, 20, 1, KINETIS_PIN_PULLUP) ); ///< PTB20 = audio_ctrl0
+	ANN_PIN_CLR();
 	BCU_LED_BUTTON1_DIS;
 }
 
 void LiveAnnProcess(send_infomation_t *send_information_live)
 {
-
 	SendCmd(&send_information_live,"EAMP",MUL_DST_NO);
-
 }
 void OCCEnter(send_infomation_t *send_information_occ)
 {

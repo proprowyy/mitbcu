@@ -26,7 +26,7 @@
 
 #define ALARM_INTERVAL_D2P (6000*20)  //60s * 20 = 20min
 #define HEART_BETA 100
-#define SAMPLE_AUDIO_FREQUENCE 10//15//21   ///<2014-01-13
+#define SAMPLE_AUDIO_FREQUENCE 13//15//21   ///<2014-01-13
 
 #define BCU_PRIORIT 10 ///<BCU thread priority
 #define BCU_HIGH_MIC_SAMPLE_PRIORITY 14
