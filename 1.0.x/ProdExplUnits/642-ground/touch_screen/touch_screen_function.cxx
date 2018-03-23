@@ -1187,6 +1187,7 @@ int parse_btn_lable_value_bcu(const char *src,int *dst_device,int *dst_vn)
 		return ret;
 }
 
+
 void SetD2dCmdPackage(unsigned int vn,unsigned int bcu_no,send_infomation_t *param_send_infomation)
 {
 	bcu_state.opposite_bcu_no=bcu_no;

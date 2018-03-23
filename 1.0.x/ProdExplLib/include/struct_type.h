@@ -223,7 +223,7 @@
 ///<设备默认音量
 #define DEFAULT_MONITOR_VOLUME (2)
 #define DEFAULT_CAR_VOLUME (92)
-#define DEFAULT_INTERCOMM_VOLUME (3)
+#define DEFAULT_INTERCOMM_VOLUME (2)
 
 //add by zhw 2014-5-20;
 typedef struct

@@ -397,7 +397,7 @@ typedef union
 
 typedef struct
 {
-	char dst_dev_name[DEVICE_NAME_LENGTH];
+		char dst_dev_name[DEVICE_NAME_LENGTH];
 		int dst_dev_number;
 		char src_dev_name[DEVICE_NAME_LENGTH];
 		int src_dev_number;

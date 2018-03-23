@@ -503,7 +503,6 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 		{
 			if( bcu_state.pcu_request_info.request_number !=0 )
 			{
-
 			     if( 1==bcu_state.pcu_request_info.open_snd_playback )
 			     {
 				   bcu_state.pcu_request_info.open_snd_playback = 2;
@@ -522,6 +521,8 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 						bcu_state.pcu_request_info.pcu_alarm_playing_again = 1;
 					}
 				 }
+
+
 			}
 			else
 			{
@@ -534,6 +535,7 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 
 			if( bcu_state.bcu_request_number !=0 )
 			{
+
 				if( 1==bcu_state.bcu_request_info.open_snd_playback )
 				{
 					bcu_state.bcu_request_info.open_snd_playback = 2;

@@ -438,7 +438,7 @@ void  StartOrBrokeBroadcastPcuRequestAlarmAudioData()
 	if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE
 	   && bcu_state.bcu_active_ann_state->state_id == ANN_IDLE
 	   && bcu_state.bcu_request_number == 0){
-			bcu_6d5w_ctrl_wilson(2);
+			bcu_6d5w_ctrl_wilson(1);
 			BcuInitPlayAlarmAudioWhenD2pReq(); ///< add, 0107
 		}
 }
@@ -493,7 +493,7 @@ void  StartOrBrokeBroadcastBcuRequestAlarmAudioData()
 	if(bcu_state.bcu_active_intercom_state->state_id == INTERCOM_IDLE
 			&&   bcu_state.bcu_active_ann_state->state_id == ANN_IDLE )
 	{
-		bcu_6d5w_ctrl_wilson(2);
+		bcu_6d5w_ctrl_wilson(1);
 		BcuInitPlayAlarmAudioWhenD2dReq(); ///< add, 0107
 	}
 }
