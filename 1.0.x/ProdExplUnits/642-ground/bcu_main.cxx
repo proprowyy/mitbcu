@@ -326,6 +326,7 @@ void *SystemControl(void *arg)
 			}
 
 		}
+		CheckSoundRespnes();
 		/*if there have cmd information comes from touch screen thread,we should response it as soon as possible*/
 		if(BlockBufferRead(bcu_state.recv_cmd_from_touch,&recv_send_info_from_touch_screen,sizeof(recv_send_info_from_touch_screen)) > 0)
 		{///<接收触摸屏线程发送过来的控制命令

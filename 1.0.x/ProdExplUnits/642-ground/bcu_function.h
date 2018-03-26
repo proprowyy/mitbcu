@@ -957,6 +957,6 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo);
 int RegisterBcuCallState(const common_package_t *p_ConmInfo);
 
 void ProbeMetalButtonToPerform( );
-
+void CheckSoundRespnes();
 #endif	/*BCU_FUNCTION_H*/
 

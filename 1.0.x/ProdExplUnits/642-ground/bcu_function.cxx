@@ -2087,12 +2087,74 @@ int RegisterBcuCallState(const common_package_t *p_ConmInfo)
 {
 	int temp_device_number=p_ConmInfo->src_dev_number;
 
-	if(p_ConmInfo->pkg_type == 7)
+	if(p_ConmInfo->pkg_type == 7&&(p_ConmInfo->src_dev_number!=bcu_state.bcu_info.devices_no))
 	{
 		memcpy(&bcu_call_state[temp_device_number-1],&p_ConmInfo->common_data_u.state,sizeof(bcu_call_state_t));
 	}
 
 	 return 0;
+}
+
+void CheckSoundRespnes()
+{
+	if((bcu_state.bcu_info.devices_no==4)||(bcu_state.bcu_info.devices_no=3))
+	{
+		printf("this is 3 || 4 , inoperate\n");
+	}
+	else
+	{
+	   if(bcu_state.bcu_info.devices_no == 5 )
+	   {
+		  if( (bcu_call_state[2].device_state)==1&&(bcu_call_state[3].device_state==1)&&(bcu_state.pcu_request_info.request_number!=0||bcu_state.bcu_request_number!=0)&&bcu_state.bcu_active_intercom_state->state_id==INTERCOM_IDLE)
+		  {
+			  StartOrBrokeBroadcastPcuRequestAlarmAudioData();
+			  StartOrBrokeBroadcastBcuRequestAlarmAudioData();
+		  }
+		  else
+		  {
+			  CloseAudioSampleTimerForPcuAlarm();
+		  }
+
+	   }
+	   if(bcu_state.bcu_info.devices_no == 2 )
+	   	{
+
+
+	   		 if( (bcu_call_state[2].device_state)==1&&(bcu_call_state[3].device_state==1)&& (bcu_call_state[4].device_state==1)&&(bcu_state.pcu_request_info.request_number!=0||bcu_state.bcu_request_number!=0)&&bcu_state.bcu_active_intercom_state->state_id==INTERCOM_IDLE)
+	   		  {
+	   					  StartOrBrokeBroadcastPcuRequestAlarmAudioData();
+	   					  StartOrBrokeBroadcastBcuRequestAlarmAudioData();
+	   		  }
+	   		 else
+	   		 {
+	   			 CloseAudioSampleTimerForPcuAlarm();
+	   		 }
+
+	   	}
+	   if(bcu_state.bcu_info.devices_no == 1 )
+	   {
+
+		   if( (bcu_call_state[1].device_state==1)&&(bcu_call_state[2].device_state==1)&&(bcu_call_state[3].device_state==1)&& (bcu_call_state[4].device_state==1)&&(bcu_state.pcu_request_info.request_number!=0||bcu_state.bcu_request_number!=0)&&bcu_state.bcu_active_intercom_state->state_id==INTERCOM_IDLE)
+		   	    {
+		   	   					  StartOrBrokeBroadcastPcuRequestAlarmAudioData();
+		   	   					  StartOrBrokeBroadcastBcuRequestAlarmAudioData();
+		   	   }
+		   	   else
+		   	   {
+		   	   			 CloseAudioSampleTimerForPcuAlarm();
+		   	   }
+
+	   }
+
+
+	}
+
+
+
+
+
+
+
 }
 
 

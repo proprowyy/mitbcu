@@ -217,9 +217,9 @@ void D2DIntercomEnter(send_infomation_t *send_information_intercomm_d2d)
 			memset(&temp_common_package,0,sizeof (common_package_t));
 			strcpy(temp_common_package.src_dev_name,"BCU");
 			temp_common_package.src_dev_number=bcu_state.bcu_info.devices_no;
-			bcu_call_state[bcu_state.bcu_info.devices_no].device_number=bcu_state.bcu_info.devices_no;
-			bcu_call_state[bcu_state.bcu_info.devices_no].device_state = 1;
-			memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no],sizeof(bcu_call_state_t));
+			bcu_call_state[bcu_state.bcu_info.devices_no-1].device_number=bcu_state.bcu_info.devices_no;
+			bcu_call_state[bcu_state.bcu_info.devices_no-1].device_state = 1;
+			memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no-1],sizeof(bcu_call_state_t));
 			temp_common_package.pkg_type=7;
 			int rc= BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id,&temp_common_package,sizeof(common_package_t));
 			if(rc<0)
@@ -246,9 +246,9 @@ void D2DIntercomExit()
 				memset(&temp_common_package,0,sizeof (common_package_t));
 				strcpy(temp_common_package.src_dev_name,"BCU");
 				temp_common_package.src_dev_number=bcu_state.bcu_info.devices_no;
-				bcu_call_state[bcu_state.bcu_info.devices_no].device_number=bcu_state.bcu_info.devices_no;
-				bcu_call_state[bcu_state.bcu_info.devices_no].device_state = 0;
-				memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no],sizeof(bcu_call_state_t));
+				bcu_call_state[bcu_state.bcu_info.devices_no-1].device_number=bcu_state.bcu_info.devices_no;
+				bcu_call_state[bcu_state.bcu_info.devices_no-1].device_state = 0;
+				memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no-1],sizeof(bcu_call_state_t));
 				temp_common_package.pkg_type=7;
 				int rc= BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id,&temp_common_package,sizeof(common_package_t));
 				if(rc<0)
@@ -324,9 +324,9 @@ void D2PIntercomEnter(send_infomation_t *send_information_intercomm_d2p)
 	memset(&temp_common_package,0,sizeof (common_package_t));
 	strcpy(temp_common_package.src_dev_name,"BCU");
 	temp_common_package.src_dev_number=bcu_state.bcu_info.devices_no;
-	bcu_call_state[bcu_state.bcu_info.devices_no].device_number=bcu_state.bcu_info.devices_no;
-	bcu_call_state[bcu_state.bcu_info.devices_no].device_state = 1;
-	memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no],sizeof(bcu_call_state_t));
+	bcu_call_state[bcu_state.bcu_info.devices_no-1].device_number=bcu_state.bcu_info.devices_no;
+	bcu_call_state[bcu_state.bcu_info.devices_no-1].device_state = 1;
+	memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no-1],sizeof(bcu_call_state_t));
 	temp_common_package.pkg_type=7;
 	int rc= BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id,&temp_common_package,sizeof(common_package_t));
 	if(rc<0)
@@ -356,9 +356,9 @@ void D2PIntercomExit()
 		memset(&temp_common_package,0,sizeof (common_package_t));
 		strcpy(temp_common_package.src_dev_name,"BCU");
 		temp_common_package.src_dev_number=bcu_state.bcu_info.devices_no;
-		bcu_call_state[bcu_state.bcu_info.devices_no].device_number=bcu_state.bcu_info.devices_no;
-		bcu_call_state[bcu_state.bcu_info.devices_no].device_state = 0;
-		memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no],sizeof(bcu_call_state_t));
+		bcu_call_state[bcu_state.bcu_info.devices_no-1].device_number=bcu_state.bcu_info.devices_no;
+		bcu_call_state[bcu_state.bcu_info.devices_no-1].device_state = 0;
+		memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no-1],sizeof(bcu_call_state_t));
 		temp_common_package.pkg_type=7;
 		int rc= BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id,&temp_common_package,sizeof(common_package_t));
 		if(rc<0)
