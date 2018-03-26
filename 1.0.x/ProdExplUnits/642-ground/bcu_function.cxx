@@ -29,10 +29,14 @@ common_package_t network_send_package_ptt_release_to_bcu;
 common_package_t network_send_package_ptt_press_to_bcu;
 common_package_t network_send_package_ptt_release_to_pcu;
 common_package_t network_send_package_ptt_press_to_pcu;
-
+unsigned int live_state_running_free_counts = 0;
+cyg_handle_t  counter_handle_live_monitor;
+cyg_handle_t alarm_handle_live_monitor;
+cyg_alarm alarm_object_live_monitor;
 //发送选车命令与监听命令
 common_big_package_t *iph_select,*iph_select_intercom;
 send_infomation_t g_MonPcuCmdPakage ,g_iph_pcu,bcu_send_infomation;
+bcu_call_state_t bcu_call_state[5];
 //××××××××××××××××××××××××××××××//
 
 
@@ -1685,29 +1689,45 @@ void ForceBreakD2DToD2P()
 
 
 
-void alarm_func_handle_key_info(cyg_handle_t counter_handle, cyg_addrword_t data)
+void alarm_func_handle_live_monitor(cyg_handle_t counter_handle, cyg_addrword_t data)
 {
-	
-	whether_ask_key_info = 1;
-	whether_send_to_pcu = whether_send_to_pcu + 1;
-	key_timer_flag ++;
+	if(live_state_running_free_counts < 30)
+	{
+		live_state_running_free_counts ++;
+	}
+}
+int CreateLiveMonitorTimer()
+{
+	cyg_clock_to_counter(cyg_real_time_clock(),&counter_handle_live_monitor);
+	cyg_alarm_create(counter_handle_live_monitor,alarm_func_handle_live_monitor,0,&alarm_handle_live_monitor,&alarm_object_live_monitor);
+	cyg_alarm_initialize(alarm_handle_live_monitor,cyg_current_time()+(100),100);
+	cyg_alarm_disable(alarm_handle_live_monitor);
+	return 0;
 }
 
-void CreateAskKeyInfoTimer()
+int EnableLiveMonitorTimer()
 {
-	
-	cyg_clock_to_counter(cyg_real_time_clock(),&counter_handle_key_info);
-	
-	cyg_alarm_create(counter_handle_key_info,alarm_func_handle_key_info,0,&alarm_handle_key_info,&alarm_object_key_info);
-	cyg_alarm_initialize(alarm_handle_key_info,cyg_current_time()+1000,1000);
-	cyg_alarm_disable(alarm_handle_key_info);
+	ResetLiveMonitorCounts();
+	cyg_alarm_initialize(alarm_handle_live_monitor,cyg_current_time()+(100),100);
+	cyg_alarm_enable(alarm_handle_live_monitor);
+	return 0;
 }
-void EnableAskKeyInfoTimer()
+int DisableLiveMonitorTimer()
 {
-	diag_printf("EnableAskKeyInfoTimer()\n");
+	ResetLiveMonitorCounts();
+	cyg_alarm_disable(alarm_handle_live_monitor);
+	return 0;
+}
 
-	cyg_alarm_enable(alarm_handle_key_info);
+void ResetLiveMonitorCounts()
+{
+	live_state_running_free_counts = 0;
 }
+unsigned int GetLiveMonitorCounts()
+{
+	return live_state_running_free_counts;
+}
+
 
 int ReadNumWilson()
 {///<获取设备号
@@ -2061,6 +2081,21 @@ int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo)
 	diag_printf("---------------------------\n");
 	return ret;
 }
+
+
+int RegisterBcuCallState(const common_package_t *p_ConmInfo)
+{
+	int temp_device_number=p_ConmInfo->src_dev_number;
+
+	if(p_ConmInfo->pkg_type == 7)
+	{
+		memcpy(&bcu_call_state[temp_device_number-1],&p_ConmInfo->common_data_u.state,sizeof(bcu_call_state_t));
+	}
+
+	 return 0;
+}
+
+
 
 void ProbeMetalButtonToPerform( )
 {

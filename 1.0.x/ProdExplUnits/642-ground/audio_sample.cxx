@@ -766,6 +766,7 @@ void PutMicSampleDataintoBuffer_EAMP(cyg_io_handle_t audio_handle, int buffer_id
 	len1 = len;
 	if(button_state == 1)///<PTT按下
 	{
+		ResetLiveMonitorCounts();
 		if (stat_rw == -EIO ||stat_rw<0  )
 		{
 			len = 0 ;

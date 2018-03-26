@@ -82,7 +82,7 @@ extern int whether_could_be_finished_d2d;
 extern int whether_eant_to_delay_finished_d2d;
 extern unsigned char whether_get_out3d5_button_state;
 extern unsigned char last_out3d5_button_state;
-
+extern bcu_call_state_t bcu_call_state[5];
 //extern int last_control_flag;
 //extern int control_flag;
 extern int last_sample_flag;
@@ -856,7 +856,7 @@ void alarm_func_handle_key_info(cyg_handle_t counter_handle, cyg_addrword_t data
  *  @param   null
  *  @return  null
  */
-void CreateAskKeyInfoTimer();
+int CreateLiveMonitorTimer();
 
 /** EnableAskKeyInfoTimer function description
  *  使能钥匙信息查询定时器
@@ -864,7 +864,10 @@ void CreateAskKeyInfoTimer();
  *  @param   null
  *  @return  null
  */
-void EnableAskKeyInfoTimer();
+int EnableLiveMonitorTimer();
+int DisableLiveMonitorTimer();
+void ResetLiveMonitorCounts();
+unsigned int GetLiveMonitorCounts();
 
 /** ReadNumWilson function description
  *  获取设备号
@@ -950,6 +953,8 @@ int TransformIntercomPackage(network_send_package_t *p_recv_network_info);
 int TransformSendPackage(network_pcu_t *p_temp_pcu_network_package,network_send_package_t *p_recv_network_info);
 
 int ProbeBigCommPackage(const common_big_package_t *p_BigConmInfo);
+
+int RegisterBcuCallState(const common_package_t *p_ConmInfo);
 
 void ProbeMetalButtonToPerform( );
 

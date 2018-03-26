@@ -213,6 +213,19 @@ void D2DIntercomEnter(send_infomation_t *send_information_intercomm_d2d)
 	SendCmd(&send_information_intercomm_d2d,"OCS",230);
 	BCU_LED_BUTTON3_ON ;///<点亮CC按钮的灯
 	AdjustVolumeAfterCODEC();///<调节BCU的音量
+			common_package_t temp_common_package;
+			memset(&temp_common_package,0,sizeof (common_package_t));
+			strcpy(temp_common_package.src_dev_name,"BCU");
+			temp_common_package.src_dev_number=bcu_state.bcu_info.devices_no;
+			bcu_call_state[bcu_state.bcu_info.devices_no].device_number=bcu_state.bcu_info.devices_no;
+			bcu_call_state[bcu_state.bcu_info.devices_no].device_state = 1;
+			memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no],sizeof(bcu_call_state_t));
+			temp_common_package.pkg_type=7;
+			int rc= BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id,&temp_common_package,sizeof(common_package_t));
+			if(rc<0)
+			{
+				printf("send common_package fail\n");
+			}
 }
 
 /*The exit of D2D intercom*/
@@ -228,6 +241,21 @@ void D2DIntercomExit()
 	ClearAllAudioDataBuffer();
 	bcu_state.this_bcu_request = 0;
 	BCU_LED_BUTTON3_DIS;
+
+				common_package_t temp_common_package;
+				memset(&temp_common_package,0,sizeof (common_package_t));
+				strcpy(temp_common_package.src_dev_name,"BCU");
+				temp_common_package.src_dev_number=bcu_state.bcu_info.devices_no;
+				bcu_call_state[bcu_state.bcu_info.devices_no].device_number=bcu_state.bcu_info.devices_no;
+				bcu_call_state[bcu_state.bcu_info.devices_no].device_state = 0;
+				memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no],sizeof(bcu_call_state_t));
+				temp_common_package.pkg_type=7;
+				int rc= BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id,&temp_common_package,sizeof(common_package_t));
+				if(rc<0)
+				{
+					printf("send common_package fail\n");
+				}
+
 }
 
 /*The process of D2D intercom*/
@@ -290,6 +318,22 @@ void D2PIntercomEnter(send_infomation_t *send_information_intercomm_d2p)
 	begin_to_broadcast_d2d = 1;
 	begin_to_broadcast_audio_data = 1;	
 	AdjustVolumeAfterCODEC();
+
+	common_package_t temp_common_package;
+
+	memset(&temp_common_package,0,sizeof (common_package_t));
+	strcpy(temp_common_package.src_dev_name,"BCU");
+	temp_common_package.src_dev_number=bcu_state.bcu_info.devices_no;
+	bcu_call_state[bcu_state.bcu_info.devices_no].device_number=bcu_state.bcu_info.devices_no;
+	bcu_call_state[bcu_state.bcu_info.devices_no].device_state = 1;
+	memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no],sizeof(bcu_call_state_t));
+	temp_common_package.pkg_type=7;
+	int rc= BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id,&temp_common_package,sizeof(common_package_t));
+	if(rc<0)
+	{
+		printf("send common_package fail\n");
+	}
+	SendCmd(&send_information_intercomm_d2p,"PCU",bcu_state.pcu_request_info.recept_pcu_no);
 	///<发送BCU当前PTT按键状态给PCU
 	SendCurrentBCUPTTStateToPCU();
 	StartAudioSampleTimer();
@@ -308,6 +352,19 @@ void D2PIntercomExit()
 	BcuInitPlayAlarmAudioWhenD2pReq();
 	BCU_LED_BUTTON2_DIS;
 	bcu_state.this_bcu_intercomm_state=0;
+		common_package_t temp_common_package;
+		memset(&temp_common_package,0,sizeof (common_package_t));
+		strcpy(temp_common_package.src_dev_name,"BCU");
+		temp_common_package.src_dev_number=bcu_state.bcu_info.devices_no;
+		bcu_call_state[bcu_state.bcu_info.devices_no].device_number=bcu_state.bcu_info.devices_no;
+		bcu_call_state[bcu_state.bcu_info.devices_no].device_state = 0;
+		memcpy(&temp_common_package.common_data_u.state,&bcu_call_state[bcu_state.bcu_info.devices_no],sizeof(bcu_call_state_t));
+		temp_common_package.pkg_type=7;
+		int rc= BlockBufferWrite(bcu_state.comm_cmd_send_buffer_id,&temp_common_package,sizeof(common_package_t));
+		if(rc<0)
+		{
+			printf("send common_package fail\n");
+		}
 }
 
 /*The process of D2P intercom*/

@@ -399,6 +399,15 @@ void NetWorkMain(network_buffer_t network_buffer)
 				}
 			}
 
+			if(FD_ISSET(udp_common_socket, &fwd))
+			{	//发送common 数据
+				if(BlockBufferRead(network_buffer.udp_common_socket_buffer.udp_common_socket_send_buffer,(void *)&common_package_buffer,sizeof(common_package_buffer))>0)
+			    {
+					net_debug_printf(("Comm: !!!!!!!!!!!!!!-%s_%d\n",common_package_buffer.dst_dev_name, common_package_buffer.dst_dev_number));
+				    net_debug_printf(("Comm: !!!!!!!!!!!!!!-pkg_type=%d\n",common_package_buffer.pkg_type));
+					UdpSendFunCMD(udp_common_socket,&common_package_buffer,sizeof(common_package_t),"230.10.10.86",UDP_COMMON_PORT);//发送控制数据
+				}
+			}
 			if(FD_ISSET(udp_data_socket,&fwd))
 			{
 				//发送音频信息

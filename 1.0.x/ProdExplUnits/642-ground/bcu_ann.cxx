@@ -138,6 +138,7 @@ void LiveAnnEnter(send_infomation_t *send_information_live)
 	MicAdPcmWavheader(bcu_state.local_audio_data_recv_buffer_id);
 	ANN_PIN_SET();
 	BCU_LED_BUTTON1_ON;
+	EnableLiveMonitorTimer();
 
 
 }
@@ -155,6 +156,7 @@ void LiveAnnExit()
 	whether_have_begin_broadcast_alarm_audio_data = 0;
 	ANN_PIN_CLR();
 	BCU_LED_BUTTON1_DIS;
+	DisableLiveMonitorTimer();
 }
 
 void LiveAnnProcess(send_infomation_t *send_information_live)

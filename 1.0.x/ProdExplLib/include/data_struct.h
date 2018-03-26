@@ -381,6 +381,16 @@ typedef struct
 	unsigned char tcms_current_cmu_state;
 }tcms_cmu_state_t;
 
+typedef struct {
+
+	unsigned int device_number;
+	unsigned int device_state; //1 占用 0 空闲
+
+}bcu_call_state_t;
+
+
+
+
 typedef union
 {
 
@@ -393,6 +403,7 @@ typedef union
 	cmu_car_type_t cmu_car_type;//COMMON_PACKAGE_TYPE_CMU_CAR_TYPE
 	cmu_ack_state_t cmu_ack_state;//COMMON_PACKAGE_TYPE_ACK_STATE
 	tcms_cmu_state_t tcms_cmu_state;//COMMON_PACKAGE_TYPE_TCMS_CMU_STATE
+	bcu_call_state_t state;
 }common_data_t;
 
 typedef struct
@@ -422,9 +433,6 @@ typedef struct
 	char db_version_audio[32];
 	char db_version_config[32];
 }pa_software_version_t;
-
-
-
 
 
 typedef struct {

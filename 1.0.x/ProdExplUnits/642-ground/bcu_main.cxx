@@ -29,6 +29,7 @@ static void Init_ocs_select_car_struct(void)
 		memset(&g_MonPcuCmdPakage,0,sizeof(g_MonPcuCmdPakage));
 		memset(&g_iph_pcu,0,sizeof(g_MonPcuCmdPakage));
 		memset(&bcu_send_infomation,0,sizeof(bcu_send_infomation));
+		memset(bcu_call_state,0,sizeof(bcu_state_t));
 
 }
 
@@ -36,6 +37,7 @@ extern char pcu_alarm_audio[];
 Node *PCURequsthead = NULL;
 Node *BCURequsthead = NULL;
 common_big_package_t recv_temp_big;
+
 int main(int argc, char **argv)
 {
 	int return_value_of_thread_create = 0;/*the return of thread create*/
@@ -47,6 +49,8 @@ int main(int argc, char **argv)
 	pthread_attr_t attr_of_sample_and_play;/*the attribution of mic sample and audio play thread*/
 	pthread_attr_t attr_of_demao_thread;
 	//****************************//
+
+
 	/*设备软件版本号登记*/
 	SetSoftwareVersion("642-PA-BCU-app-1-20180112","20180112");
 	//*********************//
@@ -261,6 +265,8 @@ void *SystemControl(void *arg)
     network_send_package_t recv_network_info_from_network;///<从网络上接收的命令
 
     bcu_state.this_bcu_is_active=1;
+    common_package_t recv_temp_common;
+    memset(&recv_temp_common,0,sizeof(common_package_t));
 
 	debug_print(("I am success entry control handle thread!\n"));
 
@@ -274,6 +280,8 @@ void *SystemControl(void *arg)
 
 	CreateAudioSampleTimer();/*create  audio sample timer*/
 
+	CreateLiveMonitorTimer();
+
 	BCUStateInit();/*initialize the original state of bcu*/
 	///<相关命令包的初始化
 	ControlCommomPackageInit(&dev_vol_to_eamp,&dev_vol_to_pcu,&dev_vol_to_bcu,&dev_vol_to_ccu);
@@ -286,12 +294,19 @@ void *SystemControl(void *arg)
 		D2DReqAndResponseHandle();
 		ChangeIntercommButtonColor(&whether_ts_is_running);
 		AutoChangeIntercommButtonEnableStateAndColor();
+
+
 		if(BlockBufferRead(bcu_state.dev_vol_info_buffer_id,&ctrl_recv_from_ts,sizeof(ts_dev_volume_info_t))>0)
 		{
 			printf("Dev vol info recv.\n");
 			printf("Dev vol  recv vlue = %d\n",ctrl_recv_from_ts.device_volume);
 			vol_temp=ctrl_recv_from_ts.device_volume;
 			bcu_6d5w_ctrl_wilson(vol_temp);
+		}
+		if(BlockBufferRead(bcu_state.comm_cmd_recv_buffer_id,&recv_temp_common,sizeof(common_package_t))>0)
+		{
+			diag_printf("Control recv a commod package\n");
+			RegisterBcuCallState(&recv_temp_common);
 		}
 
 		if(BlockBufferRead(bcu_state.comm_server_recv_big_buffer_id,&recv_temp_big,sizeof(common_big_package_t)) > 0)
@@ -377,6 +392,14 @@ void *BcuMicSampleAndPlayEntry(void *arg)
 		CurIntercomState = bcu_state.bcu_active_intercom_state->state_id;
 		if(CurAnnState == LIVE_ANN_EVENT && CurIntercomState != D2P_INTERCOMM_EVENT &&CurAnnStateInfo == LIVE_ANN_EVENT)
 		{
+
+			if(GetLiveMonitorCounts() >= 30)
+			{
+
+				SetLiveCmd(2);
+
+			}
+
 			PutMicSampleDataintoBuffer_EAMP(bcu_audio_handle, bcu_state.audio_data_send_buffer_id );
 			if(bcu_state.this_bcu_ptt_state != GetPTTState())
 			{
